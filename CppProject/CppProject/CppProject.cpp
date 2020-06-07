@@ -4,9 +4,16 @@
 #include "pch.h"
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n"; 
+using namespace std;
+
+
+int main() {
+	
+	cout << "Enter 2 numbers:" << endl;
+	int v1 = 0, v2 = 0;
+	cin >> v1 >> v2;
+	cout << "The sum of " << v1 << " and " << v2 << " is " << v1 + v2 << endl;
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
