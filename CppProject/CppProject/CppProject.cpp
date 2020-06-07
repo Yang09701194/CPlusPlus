@@ -3,26 +3,84 @@
 
 #include "pch.h"
 #include <iostream>
+#include "Sales_item.h"
 
 using namespace std;
 
 
 int main() {
 	
-	int value = 0;
-	cout << "c" << endl;
+	
 
-	while (std::cin >> value)
-	{
-		cout << "c" << endl;
-	}
-
-	return 0;
 }
 
 
 
 
+//p22   1.22
+// sales_item total;
+//if (cin >> total) {
+//	Sales_item trans;
+//	while (cin >> trans)
+//	{
+//		if (trans.isbn() == total.isbn()) {
+//			total += trans;
+//		}
+//		else {
+//			cout << total << endl;
+//			total = trans;
+//		}
+//	}
+//	cout << total << endl;
+//
+//}
+//else {
+//	cerr << "No Data?!" << endl;
+//	return -1;
+//}
+
+
+
+
+//p22 1.21 ans
+//Sales_item item1, item2;
+//std::cin >> item1 >> item2;
+//if (item1.isbn() == item2.isbn()) {
+//	std::cout << item1 + item2 << std::endl;
+//	return 0;
+//}
+//else {
+//	std::cerr << "Data must refer to same ISBN." << std::endl;
+//	return -1;
+//}
+
+
+//p 21
+//Sales_item book, book2;
+//cin >> book >> book2;
+//cout << book + book2
+//<< endl;
+//return 0;
+//
+/////////////////
+///*Sales_item book;
+//cin >> book;
+//cout << book << endl;
+//return 0;
+//*/
+
+//p17 ex 1.16
+//int value = 0, sum = 0;
+//cout << "c" << endl;
+//
+//while (std::cin >> value)
+//{
+//	sum += value;
+//}
+//
+//cout << sum << endl;
+//
+//return 0;
 
 
 //p15

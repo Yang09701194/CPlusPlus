@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Sales_item.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CppProject.cpp" />
