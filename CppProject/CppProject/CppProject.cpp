@@ -9,12 +9,56 @@ using namespace std;
 
 
 int main() {
+
+
+	int *p = (int*)malloc(100000000);//配置記憶體  工作管理員能看到爆增
 	
-	
+	int i;
+	cin >> i;
+
+	free(p);//釋放   工作管  變超低  立刻反映
+	cin >> i;
+
 
 }
 
 
+//十三戒
+//
+//int *p = (int*)malloc(100000000);//配置記憶體  工作管理員能看到爆增
+//
+//int i;
+//cin >> i;
+//
+//free(p);//釋放   工作管  變超低  立刻反映
+//cin >> i;
+//
+
+
+////http://www.cplusplus.com/reference/cstdio/fgets/
+////fgets
+////char * fgets(char * str, int num, FILE * stream);
+////Get string from stream
+////
+////char *name;   /* name 尚未指向有效的空間 */
+////printf("Your name, please: ");
+////fgets(name, 20, stdin);   /* 您確定要寫入的那塊空間合法嗎??? */
+////printf("Hello, %s\n", name);
+//
+
+//這是因為 gets 函式無法知道字元陣列的大小，而是依賴換行符號或 EOF 才會結束輸入，因此有可能引發緩衝區溢位的安全問題，有興趣可以參考〈Why is the gets function so dangerous that it should not be used ? 〉。
+//
+//從 C11 之後，gets 已經不再是標準函式之一，你可以使用 fgets 來取代 get，使用時必須指定字元陣列、大小以及 stdin：
+//
+//char str[20];
+//
+//puts("請輸入字串：");
+//gets(str);
+//
+//puts("輸入的字串為：");
+//puts(str);
+//
+//return 0;
 
 
 //p22   1.22
