@@ -103,14 +103,6 @@ int main() {
 //的方式，new 無法配置時會丟出 std::bad_alloc 例外，malloc 無法配置
 //時會回傳 null(註2)，不會影響到正常使用下的程式功能
 
-//
-//& * 用法   &取為址  *取值   *宣告時代表指標
-//int num1 = 2, num2 = 3;
-//int *pi_1, *pi_2;  //宣告指向整數的指標變數
-//pi_1 = &num1;  //用指標pi_1指向num1的位置
-//printf("pi_1 = %d\r\n", *pi_1); //pi=2
-//pi_2 = &num2;//用指標pi_2指向num2的位置
-//printf("pi_2 = %d\r\n", *pi_2); //pi=2
 
 
 
