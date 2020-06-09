@@ -10,11 +10,19 @@ using namespace std;
 
 int main() {
 
-	
+
+
+	int pause;
+	cin >> pause;
+
 }
 
 
 
+
+//p42
+//string book("123-456");
+//cout << book << endl;
 
 
 
