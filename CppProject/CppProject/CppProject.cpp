@@ -10,6 +10,7 @@ using namespace std;
 
 int main() {
 
+	
 
 
 	int pause;
@@ -18,6 +19,50 @@ int main() {
 }
 
 
+
+
+
+//p51說不能定義參考的參考   但13戒好像有 雙* pointer?
+//參考不能指向純量的型別值   例如字串數字
+
+//p51    &也可用在宣告   取完&有點類似取得物件的別名  可以在對他get set 等同對原本的值操作
+//int i = 1024, i2 = 2;
+//int &r = i, r2 = i2;
+
+//p50
+//int ival = 1024;
+//int &refVal = ival;
+//refVal = 2;// = ival = 2
+//int ii = refVal;
+
+
+
+// p 49
+//// Program for illustration purposes only: It is bad style for a function
+//// to use a global variable and also define a local variable with the same name
+//
+//int reused = 42;  // reused has global scope
+//
+//int main()
+//{
+//	int unique = 0; // unique has block scope
+//
+//	// output #1: uses global reused; prints 42 0
+//	std::cout << reused << " " << unique << std::endl;
+//
+//	int reused = 0; // new, local object named reused hides global reused
+//
+//	// output #2: uses local reused; prints 0 0
+//	std::cout << reused << " " << unique << std::endl;
+//
+//	// output #3: explicitly requests the global reused; prints 42 0
+//	std::cout << ::reused << " " << unique << std::endl;
+//
+//	return 0;
+//}
+
+//p45
+// extern  https://www.youtube.com/watch?v=j9H3LN9_dJg
 
 
 //p42
