@@ -21,6 +21,66 @@ int main() {
 
 
 
+
+
+
+
+////p71
+////帶雙括號的decltype永遠是 參考型別
+//decltype((i)) d; // d是 int&且要被初始化
+
+//p70
+//int main()
+//{
+//	const int i = 42;
+//	auto j = i;
+//	const auto &k = i;
+//	auto *p = &i;
+//	const auto j2 = i, &k2 = i;
+//
+//	// print i means int, and PKi means pointer to const int.
+//	std::cout << "j is " << typeid(j).name()
+//		<< "\nk is " << typeid(k).name()
+//		<< "\np is " << typeid(p).name()
+//		<< "\nj2 is " << typeid(j2).name()
+//		<< "\nk2 is " << typeid(k2).name()
+//		<< std::endl;
+//
+//	return 0;
+//}
+//
+
+//decltype  擷取型別  不取值
+//decltype(f()) sum = 3;
+
+
+//p69
+//auto 我看就是 C#的var
+int i = 0;
+const int ci = i, &crr = i;
+auto &g = ci;  
+auto &h = 42; //  不可參考  到  基本型別 + 可當常數型別   ( 字面值  p66
+const auto &j = 42;// const 參考 可繫節至   字面值
+
+//p67
+//// type alias
+//typedef double wages;//wages是double的同義詞
+//typedef wages base, *p;//base 是double "     p是double*的同義詞
+//typedef double wages;
+//
+////alias declaration  類別別名
+//using SI = Sales_item;
+//
+//typedef char *pstring; // pstring是char*指標
+//const pstring cstr = 0; // char *  指向char的 常數指標
+//const pstring *ps; // 指向char* 的 指標
+
+//p66
+//常數運算式  用在跨好幾層呼叫的值驗證來源是常數
+//constexpr int mf = 20;
+//constexpr int mf = size();//有可能不是  可透過此寫法檢查
+
+
 ////p63
 //const指標  出是畫後  指向的位址不能變
 //int a = 0;
