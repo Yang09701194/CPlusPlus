@@ -21,6 +21,85 @@ int main() {
 
 
 
+////p63
+//const指標  出是畫後  指向的位址不能變
+//int a = 0;
+//int *const c = &a;//永遠指向a
+//const int a = 0;
+//const int *const c = &a;//跟上面的差異是 要指向const物件 最前面就要加上const   下面a的值不能變 上面可變
+
+
+
+//p62
+//參考
+//int i = 2;
+//int &r = i;
+//const int &r2 = i;//r2是const參考 不能拿來改變 i  但r可以  也因為i非cnost
+//r1 = 0;//i變0
+//r2 = 0;//error
+
+//指標
+//const int i = 2;
+//int *r = &i; // error 非const
+//const int *r2 = &i;//ok 
+//*r2 = 0;//error const不可變
+
+
+//p61
+//參考的行跌 要和 指向的物件型別相同 有兩例外
+//1. 能用可被轉換為該參考型別 的任何運算式來初始對const的參考
+//2. const可以指向非const   反之不行
+//int = 42;
+//const int &r1 = i;
+//double d = 3.14
+//const int &r = d;
+//參考如上   指標亦同
+
+//p60
+//const的作用範圍是單個檔案
+//所以多個檔案都要用到  每個檔都要寫definition
+//
+//如果要一檔定義多檔能參照共用
+//.h
+//extern const int bufSize;  //extern表不是區域變數 而是其他檔案可看見
+//.cc
+//extern const int bufSize = fcn();
+
+
+
+////p59
+//const 無法變更的變數    一定要初始給值
+//const int i = getVal() 或 42;
+
+
+
+//p58   指標**  dereference也是**
+//int ival = 1024;
+//int *pi = &ival;   // pi points to an int
+//int **ppi = &pi;   // ppi points to a pointer to an int
+//cout << "The value of ival\n"
+//<< "direct value: " << ival << "\n"
+//<< "indirect value: " << *pi << "\n"
+//<< "doubly indirect value: " << **ppi
+//<< endl;
+//
+//int i = 2;
+//int *p1 = &i;     // p1 points to i
+//*p1 = *p1 * *p1;  // equivalent to i = i * i
+//cout << "i  = " << i << endl;
+//
+//*p1 *= *p1;       // equivalent to i *= i
+//cout << "i  = " << i << endl;
+//
+//return 0;
+
+//int i = 42;
+//int *p;// p是對int的一個指標
+//int *&r = p;//r是對指標p的一個參考   &r 可以看成就是r  的意思  參考賦值時寫&r  之後操作都是用r  
+////所以類似 int *r = p 也就是r就是p
+//r = &i;// r = p = &i >> p = i的位址
+//*r = 0;// r = p = i的位址  的*取值 = 0  >> i = 0;
+
 
 
 //p57 
