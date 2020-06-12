@@ -12,25 +12,87 @@ using namespace std;
 int main() {
 
 
+
+
+	int pause;
+	cin >> pause;
+
 }
 
 
 
 
 
-//p77
-一個header不能被引入多次  所以可以用preprocessor(前置處理器)  來做到安全引入
 
-_H就是點h 前面同檔名     這就叫header guard
-#ifndef PCH_H
-#define PCH_H
-
-// content here
-
-#endif //PCH_H
+//88
 
 
+//86
+//字串操作
+//getline(istream, s)  讀一行    遇到newline停
+//s.empty()   是否空
+//s.size() 長度   回傳值是 string::size_type  是一個unsign特性且可計數任何字串長度的型別  可用auto 或decltype來接打字比較少
+//s[i]
 
+//string > < 用字典序
+
+
+//cout << "a" << endl;
+//cout << "b" << endl;//換行
+//
+//
+//讀未知數目字串  直到eof 或無效輸入
+//while (cin >> word)
+//{
+//	cout << word << endl;
+//}
+
+//while (getline(cin		, line))
+//{
+//	cout << word << endl;
+//}
+
+
+//84
+//string s1;
+//string s2 = s1;//空字串
+//string s3 = "abc";
+//string s4(10, 'c'); // 10個c
+//string s6("afg");
+//string s6(s3);
+//
+//string 可用在 cin cout
+
+
+
+
+////p82
+//string 長度可變的一個字元序列
+//vector 長度可變的物件序列
+
+////滿誇張的  說的和C#不同  竟然建議一個個引入  C#寫那麼久就知道根本沒必要   多一堆額外的費工  幾千行的程式碼可能要加個幾百行 感覺有點不smart
+//using std::cin;
+//using std::cout;
+//using std::endl;
+
+//像我都很聰明  直接用using namespace
+
+//又說  h檔不該包含using  因為h會被引用   容易跟其他印入的程式的using衝突
+
+
+
+////p77
+//一個header不能被引入多次  所以可以用preprocessor(前置處理器)  來做到安全引入
+//
+//_H就是點h 前面同檔名     這就叫header guard  都大寫
+//#ifndef PCH_H
+//#define PCH_H
+//
+//// content here
+//
+//#endif //PCH_H
+
+//#include 在 preprocessor處理會替代成那個標頭檔的內容  相當於併進來
 
 //p76
 //單檔中只能有一個類別定義   多個檔案  每檔的類別定義需相同
