@@ -8,13 +8,9 @@
 using namespace std;
 
 
+
 int main() {
 
-	
-
-
-	int pause;
-	cin >> pause;
 
 }
 
@@ -22,7 +18,36 @@ int main() {
 
 
 
+//p77
+一個header不能被引入多次  所以可以用preprocessor(前置處理器)  來做到安全引入
 
+_H就是點h 前面同檔名     這就叫header guard
+#ifndef PCH_H
+#define PCH_H
+
+// content here
+
+#endif //PCH_H
+
+
+
+
+//p76
+//單檔中只能有一個類別定義   多個檔案  每檔的類別定義需相同
+//定義在標頭就可引用共用   h檔名稱 跟類別名稱習慣相同
+
+
+//p75  main
+////Sales_data  如果定義在同個檔案  要放在main前面
+////所以寫在h檔  還真的可以
+//Sales_data d1, d2;
+//double price = 0;
+//cin >> d1.bookNo >> d1.units_sold >> price;
+//d1.revenue = d1.units_sold * price;
+////d2同理
+//
+//int pause;
+//cin >> pause;
 
 
 ////p71
@@ -56,11 +81,11 @@ int main() {
 
 //p69
 //auto 我看就是 C#的var
-int i = 0;
-const int ci = i, &crr = i;
-auto &g = ci;  
-auto &h = 42; //  不可參考  到  基本型別 + 可當常數型別   ( 字面值  p66
-const auto &j = 42;// const 參考 可繫節至   字面值
+//int i = 0;
+//const int ci = i, &crr = i;
+//auto &g = ci;  
+//auto &h = 42; //  不可參考  到  基本型別 + 可當常數型別   ( 字面值  p66
+//const auto &j = 42;// const 參考 可繫節至   字面值
 
 //p67
 //// type alias
