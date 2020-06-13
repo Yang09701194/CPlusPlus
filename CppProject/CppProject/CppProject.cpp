@@ -4,14 +4,15 @@
 #include "pch.h"
 #include <iostream>
 #include "Sales_item.h"
+#include <vector>
+
 
 using namespace std;
+using std::vector;
 
 
 
 int main() {
-
-
 
 
 	int pause;
@@ -21,11 +22,104 @@ int main() {
 
 
 
+//96 vector 就像 C# List
 
+
+//95
+	//const string hexdigits = "0123456789ABCDEF";  // possible hex digits
+
+	//cout << "Enter a series of numbers between 0 and 15"
+	//     << " separated by spaces.  Hit ENTER when finished: " 
+	//     << endl;
+	//string result;        // will hold the resulting hexify'd string
+
+	//string::size_type n;  // hold numbers from the input
+	//while (cin >> n)
+	//	if (n < hexdigits.size())    // ignore invalid input
+	//		result += hexdigits[n];  // fetch the indicated hex digit
+
+	//cout << "Your hex number is: " << result << endl;
+
+	//return 0;
+
+//94
+//if (!s.empty())
+//	cout << s[0] << endl;
+//if (!s.empty())
+//	s[0] = toupper(s[0]);
+//
+//// convert first word in s to uppercase
+//s = orig;  // restore s to original case
+//decltype(s.size()) index = 0;
+//
+//// process characters in s until we run out of characters 
+//// or we hit a whitespace
+//while (index != s.size() && !isspace(s[index])) {
+//
+//	// s[index] returns a reference so we can change 
+//	// the underlying character
+//	s[index] = toupper(s[index]);
+//
+//	// increment the index to look at the next character 
+//	// on the next iteration
+//	++index;
+//}
+
+
+//93  
+//一個參考不過就是給一個物件另一個名稱
+//要改變字元裡的值  要用參考
+//for (auto &c : str)  
+//	&c toupper(c); //印string 裡的每個char
+
+//s[0]  第一個字元  就一般array概念
+
+
+////91
+//string str("abc");  
+//for (auto c : str)  就 foreach
+//	cout << c << endl; //印string 裡的每個char
+
+
+//string s("Hello World!!!");
+//// punct_cnt has the same type that s.size returns
+//decltype(s.size()) punct_cnt = 0;
+//
+//// count the number of punctuation characters in s
+//for (auto c : s)         // for every char in s
+//if (ispunct(c))      // if the character is punctuation
+//	++punct_cnt;     // increment the punctuation counter
+//
+//cout << punct_cnt
+//	<< " punctuation characters in " << s << endl;
+//
+//isalnum(c)
+//isalpha(c)
+//iscntrl
+//isdigit
+//islower
+//isprint
+//ispunct
+//isspace
+//isupper
+//isxdigit
+//tolower
+//toupper
+
+
+//90
+//C++ 弱
+//竟然不能 string s = "a" + "b";
+//純字串相鄰相加就錯  一定要至少一邊是個字串變數  差
+
+
+////89
+//短字串小於長字串
+//字元可以跟字串相加
+//string s3 = s1 + "," + s2 + '\n';
 
 
 //88
-
 
 //86
 //字串操作
