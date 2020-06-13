@@ -13,7 +13,7 @@ using std::vector;
 
 
 int main() {
-
+	
 
 	int pause;
 	cin >> pause;
@@ -22,7 +22,186 @@ int main() {
 
 
 
-//96 vector 就像 C# List
+//臨時看到  竟然初始有包在ifdef
+//#ifdef LIST_INIT
+//vector<int> v{ 1,2,3,4,5,6,7,8,9 };
+//#else
+//int temp[] = { 1,2,3,4,5,6,7,8,9 };
+//vector<int> v(begin(temp), end(temp));
+//#endif
+//for (auto &i : v) // for each element in v (note: i is a reference)
+//i *= i;           // square the element value
+//for (auto i : v)      // for each element in v
+//cout << i << " "; // print the element
+//cout << endl;
+//
+//return 0;
+
+
+//112
+////binary search using iterator
+//auto beg = text.begin(), end = text.end();
+//auto mid = text.begin() + (end - beg)/2;
+//while (mid != end && *mid != sought)
+//{
+//	if (sought < *mid)//往前半找
+//		end = mid;
+//	else              //往後半找
+//		beg = mid + 1;
+//	mid = beg + (end - beg) / 2;//新的中點
+//}
+
+
+
+
+//111
+//iter + n
+//iter - n
+//iter += n
+//iter -= n
+//> < <= >= 就想成目前在vector裡的位置比較  很直覺  數字index比大小而已
+
+
+
+//110
+//印出每一列  直到那列是空白
+//// print each line in text up to the first blank line
+//for (auto it = text.cbegin();
+//	it != text.cend() && !(*it).empty(); ++it)
+//	cout << *it << endl;
+//
+//// equivalent loop using arrow to dereference it and call empty
+//for (auto it = text.cbegin();
+//	it != text.cend() && !it->empty(); ++it)   ->同(* ).
+//	cout << *it << endl;
+
+
+//range 版 for 跟C# foreach一樣  集合變數不能被變動例如增刪  一變iter就失效了
+
+
+
+//109
+//vector<int> v;
+//const vector<int> v2;
+//auto it1 = v.begin(); //預設回傳iter
+//auto it2 = v2.begin();//預設回傳const_iterator
+//auto it1c = v2.cbegin();//cbegin  cend固定回傳const_iterator
+//
+//(*it).empty()   //(*it)要括號包起來 不然會先應用到it身上 錯
+
+
+//108
+//for (auto it = s.begin(); it != s.end() && !isspace(*it); ++it)
+//{
+//	*it = toupper(*it);//全轉大寫
+//}
+
+//iter型別有  iterator  const_iterator
+vector<int>::iterator it;  //可讀寫  不能用在const類型的vector  
+vector<int>::const_iterator it2; //可讀不能寫    用在const類型的vector  本身就是常數不能寫  
+//也可以用在非const類型vector 一樣有唯讀效果
+
+
+
+
+
+//107
+//迭代器可以用*解參考 dereference
+//string("abc");
+//if (s.begin() != s.end()) {//非空
+//	auto it = s.begin();//第一個字元
+//	*it = toupper(*it);   //首字轉大寫
+//}
+//
+//*iter 
+//iter->mem   //(*iter).mem
+//++iter
+//--
+//
+//但end 不代表任何元素  不能 ++ --
+
+//105-6 iterator 迭代器
+//auto b = v.begin(), e = v.end();//end 是最後一個位置的後面  off-the-end是不存在的元素 就是再往後移一格
+//兩個iter == 是代表的元素相同  或是同一個容器的off the end
+//!=
+//string vector 都有iterator
+
+
+//104   把輸入的分數依照十分一個等級分群  計算每個十分範圍的數量
+//vector<unsigned> grades;
+//// count the number of grades by clusters of ten:
+//// 0--9, 10--19, . . . 90--99, 100
+//unsigned scores[11] = {};  // 11 buckets, all value initialized to 0
+//unsigned grade;
+//while (cin >> grade) {
+//	if (grade <= 100)
+//		// increment the counter for the current cluster
+//		++scores[grade / 10];
+//	grades.push_back(grade);
+//}
+//cout << "grades.size = " << grades.size() << endl;
+//
+//for (auto g : grades)  // for every element in grades
+//cout << g << " ";
+//cout << endl;
+//
+//for (auto i : scores)       // for each counter in scores
+//cout << i << " ";       // print the value of that counter
+//cout << endl;
+
+
+//// vector 的 for 的 i 類型都用 decltype(v.size())
+//vector<char> v;
+//for (decltype(v.size()) index = 0; 	index != v.size() ; ++index)
+//	v[index] = toupper(v[index]); // capitalize the current character
+
+
+
+
+//102
+//vector<int> v{ 1,2,3,4,5 }
+//for (auto &i : v)
+//	i *= i;
+//for (auto &i : v)
+//	cout << i << endl;
+//
+//vector 也有 size(回傳 vector<CC>::size_type 類型 ) 和 empty是否空 方法
+//
+//vec 相等  就是內部元素和順序都相等
+//> < 就是字串用字典的概念去比美個元素   不然就每種型別的 > < 運算   不支援><就vec無法比較
+
+
+
+//101 
+//vector<int> v2;
+//for (int i = 0; i != 100; i++)
+//{
+//	v2.push_back(i)
+//}
+//
+//string word;
+//vector<string> text;
+//while (cin >> word) {
+//	text.push_back(word);
+//}
+
+
+//96-98 vector 就像 C# List
+//vector<int> ivec;
+//vector<Sales_item> vss;
+//vector<vector<string>> file;
+//
+//vector<int> ivec = ivec2;
+//vector<int> ivec(ivec2);//此二  copy另個vec
+//vector<string> ivec = { "a", "b", "c" };
+//vector<string> ivec{ "a", "b", "c" };//此二串列初始化
+//vector<int> ivec(10, -1);//10個-1
+//vector<string> ivec(10, "a");//10 個a
+//vector<int> ivec(10, -1);//10個-1
+//vector<string> ivec(10);//10 個預設值
+//
+//vector<string> ivec{ 10 };//10 個預設值   特殊用法   因為10不能給string  編譯器自己繞路設想
+
 
 
 //95
