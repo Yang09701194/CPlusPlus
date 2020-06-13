@@ -13,7 +13,9 @@ using std::vector;
 
 
 int main() {
-	
+
+
+
 
 	int pause;
 	cin >> pause;
@@ -38,6 +40,140 @@ int main() {
 //return 0;
 
 
+
+
+//124
+char* arr = str // error char指標不能用string初始化 
+//const char *str = s.c_str();  //SSok 回傳Ctyle字元字串的字元陣列的開頭
+
+//123
+//cat cpy  容納的陣列要夠裝 包含null結尾
+//strcpy(lsrgrStr, cal);
+//
+//要計算得很清楚
+//這些都叫C Style 字串  所以建議進量都使用string   更安全 更有效率
+
+
+
+//122
+//標準C程式庫  The Standard C Library 在C Style的字串上運算
+//傳入的變數  一定要null結尾  不然他會一直往後找到null為止
+//char c = { "C","A" };
+//cout << strlen(ca) << endl; //error
+//
+//strlen(p)
+//strcmp(p1, p2)
+//strcat(p1, p2)
+//strcpy(p1, p2)
+//
+//C Style字串的比對 > < 不是用字典  而是直接比對字串指標位置
+//	要用strcmp才可以字典比大小
+
+
+//121
+//int *p = &ia[2];
+//int j = p[1];
+
+//int k = p[-2];//指向p[0]
+
+
+//120
+//auto n = end(arr) - begin(arr); // 指標相減 型別是 ptrdiff_t  可負的有號
+//
+//也可以
+//int * b = arr, *e = arr + sz;//相當於指向off-the-end   長度10的arr  0+10剛好超過最後一個元素+1
+//while (b < e)
+//{
+//	++b;
+//}
+//
+//int ia[] = { 1, 2, 3, 4 };
+//int last = *(ia + 4); //相當於指向ia[4]
+//如果寫 *ia + 4 就是ia指向物件的值+4
+
+
+//119
+//int ia[] = { 1, 2 };
+//int *pbeg = begin(ia), *pend = end(ia);
+//while (pbeg != pend && *pbeg >= 0)//找出第一個負的元素
+//	++pbeg;//找下一個
+
+//int arr[] = { 1, 2 };
+//int *ip = arr;//arr[0]  
+//int *ip2 = ip +  4; //指向arr[4]
+
+
+//118
+//int arr[] = { 1, 2 };
+//int *p = arr;
+//++p;  //指到arr[1] 
+//
+//int *e = &arr[2]; //類似 off-the-end   不存在的元素
+//for (int *b = arr; *b < e; b++)
+//{
+//	cout << *b << endl; 
+//}
+
+//int ia[] = { 1, 2 };
+//int *beg = begin(ia); //陣列用這個
+//int *last = end(ia);
+
+
+
+
+
+
+//117
+//string nums[] = { "1", "2" };
+//string *p = &nums[0];
+//string *p2 = nums;//兩者同  都指向第0個元素  (一般口語是說第一個
+//decltype(nums) nu2 = { "5","6" };//decltype ok
+
+
+
+
+//116
+//陣列存取一樣用 arr[index]
+//index型別通常是size_t 是無號型別
+//一樣可以套用 range版 for
+
+
+
+//115
+//int *ptrs[10]; //十個對int的指標
+//int &refs[10] = ?; //沒有參考組的陣列
+//int (*Parray)[10] = &arr;//Parray指向  10 int arr
+//int (&arrRef)[10] = arr;//arrRef 參考  10 int arr
+//int *(&arry)[10] = ptrs;//arry是一個參考  指涉 10 int arr
+
+
+//114
+//int a[3] = { 0,1,2 };
+//int a2[] = { 0,1,2 };
+//int a[5] = { 0,1,2 }; //後面兩個初始  0 1 2 0 0
+//
+//string的字元陣列  特殊規則 都是以null結尾
+//
+//char a3[] = "abc"; //程式自動在後面加一個null終止符 terminator
+//char a3[3] = "abc"; //error  後面不夠放null
+
+
+
+
+
+
+//113  陣列  array
+//array尺寸要是const  可以用constexpr
+//
+//unsigned cc = 3;
+//constexpr unsigned sz = 3;
+//int arr[10];
+//int *arr[10];// 10個對int的指標組成的陣列
+//int arr[sz];
+//int arr[cc];//error
+//陣列中存的是物件  所以沒有參考組成的陣列
+
+
 //112
 ////binary search using iterator
 //auto beg = text.begin(), end = text.end();
@@ -60,6 +196,7 @@ int main() {
 //iter += n
 //iter -= n
 //> < <= >= 就想成目前在vector裡的位置比較  很直覺  數字index比大小而已
+// iter - iter 得到 位置差  型別是difference_type
 
 
 
