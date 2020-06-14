@@ -1,4 +1,4 @@
-// CppProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
+ï»¿// CppProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "pch.h"
@@ -20,11 +20,194 @@ int main() {
 	int pause;
 	cin >> pause;
 
+
 }
 
 
 
-//Á{®É¬İ¨ì  ³ºµMªì©l¦³¥]¦bifdef
+
+//128
+//
+//#include "Version_test.h"
+//
+//#include <iterator>
+//	using std::begin; using std::end;
+//
+//#include <vector>
+//	using std::vector;
+//#include <iostream>
+//	using std::cout; using std::endl;
+//
+//#include <cstddef>
+//	using std::size_t;
+//
+//	int main()
+//	{
+//		// array of size 3; each element is an array of 4 uninitailzed ints 
+//		int ia1[3][4];
+//
+//		// array of size 10; each element is a 20-element array 
+//		// whose elements are arrays of 30 ints
+//		int arr[10][20][30] = { 0 }; // initialize all elements to 0
+//
+//		// assigns the first element of arr to the last element 
+//		// in the last row of ia
+//		ia1[2][3] = arr[0][0][0];
+//
+//		// binds row to the second four-element array in ia 
+//		int(&row)[4] = ia1[1];
+//
+//		// three elements, each element is an array of size 4
+//		int ia2[3][4] = {
+//			{0, 1, 2, 3},   // initializers for the row indexed by 0
+//			{4, 5, 6, 7},   // initializers for the row indexed by 1
+//			{8, 9, 10, 11}  // initializers for the row indexed by 2
+//		};
+//
+//		// equivalent initialization without the optional 
+//		// nested braces for each row
+//		int ia3[3][4] = { 0,1,2,3,4,5,6,7,8,9,10,11 };
+//
+//		// explicitly initialize only element 0 in each row
+//		int ia4[3][4] = { { 0 }, { 4 }, { 8 } };
+//
+//		// explicitly initialize row 0; the remaining elements 
+//		// are value initialized
+//		int ix[3][4] = { 0, 3, 6, 9 };
+//
+//		// prints 9 0 0 
+//		cout << ix[0][3] << ' ' << ix[1][0] << ' ' << ix[2][0] << endl;
+//
+//#ifdef CONSTEXPR_VARS
+//		constexpr size_t rowCnt = 3, colCnt = 4;
+//#else
+//		const size_t rowCnt = 3, colCnt = 4;
+//#endif
+//		int ia[rowCnt][colCnt];   // 12 uninitialized elements 
+//		
+//		//!!!!!å¤šç¶­é™£åˆ—å¸¸ç”¨ å¤šå±¤è¿´åœˆè™•ç†
+//		
+//		// for each row
+//		for (size_t i = 0; i != rowCnt; ++i) {
+//			// for each column within the row
+//			for (size_t j = 0; j != colCnt; ++j) {
+//				// assign the element's positional index as its value
+//				ia[i][j] = i * colCnt + j;
+//			}
+//		}
+//
+//
+//		//!!!!!å°å…ƒç´ range for æ™‚  è¦æ”¹è®Šå…ƒç´ çš„å€¼  ç”¨åƒè€ƒ&
+//		//ä¸åŠ &  å°å…ƒç´ éæ­·çš„æ™‚å€™  éƒ½æœƒè¢«è½‰ç‚ºé™£åˆ—ç¬¬ä¸€å€‹å…ƒç´ çš„æŒ‡æ¨™
+//		
+//		// four ways to print the contents of ia
+//		// 1. using nested range for loops
+//		for (const auto &row : ia) // for every element in the outer array
+//			for (auto col : row)   // for every element in the inner array
+//				cout << col << endl; // print the element's value
+//		cout << ia[0][0] << ' ' << ia[2][3] << endl; // prints 0 11
+//
+
+
+////129
+//int ia[3][4];
+//int(*p)[4] = ia; æŒ‡å‘ç¬¬ä¸€å€‹å››intçš„é™£åˆ—
+//p = &ia[2];   æŒ‡å‘ç¬¬ä¸‰å€‹å››intçš„é™£åˆ—
+
+//åº•ä¸‹ ia + rowCnt å°±æ˜¯é€™å€‹æ„æ¶µ
+
+//							
+//		// 2. using pointers and a traditional for loop
+//		//    with pointer arithmetic to calculate the end pointers 
+//		for (auto p = ia; p != ia + rowCnt; ++p) {
+//			// q points to the first element of an array of four ints; 
+//			// that is, q points to an int
+//			for (auto q = *p; q != *p + colCnt; ++q)
+//				cout << *q << ' ';
+//			cout << endl;
+//		}
+//
+
+//p130   æ³¨æ„ begin end è£¡é¢æœ‰æ¥*
+
+//		// 3. using pointers and a traditional for loop
+//		//    with the library begin and end functions to manage the pointers
+//		for (auto p = begin(ia); p != end(ia); ++p) {
+//			// q points to the first element in an inner array
+//			for (auto q = begin(*p); q != end(*p); ++q)
+//				cout << *q << ' ';  // prints the int value to which q points
+//			cout << endl;
+//		}
+//
+//		// 4. using a type alias to declare the loop control variable
+//#ifdef TYPE_ALIAS_DECLS
+//		using int_array = int[4]; // new style type alias declaration 
+//#else
+//		typedef int int_array[4]; // equivalent typedef declaration
+//#endif
+//
+//		for (int_array *p = ia; p != ia + 3; ++p) {
+//			for (int *q = *p; q != *p + 4; ++q)
+//				cout << *q << ' ';
+//			cout << endl;
+//		}
+//
+//		// alternative way to assign positional index to elements 
+//		// in a two-dimensional array
+//		int alt_ia[rowCnt][colCnt]; // 12 uninitialized elements 
+//		size_t cnt = 0;
+//		for (auto &row : alt_ia)    // for every element in the outer array
+//			for (auto &col : row) { // for every element in the inner array
+//				col = cnt;          // give this element the next value
+//				++cnt;              // increment cnt
+//			}
+//		// now print the value of the array
+//		for (const auto &row : alt_ia) // for every element in the outer array
+//			for (auto col : row)     // for every element in the inner array
+//				cout << col << endl;
+//
+//		return 0;
+//	}
+//
+
+
+
+
+
+//127
+//ia[2][3] = arr[0][0][0];
+//int(&row)[4] = ia[1];  //row ç¹«çµè‡³  iaç¬¬äºŒå€‹å››å…ƒç´ çš„00é™£åˆ—
+
+
+//126
+//å¤šç¶­é™£åˆ—  æ˜¯é™£åˆ—æ‰€æ§‹æˆçš„é™£åˆ—
+//int ia[3][4];   å¤§å°3  æ¯å€‹å…ƒç´ éƒ½æ˜¯å¤§å°4çš„é™£åˆ—
+//int arr[10][20][30] = {0}; æ‰€æœ‰å…ƒç´ åˆå§‹ç‚º 0
+//äºŒç¶­å¯çœ‹ä½œ  arr[åˆ—][è¡Œ æ¬„]
+
+//int ia[3][4] = {
+//	{0,1,2,3},
+//	{4,1,2,3},
+//	{0,1,5,3},
+//};  //ok ç­‰åŒ
+//int ia[3][4] = {
+//	0,1,2,3,4,1,2,3,0,1,5,3
+//};
+//
+//
+//int ia[3][4] = {
+//	{0},
+//	{4},
+//	{5},//åˆå§‹æ¯åˆ—ç¬¬ä¸€è¡Œ  æ¯åˆ—å¾Œä¸‰å€‹éƒ½0
+//};
+//int ia[3][4] = {
+//	0,1,2,3 //åˆå§‹ç¬¬ä¸€åˆ—
+//};
+//
+
+
+//125
+//ç”¨é™£åˆ—åˆå§‹åŒ–vec  v(begin(temp), end(temp));
 //#ifdef LIST_INIT
 //vector<int> v{ 1,2,3,4,5,6,7,8,9 };
 //#else
@@ -39,25 +222,29 @@ int main() {
 //
 //return 0;
 
+//vector<int> v(arr + 1, arr + 4); //ç”¨arrçš„å­é›†
+
+//ä»–æ˜¯å»ºè­°   ä¸è¦ç”¨array æŒ‡æ¨™ å¤šç”¨vector iteratoræ¯”è¼ƒç¾ä»£å’Œé«˜éšçš„æ“ä½œ  æˆ‘æ˜¯è¦ºå¾—éƒ½OK
+
 
 
 
 //124
-char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ 
-//const char *str = s.c_str();  //SSok ¦^¶ÇCtyle¦r¤¸¦r¦êªº¦r¤¸°}¦Cªº¶}ÀY
+//char* arr = str // error charæŒ‡æ¨™ä¸èƒ½ç”¨stringåˆå§‹åŒ– 
+//const char *str = s.c_str();  //SSok å›å‚³Ctyleå­—å…ƒå­—ä¸²çš„å­—å…ƒé™£åˆ—çš„é–‹é ­
 
 //123
-//cat cpy  ®e¯Çªº°}¦C­n°÷¸Ë ¥]§tnullµ²§À
+//cat cpy  å®¹ç´çš„é™£åˆ—è¦å¤ è£ åŒ…å«nullçµå°¾
 //strcpy(lsrgrStr, cal);
 //
-//­n­pºâ±o«Ü²M·¡
-//³o¨Ç³£¥sC Style ¦r¦ê  ©Ò¥H«ØÄ³¶i¶q³£¨Ï¥Îstring   §ó¦w¥ş §ó¦³®Ä²v
+//è¦è¨ˆç®—å¾—å¾ˆæ¸…æ¥š
+//é€™äº›éƒ½å«C Style å­—ä¸²  æ‰€ä»¥å»ºè­°é€²é‡éƒ½ä½¿ç”¨string   æ›´å®‰å…¨ æ›´æœ‰æ•ˆç‡
 
 
 
 //122
-//¼Ğ·ÇCµ{¦¡®w  The Standard C Library ¦bC Styleªº¦r¦ê¤W¹Bºâ
-//¶Ç¤JªºÅÜ¼Æ  ¤@©w­nnullµ²§À  ¤£µM¥L·|¤@ª½©¹«á§ä¨ìnull¬°¤î
+//æ¨™æº–Cç¨‹å¼åº«  The Standard C Library åœ¨C Styleçš„å­—ä¸²ä¸Šé‹ç®—
+//å‚³å…¥çš„è®Šæ•¸  ä¸€å®šè¦nullçµå°¾  ä¸ç„¶ä»–æœƒä¸€ç›´å¾€å¾Œæ‰¾åˆ°nullç‚ºæ­¢
 //char c = { "C","A" };
 //cout << strlen(ca) << endl; //error
 //
@@ -66,56 +253,56 @@ char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ
 //strcat(p1, p2)
 //strcpy(p1, p2)
 //
-//C Style¦r¦êªº¤ñ¹ï > < ¤£¬O¥Î¦r¨å  ¦Ó¬Oª½±µ¤ñ¹ï¦r¦ê«ü¼Ğ¦ì¸m
-//	­n¥Îstrcmp¤~¥i¥H¦r¨å¤ñ¤j¤p
+//C Styleå­—ä¸²çš„æ¯”å° > < ä¸æ˜¯ç”¨å­—å…¸  è€Œæ˜¯ç›´æ¥æ¯”å°å­—ä¸²æŒ‡æ¨™ä½ç½®
+//	è¦ç”¨strcmpæ‰å¯ä»¥å­—å…¸æ¯”å¤§å°
 
 
 //121
 //int *p = &ia[2];
 //int j = p[1];
 
-//int k = p[-2];//«ü¦Vp[0]
+//int k = p[-2];//æŒ‡å‘p[0]
 
 
 //120
-//auto n = end(arr) - begin(arr); // «ü¼Ğ¬Û´î «¬§O¬O ptrdiff_t  ¥i­tªº¦³¸¹
+//auto n = end(arr) - begin(arr); // æŒ‡æ¨™ç›¸æ¸› å‹åˆ¥æ˜¯ ptrdiff_t  å¯è² çš„æœ‰è™Ÿ
 //
-//¤]¥i¥H
-//int * b = arr, *e = arr + sz;//¬Û·í©ó«ü¦Voff-the-end   ªø«×10ªºarr  0+10­è¦n¶W¹L³Ì«á¤@­Ó¤¸¯À+1
+//ä¹Ÿå¯ä»¥
+//int * b = arr, *e = arr + sz;//ç›¸ç•¶æ–¼æŒ‡å‘off-the-end   é•·åº¦10çš„arr  0+10å‰›å¥½è¶…éæœ€å¾Œä¸€å€‹å…ƒç´ +1
 //while (b < e)
 //{
 //	++b;
 //}
 //
 //int ia[] = { 1, 2, 3, 4 };
-//int last = *(ia + 4); //¬Û·í©ó«ü¦Via[4]
-//¦pªG¼g *ia + 4 ´N¬Oia«ü¦Vª«¥óªº­È+4
+//int last = *(ia + 4); //ç›¸ç•¶æ–¼æŒ‡å‘ia[4]
+//å¦‚æœå¯« *ia + 4 å°±æ˜¯iaæŒ‡å‘ç‰©ä»¶çš„å€¼+4
 
 
 //119
 //int ia[] = { 1, 2 };
 //int *pbeg = begin(ia), *pend = end(ia);
-//while (pbeg != pend && *pbeg >= 0)//§ä¥X²Ä¤@­Ó­tªº¤¸¯À
-//	++pbeg;//§ä¤U¤@­Ó
+//while (pbeg != pend && *pbeg >= 0)//æ‰¾å‡ºç¬¬ä¸€å€‹è² çš„å…ƒç´ 
+//	++pbeg;//æ‰¾ä¸‹ä¸€å€‹
 
 //int arr[] = { 1, 2 };
 //int *ip = arr;//arr[0]  
-//int *ip2 = ip +  4; //«ü¦Varr[4]
+//int *ip2 = ip +  4; //æŒ‡å‘arr[4]
 
 
 //118
 //int arr[] = { 1, 2 };
 //int *p = arr;
-//++p;  //«ü¨ìarr[1] 
+//++p;  //æŒ‡åˆ°arr[1] 
 //
-//int *e = &arr[2]; //Ãş¦ü off-the-end   ¤£¦s¦bªº¤¸¯À
+//int *e = &arr[2]; //é¡ä¼¼ off-the-end   ä¸å­˜åœ¨çš„å…ƒç´ 
 //for (int *b = arr; *b < e; b++)
 //{
 //	cout << *b << endl; 
 //}
 
 //int ia[] = { 1, 2 };
-//int *beg = begin(ia); //°}¦C¥Î³o­Ó
+//int *beg = begin(ia); //é™£åˆ—ç”¨é€™å€‹
 //int *last = end(ia);
 
 
@@ -126,52 +313,52 @@ char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ
 //117
 //string nums[] = { "1", "2" };
 //string *p = &nums[0];
-//string *p2 = nums;//¨âªÌ¦P  ³£«ü¦V²Ä0­Ó¤¸¯À  (¤@¯ë¤f»y¬O»¡²Ä¤@­Ó
+//string *p2 = nums;//å…©è€…åŒ  éƒ½æŒ‡å‘ç¬¬0å€‹å…ƒç´   (ä¸€èˆ¬å£èªæ˜¯èªªç¬¬ä¸€å€‹
 //decltype(nums) nu2 = { "5","6" };//decltype ok
 
 
 
 
 //116
-//°}¦C¦s¨ú¤@¼Ë¥Î arr[index]
-//index«¬§O³q±`¬Osize_t ¬OµL¸¹«¬§O
-//¤@¼Ë¥i¥H®M¥Î rangeª© for
+//é™£åˆ—å­˜å–ä¸€æ¨£ç”¨ arr[index]
+//indexå‹åˆ¥é€šå¸¸æ˜¯size_t æ˜¯ç„¡è™Ÿå‹åˆ¥
+//ä¸€æ¨£å¯ä»¥å¥—ç”¨ rangeç‰ˆ for
 
 
 
 //115
-//int *ptrs[10]; //¤Q­Ó¹ïintªº«ü¼Ğ
-//int &refs[10] = ?; //¨S¦³°Ñ¦Ò²Õªº°}¦C
-//int (*Parray)[10] = &arr;//Parray«ü¦V  10 int arr
-//int (&arrRef)[10] = arr;//arrRef °Ñ¦Ò  10 int arr
-//int *(&arry)[10] = ptrs;//arry¬O¤@­Ó°Ñ¦Ò  «ü¯A 10 int arr
+//int *ptrs[10]; //åå€‹å°intçš„æŒ‡æ¨™
+//int &refs[10] = ?; //æ²’æœ‰åƒè€ƒçµ„çš„é™£åˆ—
+//int (*Parray)[10] = &arr;//ParrayæŒ‡å‘  10 int arr
+//int (&arrRef)[10] = arr;//arrRef åƒè€ƒ  10 int arr
+//int *(&arry)[10] = ptrs;//arryæ˜¯ä¸€å€‹åƒè€ƒ  æŒ‡æ¶‰ 10 int arr
 
 
 //114
 //int a[3] = { 0,1,2 };
 //int a2[] = { 0,1,2 };
-//int a[5] = { 0,1,2 }; //«á­±¨â­Óªì©l  0 1 2 0 0
+//int a[5] = { 0,1,2 }; //å¾Œé¢å…©å€‹åˆå§‹  0 1 2 0 0
 //
-//stringªº¦r¤¸°}¦C  ¯S®í³W«h ³£¬O¥Hnullµ²§À
+//stringçš„å­—å…ƒé™£åˆ—  ç‰¹æ®Šè¦å‰‡ éƒ½æ˜¯ä»¥nullçµå°¾
 //
-//char a3[] = "abc"; //µ{¦¡¦Û°Ê¦b«á­±¥[¤@­Ónull²×¤î²Å terminator
-//char a3[3] = "abc"; //error  «á­±¤£°÷©ñnull
+//char a3[] = "abc"; //ç¨‹å¼è‡ªå‹•åœ¨å¾Œé¢åŠ ä¸€å€‹nullçµ‚æ­¢ç¬¦ terminator
+//char a3[3] = "abc"; //error  å¾Œé¢ä¸å¤ æ”¾null
 
 
 
 
 
 
-//113  °}¦C  array
-//array¤Ø¤o­n¬Oconst  ¥i¥H¥Îconstexpr
+//113  é™£åˆ—  array
+//arrayå°ºå¯¸è¦æ˜¯const  å¯ä»¥ç”¨constexpr
 //
 //unsigned cc = 3;
 //constexpr unsigned sz = 3;
 //int arr[10];
-//int *arr[10];// 10­Ó¹ïintªº«ü¼Ğ²Õ¦¨ªº°}¦C
+//int *arr[10];// 10å€‹å°intçš„æŒ‡æ¨™çµ„æˆçš„é™£åˆ—
 //int arr[sz];
 //int arr[cc];//error
-//°}¦C¤¤¦sªº¬Oª«¥ó  ©Ò¥H¨S¦³°Ñ¦Ò²Õ¦¨ªº°}¦C
+//é™£åˆ—ä¸­å­˜çš„æ˜¯ç‰©ä»¶  æ‰€ä»¥æ²’æœ‰åƒè€ƒçµ„æˆçš„é™£åˆ—
 
 
 //112
@@ -180,11 +367,11 @@ char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ
 //auto mid = text.begin() + (end - beg)/2;
 //while (mid != end && *mid != sought)
 //{
-//	if (sought < *mid)//©¹«e¥b§ä
+//	if (sought < *mid)//å¾€å‰åŠæ‰¾
 //		end = mid;
-//	else              //©¹«á¥b§ä
+//	else              //å¾€å¾ŒåŠæ‰¾
 //		beg = mid + 1;
-//	mid = beg + (end - beg) / 2;//·sªº¤¤ÂI
+//	mid = beg + (end - beg) / 2;//æ–°çš„ä¸­é»
 //}
 
 
@@ -195,13 +382,13 @@ char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ
 //iter - n
 //iter += n
 //iter -= n
-//> < <= >= ´N·Q¦¨¥Ø«e¦bvector¸Ìªº¦ì¸m¤ñ¸û  «Üª½Ä±  ¼Æ¦rindex¤ñ¤j¤p¦Ó¤w
-// iter - iter ±o¨ì ¦ì¸m®t  «¬§O¬Odifference_type
+//> < <= >= å°±æƒ³æˆç›®å‰åœ¨vectorè£¡çš„ä½ç½®æ¯”è¼ƒ  å¾ˆç›´è¦º  æ•¸å­—indexæ¯”å¤§å°è€Œå·²
+// iter - iter å¾—åˆ° ä½ç½®å·®  å‹åˆ¥æ˜¯difference_type
 
 
 
 //110
-//¦L¥X¨C¤@¦C  ª½¨ì¨º¦C¬OªÅ¥Õ
+//å°å‡ºæ¯ä¸€åˆ—  ç›´åˆ°é‚£åˆ—æ˜¯ç©ºç™½
 //// print each line in text up to the first blank line
 //for (auto it = text.cbegin();
 //	it != text.cend() && !(*it).empty(); ++it)
@@ -209,45 +396,45 @@ char* arr = str // error char«ü¼Ğ¤£¯à¥Îstringªì©l¤Æ
 //
 //// equivalent loop using arrow to dereference it and call empty
 //for (auto it = text.cbegin();
-//	it != text.cend() && !it->empty(); ++it)   ->¦P(* ).
+//	it != text.cend() && !it->empty(); ++it)   ->åŒ(* ).
 //	cout << *it << endl;
 
 
-//range ª© for ¸òC# foreach¤@¼Ë  ¶°¦XÅÜ¼Æ¤£¯à³QÅÜ°Ê¨Ò¦p¼W§R  ¤@ÅÜiter´N¥¢®Ä¤F
+//range ç‰ˆ for è·ŸC# foreachä¸€æ¨£  é›†åˆè®Šæ•¸ä¸èƒ½è¢«è®Šå‹•ä¾‹å¦‚å¢åˆª  ä¸€è®Šiterå°±å¤±æ•ˆäº†
 
 
 
 //109
 //vector<int> v;
 //const vector<int> v2;
-//auto it1 = v.begin(); //¹w³]¦^¶Çiter
-//auto it2 = v2.begin();//¹w³]¦^¶Çconst_iterator
-//auto it1c = v2.cbegin();//cbegin  cend©T©w¦^¶Çconst_iterator
+//auto it1 = v.begin(); //é è¨­å›å‚³iter
+//auto it2 = v2.begin();//é è¨­å›å‚³const_iterator
+//auto it1c = v2.cbegin();//cbegin  cendå›ºå®šå›å‚³const_iterator
 //
-//(*it).empty()   //(*it)­n¬A¸¹¥]°_¨Ó ¤£µM·|¥ıÀ³¥Î¨ìit¨­¤W ¿ù
+//(*it).empty()   //(*it)è¦æ‹¬è™ŸåŒ…èµ·ä¾† ä¸ç„¶æœƒå…ˆæ‡‰ç”¨åˆ°itèº«ä¸Š éŒ¯
 
 
 //108
 //for (auto it = s.begin(); it != s.end() && !isspace(*it); ++it)
 //{
-//	*it = toupper(*it);//¥şÂà¤j¼g
+//	*it = toupper(*it);//å…¨è½‰å¤§å¯«
 //}
 
-//iter«¬§O¦³  iterator  const_iterator
-vector<int>::iterator it;  //¥iÅª¼g  ¤£¯à¥Î¦bconstÃş«¬ªºvector  
-vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O±`¼Æ¤£¯à¼g  
-//¤]¥i¥H¥Î¦b«DconstÃş«¬vector ¤@¼Ë¦³°ßÅª®ÄªG
+//iterå‹åˆ¥æœ‰  iterator  const_iterator
+vector<int>::iterator it;  //å¯è®€å¯«  ä¸èƒ½ç”¨åœ¨consté¡å‹çš„vector  
+vector<int>::const_iterator it2; //å¯è®€ä¸èƒ½å¯«    ç”¨åœ¨consté¡å‹çš„vector  æœ¬èº«å°±æ˜¯å¸¸æ•¸ä¸èƒ½å¯«  
+//ä¹Ÿå¯ä»¥ç”¨åœ¨éconsté¡å‹vector ä¸€æ¨£æœ‰å”¯è®€æ•ˆæœ
 
 
 
 
 
 //107
-//­¡¥N¾¹¥i¥H¥Î*¸Ñ°Ñ¦Ò dereference
+//è¿­ä»£å™¨å¯ä»¥ç”¨*è§£åƒè€ƒ dereference
 //string("abc");
-//if (s.begin() != s.end()) {//«DªÅ
-//	auto it = s.begin();//²Ä¤@­Ó¦r¤¸
-//	*it = toupper(*it);   //­º¦rÂà¤j¼g
+//if (s.begin() != s.end()) {//éç©º
+//	auto it = s.begin();//ç¬¬ä¸€å€‹å­—å…ƒ
+//	*it = toupper(*it);   //é¦–å­—è½‰å¤§å¯«
 //}
 //
 //*iter 
@@ -255,16 +442,16 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //++iter
 //--
 //
-//¦ıend ¤£¥Nªí¥ô¦ó¤¸¯À  ¤£¯à ++ --
+//ä½†end ä¸ä»£è¡¨ä»»ä½•å…ƒç´   ä¸èƒ½ ++ --
 
-//105-6 iterator ­¡¥N¾¹
-//auto b = v.begin(), e = v.end();//end ¬O³Ì«á¤@­Ó¦ì¸mªº«á­±  off-the-end¬O¤£¦s¦bªº¤¸¯À ´N¬O¦A©¹«á²¾¤@®æ
-//¨â­Óiter == ¬O¥Nªíªº¤¸¯À¬Û¦P  ©Î¬O¦P¤@­Ó®e¾¹ªºoff the end
+//105-6 iterator è¿­ä»£å™¨
+//auto b = v.begin(), e = v.end();//end æ˜¯æœ€å¾Œä¸€å€‹ä½ç½®çš„å¾Œé¢  off-the-endæ˜¯ä¸å­˜åœ¨çš„å…ƒç´  å°±æ˜¯å†å¾€å¾Œç§»ä¸€æ ¼
+//å…©å€‹iter == æ˜¯ä»£è¡¨çš„å…ƒç´ ç›¸åŒ  æˆ–æ˜¯åŒä¸€å€‹å®¹å™¨çš„off the end
 //!=
-//string vector ³£¦³iterator
+//string vector éƒ½æœ‰iterator
 
 
-//104   §â¿é¤Jªº¤À¼Æ¨Ì·Ó¤Q¤À¤@­Óµ¥¯Å¤À¸s  ­pºâ¨C­Ó¤Q¤À½d³òªº¼Æ¶q
+//104   æŠŠè¼¸å…¥çš„åˆ†æ•¸ä¾ç…§ååˆ†ä¸€å€‹ç­‰ç´šåˆ†ç¾¤  è¨ˆç®—æ¯å€‹ååˆ†ç¯„åœçš„æ•¸é‡
 //vector<unsigned> grades;
 //// count the number of grades by clusters of ten:
 //// 0--9, 10--19, . . . 90--99, 100
@@ -287,7 +474,7 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //cout << endl;
 
 
-//// vector ªº for ªº i Ãş«¬³£¥Î decltype(v.size())
+//// vector çš„ for çš„ i é¡å‹éƒ½ç”¨ decltype(v.size())
 //vector<char> v;
 //for (decltype(v.size()) index = 0; 	index != v.size() ; ++index)
 //	v[index] = toupper(v[index]); // capitalize the current character
@@ -302,10 +489,10 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //for (auto &i : v)
 //	cout << i << endl;
 //
-//vector ¤]¦³ size(¦^¶Ç vector<CC>::size_type Ãş«¬ ) ©M empty¬O§_ªÅ ¤èªk
+//vector ä¹Ÿæœ‰ size(å›å‚³ vector<CC>::size_type é¡å‹ ) å’Œ emptyæ˜¯å¦ç©º æ–¹æ³•
 //
-//vec ¬Ûµ¥  ´N¬O¤º³¡¤¸¯À©M¶¶§Ç³£¬Ûµ¥
-//> < ´N¬O¦r¦ê¥Î¦r¨åªº·§©À¥h¤ñ¬ü­Ó¤¸¯À   ¤£µM´N¨CºØ«¬§Oªº > < ¹Bºâ   ¤£¤ä´©><´NvecµLªk¤ñ¸û
+//vec ç›¸ç­‰  å°±æ˜¯å…§éƒ¨å…ƒç´ å’Œé †åºéƒ½ç›¸ç­‰
+//> < å°±æ˜¯å­—ä¸²ç”¨å­—å…¸çš„æ¦‚å¿µå»æ¯”ç¾å€‹å…ƒç´    ä¸ç„¶å°±æ¯ç¨®å‹åˆ¥çš„ > < é‹ç®—   ä¸æ”¯æ´><å°±vecç„¡æ³•æ¯”è¼ƒ
 
 
 
@@ -323,21 +510,21 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //}
 
 
-//96-98 vector ´N¹³ C# List
+//96-98 vector å°±åƒ C# List
 //vector<int> ivec;
 //vector<Sales_item> vss;
 //vector<vector<string>> file;
 //
 //vector<int> ivec = ivec2;
-//vector<int> ivec(ivec2);//¦¹¤G  copy¥t­Óvec
+//vector<int> ivec(ivec2);//æ­¤äºŒ  copyå¦å€‹vec
 //vector<string> ivec = { "a", "b", "c" };
-//vector<string> ivec{ "a", "b", "c" };//¦¹¤G¦ê¦Cªì©l¤Æ
-//vector<int> ivec(10, -1);//10­Ó-1
-//vector<string> ivec(10, "a");//10 ­Óa
-//vector<int> ivec(10, -1);//10­Ó-1
-//vector<string> ivec(10);//10 ­Ó¹w³]­È
+//vector<string> ivec{ "a", "b", "c" };//æ­¤äºŒä¸²åˆ—åˆå§‹åŒ–
+//vector<int> ivec(10, -1);//10å€‹-1
+//vector<string> ivec(10, "a");//10 å€‹a
+//vector<int> ivec(10, -1);//10å€‹-1
+//vector<string> ivec(10);//10 å€‹é è¨­å€¼
 //
-//vector<string> ivec{ 10 };//10 ­Ó¹w³]­È   ¯S®í¥Îªk   ¦]¬°10¤£¯àµ¹string  ½sÄ¶¾¹¦Û¤vÂ¶¸ô³]·Q
+//vector<string> ivec{ 10 };//10 å€‹é è¨­å€¼   ç‰¹æ®Šç”¨æ³•   å› ç‚º10ä¸èƒ½çµ¦string  ç·¨è­¯å™¨è‡ªå·±ç¹è·¯è¨­æƒ³
 
 
 
@@ -383,18 +570,18 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 
 
 //93  
-//¤@­Ó°Ñ¦Ò¤£¹L´N¬Oµ¹¤@­Óª«¥ó¥t¤@­Ó¦WºÙ
-//­n§ïÅÜ¦r¤¸¸Ìªº­È  ­n¥Î°Ñ¦Ò
+//ä¸€å€‹åƒè€ƒä¸éå°±æ˜¯çµ¦ä¸€å€‹ç‰©ä»¶å¦ä¸€å€‹åç¨±
+//è¦æ”¹è®Šå­—å…ƒè£¡çš„å€¼  è¦ç”¨åƒè€ƒ
 //for (auto &c : str)  
-//	&c toupper(c); //¦Lstring ¸Ìªº¨C­Óchar
+//	&c toupper(c); //å°string è£¡çš„æ¯å€‹char
 
-//s[0]  ²Ä¤@­Ó¦r¤¸  ´N¤@¯ëarray·§©À
+//s[0]  ç¬¬ä¸€å€‹å­—å…ƒ  å°±ä¸€èˆ¬arrayæ¦‚å¿µ
 
 
 ////91
 //string str("abc");  
-//for (auto c : str)  ´N foreach
-//	cout << c << endl; //¦Lstring ¸Ìªº¨C­Óchar
+//for (auto c : str)  å°± foreach
+//	cout << c << endl; //å°string è£¡çš„æ¯å€‹char
 
 
 //string s("Hello World!!!");
@@ -424,34 +611,34 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 
 
 //90
-//C++ ®z
-//³ºµM¤£¯à string s = "a" + "b";
-//¯Â¦r¦ê¬Û¾F¬Û¥[´N¿ù  ¤@©w­n¦Ü¤Ö¤@Ãä¬O­Ó¦r¦êÅÜ¼Æ  ®t
+//C++ å¼±
+//ç«Ÿç„¶ä¸èƒ½ string s = "a" + "b";
+//ç´”å­—ä¸²ç›¸é„°ç›¸åŠ å°±éŒ¯  ä¸€å®šè¦è‡³å°‘ä¸€é‚Šæ˜¯å€‹å­—ä¸²è®Šæ•¸  å·®
 
 
 ////89
-//µu¦r¦ê¤p©óªø¦r¦ê
-//¦r¤¸¥i¥H¸ò¦r¦ê¬Û¥[
+//çŸ­å­—ä¸²å°æ–¼é•·å­—ä¸²
+//å­—å…ƒå¯ä»¥è·Ÿå­—ä¸²ç›¸åŠ 
 //string s3 = s1 + "," + s2 + '\n';
 
 
 //88
 
 //86
-//¦r¦ê¾Ş§@
-//getline(istream, s)  Åª¤@¦æ    ¹J¨ìnewline°±
-//s.empty()   ¬O§_ªÅ
-//s.size() ªø«×   ¦^¶Ç­È¬O string::size_type  ¬O¤@­Óunsign¯S©Ê¥B¥i­p¼Æ¥ô¦ó¦r¦êªø«×ªº«¬§O  ¥i¥Îauto ©Îdecltype¨Ó±µ¥´¦r¤ñ¸û¤Ö
+//å­—ä¸²æ“ä½œ
+//getline(istream, s)  è®€ä¸€è¡Œ    é‡åˆ°newlineåœ
+//s.empty()   æ˜¯å¦ç©º
+//s.size() é•·åº¦   å›å‚³å€¼æ˜¯ string::size_type  æ˜¯ä¸€å€‹unsignç‰¹æ€§ä¸”å¯è¨ˆæ•¸ä»»ä½•å­—ä¸²é•·åº¦çš„å‹åˆ¥  å¯ç”¨auto æˆ–decltypeä¾†æ¥æ‰“å­—æ¯”è¼ƒå°‘
 //s[i]
 
-//string > < ¥Î¦r¨å§Ç
+//string > < ç”¨å­—å…¸åº
 
 
 //cout << "a" << endl;
-//cout << "b" << endl;//´«¦æ
+//cout << "b" << endl;//æ›è¡Œ
 //
 //
-//Åª¥¼ª¾¼Æ¥Ø¦r¦ê  ª½¨ìeof ©ÎµL®Ä¿é¤J
+//è®€æœªçŸ¥æ•¸ç›®å­—ä¸²  ç›´åˆ°eof æˆ–ç„¡æ•ˆè¼¸å…¥
 //while (cin >> word)
 //{
 //	cout << word << endl;
@@ -465,36 +652,36 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 
 //84
 //string s1;
-//string s2 = s1;//ªÅ¦r¦ê
+//string s2 = s1;//ç©ºå­—ä¸²
 //string s3 = "abc";
-//string s4(10, 'c'); // 10­Óc
+//string s4(10, 'c'); // 10å€‹c
 //string s6("afg");
 //string s6(s3);
 //
-//string ¥i¥Î¦b cin cout
+//string å¯ç”¨åœ¨ cin cout
 
 
 
 
 ////p82
-//string ªø«×¥iÅÜªº¤@­Ó¦r¤¸§Ç¦C
-//vector ªø«×¥iÅÜªºª«¥ó§Ç¦C
+//string é•·åº¦å¯è®Šçš„ä¸€å€‹å­—å…ƒåºåˆ—
+//vector é•·åº¦å¯è®Šçš„ç‰©ä»¶åºåˆ—
 
-////º¡¸Ø±iªº  »¡ªº©MC#¤£¦P  ³ºµM«ØÄ³¤@­Ó­Ó¤Ş¤J  C#¼g¨º»ò¤[´Nª¾¹D®Ú¥»¨S¥²­n   ¦h¤@°ïÃB¥~ªº¶O¤u  ´X¤d¦æªºµ{¦¡½X¥i¯à­n¥[­Ó´X¦Ê¦æ ·PÄ±¦³ÂI¤£smart
+////æ»¿èª‡å¼µçš„  èªªçš„å’ŒC#ä¸åŒ  ç«Ÿç„¶å»ºè­°ä¸€å€‹å€‹å¼•å…¥  C#å¯«é‚£éº¼ä¹…å°±çŸ¥é“æ ¹æœ¬æ²’å¿…è¦   å¤šä¸€å †é¡å¤–çš„è²»å·¥  å¹¾åƒè¡Œçš„ç¨‹å¼ç¢¼å¯èƒ½è¦åŠ å€‹å¹¾ç™¾è¡Œ æ„Ÿè¦ºæœ‰é»ä¸smart
 //using std::cin;
 //using std::cout;
 //using std::endl;
 
-//¹³§Ú³£«ÜÁo©ú  ª½±µ¥Îusing namespace
+//åƒæˆ‘éƒ½å¾ˆè°æ˜  ç›´æ¥ç”¨using namespace
 
-//¤S»¡  hÀÉ¤£¸Ó¥]§tusing  ¦]¬°h·|³Q¤Ş¥Î   ®e©ö¸ò¨ä¥L¦L¤Jªºµ{¦¡ªºusing½Ä¬ğ
+//åˆèªª  hæª”ä¸è©²åŒ…å«using  å› ç‚ºhæœƒè¢«å¼•ç”¨   å®¹æ˜“è·Ÿå…¶ä»–å°å…¥çš„ç¨‹å¼çš„usingè¡çª
 
 
 
 ////p77
-//¤@­Óheader¤£¯à³Q¤Ş¤J¦h¦¸  ©Ò¥H¥i¥H¥Îpreprocessor(«e¸m³B²z¾¹)  ¨Ó°µ¨ì¦w¥ş¤Ş¤J
+//ä¸€å€‹headerä¸èƒ½è¢«å¼•å…¥å¤šæ¬¡  æ‰€ä»¥å¯ä»¥ç”¨preprocessor(å‰ç½®è™•ç†å™¨)  ä¾†åšåˆ°å®‰å…¨å¼•å…¥
 //
-//_H´N¬OÂIh «e­±¦PÀÉ¦W     ³o´N¥sheader guard  ³£¤j¼g
+//_Hå°±æ˜¯é»h å‰é¢åŒæª”å     é€™å°±å«header guard  éƒ½å¤§å¯«
 //#ifndef PCH_H
 //#define PCH_H
 //
@@ -502,29 +689,29 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //
 //#endif //PCH_H
 
-//#include ¦b preprocessor³B²z·|´À¥N¦¨¨º­Ó¼ĞÀYÀÉªº¤º®e  ¬Û·í©ó¨Ö¶i¨Ó
+//#include åœ¨ preprocessorè™•ç†æœƒæ›¿ä»£æˆé‚£å€‹æ¨™é ­æª”çš„å…§å®¹  ç›¸ç•¶æ–¼ä½µé€²ä¾†
 
 //p76
-//³æÀÉ¤¤¥u¯à¦³¤@­ÓÃş§O©w¸q   ¦h­ÓÀÉ®×  ¨CÀÉªºÃş§O©w¸q»İ¬Û¦P
-//©w¸q¦b¼ĞÀY´N¥i¤Ş¥Î¦@¥Î   hÀÉ¦WºÙ ¸òÃş§O¦WºÙ²ßºD¬Û¦P
+//å–®æª”ä¸­åªèƒ½æœ‰ä¸€å€‹é¡åˆ¥å®šç¾©   å¤šå€‹æª”æ¡ˆ  æ¯æª”çš„é¡åˆ¥å®šç¾©éœ€ç›¸åŒ
+//å®šç¾©åœ¨æ¨™é ­å°±å¯å¼•ç”¨å…±ç”¨   hæª”åç¨± è·Ÿé¡åˆ¥åç¨±ç¿’æ…£ç›¸åŒ
 
 
 //p75  main
-////Sales_data  ¦pªG©w¸q¦b¦P­ÓÀÉ®×  ­n©ñ¦bmain«e­±
-////©Ò¥H¼g¦bhÀÉ  ÁÙ¯uªº¥i¥H
+////Sales_data  å¦‚æœå®šç¾©åœ¨åŒå€‹æª”æ¡ˆ  è¦æ”¾åœ¨mainå‰é¢
+////æ‰€ä»¥å¯«åœ¨hæª”  é‚„çœŸçš„å¯ä»¥
 //Sales_data d1, d2;
 //double price = 0;
 //cin >> d1.bookNo >> d1.units_sold >> price;
 //d1.revenue = d1.units_sold * price;
-////d2¦P²z
+////d2åŒç†
 //
 //int pause;
 //cin >> pause;
 
 
 ////p71
-////±aÂù¬A¸¹ªºdecltype¥Ã»·¬O °Ñ¦Ò«¬§O
-//decltype((i)) d; // d¬O int&¥B­n³Qªì©l¤Æ
+////å¸¶é›™æ‹¬è™Ÿçš„decltypeæ°¸é æ˜¯ åƒè€ƒå‹åˆ¥
+//decltype((i)) d; // dæ˜¯ int&ä¸”è¦è¢«åˆå§‹åŒ–
 
 //p70
 //int main()
@@ -547,90 +734,90 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //}
 //
 
-//decltype  Â^¨ú«¬§O  ¤£¨ú­È
+//decltype  æ“·å–å‹åˆ¥  ä¸å–å€¼
 //decltype(f()) sum = 3;
 
 
 //p69
-//auto §Ú¬İ´N¬O C#ªºvar
+//auto æˆ‘çœ‹å°±æ˜¯ C#çš„var
 //int i = 0;
 //const int ci = i, &crr = i;
 //auto &g = ci;  
-//auto &h = 42; //  ¤£¥i°Ñ¦Ò  ¨ì  °ò¥»«¬§O + ¥i·í±`¼Æ«¬§O   ( ¦r­±­È  p66
-//const auto &j = 42;// const °Ñ¦Ò ¥iÃ´¸`¦Ü   ¦r­±­È
+//auto &h = 42; //  ä¸å¯åƒè€ƒ  åˆ°  åŸºæœ¬å‹åˆ¥ + å¯ç•¶å¸¸æ•¸å‹åˆ¥   ( å­—é¢å€¼  p66
+//const auto &j = 42;// const åƒè€ƒ å¯ç¹«ç¯€è‡³   å­—é¢å€¼
 
 //p67
 //// type alias
-//typedef double wages;//wages¬Odoubleªº¦P¸qµü
-//typedef wages base, *p;//base ¬Odouble "     p¬Odouble*ªº¦P¸qµü
+//typedef double wages;//wagesæ˜¯doubleçš„åŒç¾©è©
+//typedef wages base, *p;//base æ˜¯double "     pæ˜¯double*çš„åŒç¾©è©
 //typedef double wages;
 //
-////alias declaration  Ãş§O§O¦W
+////alias declaration  é¡åˆ¥åˆ¥å
 //using SI = Sales_item;
 //
-//typedef char *pstring; // pstring¬Ochar*«ü¼Ğ
-//const pstring cstr = 0; // char *  «ü¦Vcharªº ±`¼Æ«ü¼Ğ
-//const pstring *ps; // «ü¦Vchar* ªº «ü¼Ğ
+//typedef char *pstring; // pstringæ˜¯char*æŒ‡æ¨™
+//const pstring cstr = 0; // char *  æŒ‡å‘charçš„ å¸¸æ•¸æŒ‡æ¨™
+//const pstring *ps; // æŒ‡å‘char* çš„ æŒ‡æ¨™
 
 //p66
-//±`¼Æ¹Bºâ¦¡  ¥Î¦b¸ó¦n´X¼h©I¥sªº­ÈÅçÃÒ¨Ó·½¬O±`¼Æ
+//å¸¸æ•¸é‹ç®—å¼  ç”¨åœ¨è·¨å¥½å¹¾å±¤å‘¼å«çš„å€¼é©—è­‰ä¾†æºæ˜¯å¸¸æ•¸
 //constexpr int mf = 20;
-//constexpr int mf = size();//¦³¥i¯à¤£¬O  ¥i³z¹L¦¹¼gªkÀË¬d
+//constexpr int mf = size();//æœ‰å¯èƒ½ä¸æ˜¯  å¯é€éæ­¤å¯«æ³•æª¢æŸ¥
 
 
 ////p63
-//const«ü¼Ğ  ¥X¬Oµe«á  «ü¦Vªº¦ì§}¤£¯àÅÜ
+//constæŒ‡æ¨™  å‡ºæ˜¯ç•«å¾Œ  æŒ‡å‘çš„ä½å€ä¸èƒ½è®Š
 //int a = 0;
-//int *const c = &a;//¥Ã»·«ü¦Va
+//int *const c = &a;//æ°¸é æŒ‡å‘a
 //const int a = 0;
-//const int *const c = &a;//¸ò¤W­±ªº®t²§¬O ­n«ü¦Vconstª«¥ó ³Ì«e­±´N­n¥[¤Wconst   ¤U­±aªº­È¤£¯àÅÜ ¤W­±¥iÅÜ
+//const int *const c = &a;//è·Ÿä¸Šé¢çš„å·®ç•°æ˜¯ è¦æŒ‡å‘constç‰©ä»¶ æœ€å‰é¢å°±è¦åŠ ä¸Šconst   ä¸‹é¢açš„å€¼ä¸èƒ½è®Š ä¸Šé¢å¯è®Š
 
 
 
 //p62
-//°Ñ¦Ò
+//åƒè€ƒ
 //int i = 2;
 //int &r = i;
-//const int &r2 = i;//r2¬Oconst°Ñ¦Ò ¤£¯à®³¨Ó§ïÅÜ i  ¦ır¥i¥H  ¤]¦]¬°i«Dcnost
-//r1 = 0;//iÅÜ0
+//const int &r2 = i;//r2æ˜¯conståƒè€ƒ ä¸èƒ½æ‹¿ä¾†æ”¹è®Š i  ä½†rå¯ä»¥  ä¹Ÿå› ç‚ºiécnost
+//r1 = 0;//iè®Š0
 //r2 = 0;//error
 
-//«ü¼Ğ
+//æŒ‡æ¨™
 //const int i = 2;
-//int *r = &i; // error «Dconst
+//int *r = &i; // error éconst
 //const int *r2 = &i;//ok 
-//*r2 = 0;//error const¤£¥iÅÜ
+//*r2 = 0;//error constä¸å¯è®Š
 
 
 //p61
-//°Ñ¦Òªº¦æ¶^ ­n©M «ü¦Vªºª«¥ó«¬§O¬Û¦P ¦³¨â¨Ò¥~
-//1. ¯à¥Î¥i³QÂà´«¬°¸Ó°Ñ¦Ò«¬§O ªº¥ô¦ó¹Bºâ¦¡¨Óªì©l¹ïconstªº°Ñ¦Ò
-//2. const¥i¥H«ü¦V«Dconst   ¤Ï¤§¤£¦æ
+//åƒè€ƒçš„è¡Œè·Œ è¦å’Œ æŒ‡å‘çš„ç‰©ä»¶å‹åˆ¥ç›¸åŒ æœ‰å…©ä¾‹å¤–
+//1. èƒ½ç”¨å¯è¢«è½‰æ›ç‚ºè©²åƒè€ƒå‹åˆ¥ çš„ä»»ä½•é‹ç®—å¼ä¾†åˆå§‹å°constçš„åƒè€ƒ
+//2. constå¯ä»¥æŒ‡å‘éconst   åä¹‹ä¸è¡Œ
 //int = 42;
 //const int &r1 = i;
 //double d = 3.14
 //const int &r = d;
-//°Ñ¦Ò¦p¤W   «ü¼Ğ¥ç¦P
+//åƒè€ƒå¦‚ä¸Š   æŒ‡æ¨™äº¦åŒ
 
 //p60
-//constªº§@¥Î½d³ò¬O³æ­ÓÀÉ®×
-//©Ò¥H¦h­ÓÀÉ®×³£­n¥Î¨ì  ¨C­ÓÀÉ³£­n¼gdefinition
+//constçš„ä½œç”¨ç¯„åœæ˜¯å–®å€‹æª”æ¡ˆ
+//æ‰€ä»¥å¤šå€‹æª”æ¡ˆéƒ½è¦ç”¨åˆ°  æ¯å€‹æª”éƒ½è¦å¯«definition
 //
-//¦pªG­n¤@ÀÉ©w¸q¦hÀÉ¯à°Ñ·Ó¦@¥Î
+//å¦‚æœè¦ä¸€æª”å®šç¾©å¤šæª”èƒ½åƒç…§å…±ç”¨
 //.h
-//extern const int bufSize;  //externªí¤£¬O°Ï°ìÅÜ¼Æ ¦Ó¬O¨ä¥LÀÉ®×¥i¬İ¨£
+//extern const int bufSize;  //externè¡¨ä¸æ˜¯å€åŸŸè®Šæ•¸ è€Œæ˜¯å…¶ä»–æª”æ¡ˆå¯çœ‹è¦‹
 //.cc
 //extern const int bufSize = fcn();
 
 
 
 ////p59
-//const µLªkÅÜ§óªºÅÜ¼Æ    ¤@©w­nªì©lµ¹­È
-//const int i = getVal() ©Î 42;
+//const ç„¡æ³•è®Šæ›´çš„è®Šæ•¸    ä¸€å®šè¦åˆå§‹çµ¦å€¼
+//const int i = getVal() æˆ– 42;
 
 
 
-//p58   «ü¼Ğ**  dereference¤]¬O**
+//p58   æŒ‡æ¨™**  dereferenceä¹Ÿæ˜¯**
 //int ival = 1024;
 //int *pi = &ival;   // pi points to an int
 //int **ppi = &pi;   // ppi points to a pointer to an int
@@ -651,19 +838,19 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //return 0;
 
 //int i = 42;
-//int *p;// p¬O¹ïintªº¤@­Ó«ü¼Ğ
-//int *&r = p;//r¬O¹ï«ü¼Ğpªº¤@­Ó°Ñ¦Ò   &r ¥i¥H¬İ¦¨´N¬Or  ªº·N«ä  °Ñ¦Ò½á­È®É¼g&r  ¤§«á¾Ş§@³£¬O¥Îr  
-////©Ò¥HÃş¦ü int *r = p ¤]´N¬Or´N¬Op
-//r = &i;// r = p = &i >> p = iªº¦ì§}
-//*r = 0;// r = p = iªº¦ì§}  ªº*¨ú­È = 0  >> i = 0;
+//int *p;// pæ˜¯å°intçš„ä¸€å€‹æŒ‡æ¨™
+//int *&r = p;//ræ˜¯å°æŒ‡æ¨™pçš„ä¸€å€‹åƒè€ƒ   &r å¯ä»¥çœ‹æˆå°±æ˜¯r  çš„æ„æ€  åƒè€ƒè³¦å€¼æ™‚å¯«&r  ä¹‹å¾Œæ“ä½œéƒ½æ˜¯ç”¨r  
+////æ‰€ä»¥é¡ä¼¼ int *r = p ä¹Ÿå°±æ˜¯rå°±æ˜¯p
+//r = &i;// r = p = &i >> p = içš„ä½å€
+//*r = 0;// r = p = içš„ä½å€  çš„*å–å€¼ = 0  >> i = 0;
 
 
 
 //p57 
-//int* p, p2  //p«ü¼Ğ p2¥u¬Oint    *¤£·|¦Û°Ê®M¥Î  ¤À¶}¬İ
+//int* p, p2  //pæŒ‡æ¨™ p2åªæ˜¯int    *ä¸æœƒè‡ªå‹•å¥—ç”¨  åˆ†é–‹çœ‹
 
 //p56
-//void* ¥i©ñ¥ô¦óÃş«¬«ü¼Ğ  ¦ı«¬§O¥¼ª¾ ©Ò¥H¯à°µªº¨Æ«Ü¤Ö
+//void* å¯æ”¾ä»»ä½•é¡å‹æŒ‡æ¨™  ä½†å‹åˆ¥æœªçŸ¥ æ‰€ä»¥èƒ½åšçš„äº‹å¾ˆå°‘
 
 
 
@@ -671,19 +858,19 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //int v = 12;
 //int *pi = 0;
 //int *pi2 = &v;
-//if(pi) // 0«ü¼Ğ false
-//if(pi2)// «D0«ü¼Ğ true
-//«ü¼Ğ¥i¥Î == ¤ñ¸û
+//if(pi) // 0æŒ‡æ¨™ false
+//if(pi2)// é0æŒ‡æ¨™ true
+//æŒ‡æ¨™å¯ç”¨ == æ¯”è¼ƒ
 
 
 ////p53
 //int ival = 3;
-//int *p = &ival;   ¥kÃä¦ì§}  ¶Çµ¹¥ªÃä«ü¼Ğ
-//cout << *p;   ³o¸Ì*p´N¬O¨ú­È¤F
-//*p = 123; //= ival½á­È
-// p = 0; Åı«ü¼ĞÅÜ¦¨null«ü¼Ğ   ¨S¦³«ü¦V¥ô¦óª«¥ó
+//int *p = &ival;   å³é‚Šä½å€  å‚³çµ¦å·¦é‚ŠæŒ‡æ¨™
+//cout << *p;   é€™è£¡*på°±æ˜¯å–å€¼äº†
+//*p = 123; //= ivalè³¦å€¼
+// p = 0; è®“æŒ‡æ¨™è®ŠæˆnullæŒ‡æ¨™   æ²’æœ‰æŒ‡å‘ä»»ä½•ç‰©ä»¶
 
-// int *p1 = nullptr; //ªÅ­È«ü¼Ğ  ¨S¦³«ü¦V¥ô¦óª« = int *p = 0;
+// int *p1 = nullptr; //ç©ºå€¼æŒ‡æ¨™  æ²’æœ‰æŒ‡å‘ä»»ä½•ç‰© = int *p = 0;
 
 
 //p52   
@@ -691,17 +878,17 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //int *p = &v;
 
 
-//p51»¡¤£¯à©w¸q°Ñ¦Òªº°Ñ¦Ò   ¦]¬°°Ñ¦Ò¤£¬Oª«¥ó  ¥L­Ì¨S¦³¦ì§}
-//¦ı13§Ù¦n¹³¦³ Âù* pointer?
-//°Ñ¦Ò¤£¯à«ü¦V¯Â¶qªº«¬§O­È   ¨Ò¦p¦r¦ê¼Æ¦r
-//«ü¼Ğªº«¬§O­n¹ïÀ³«ü¦Vª«¥óªº«¬§O
-//p51    &¤]¥i¥Î¦b«Å§i   ¨ú§¹&¦³ÂIÃş¦ü¨ú±oª«¥óªº§O¦W  ¥i¥H¦b¹ï¥Lget set µ¥¦P¹ï­ì¥»ªº­È¾Ş§@
+//p51èªªä¸èƒ½å®šç¾©åƒè€ƒçš„åƒè€ƒ   å› ç‚ºåƒè€ƒä¸æ˜¯ç‰©ä»¶  ä»–å€‘æ²’æœ‰ä½å€
+//ä½†13æˆ’å¥½åƒæœ‰ é›™* pointer?
+//åƒè€ƒä¸èƒ½æŒ‡å‘ç´”é‡çš„å‹åˆ¥å€¼   ä¾‹å¦‚å­—ä¸²æ•¸å­—
+//æŒ‡æ¨™çš„å‹åˆ¥è¦å°æ‡‰æŒ‡å‘ç‰©ä»¶çš„å‹åˆ¥
+//p51    &ä¹Ÿå¯ç”¨åœ¨å®£å‘Š   å–å®Œ&æœ‰é»é¡ä¼¼å–å¾—ç‰©ä»¶çš„åˆ¥å  å¯ä»¥åœ¨å°ä»–get set ç­‰åŒå°åŸæœ¬çš„å€¼æ“ä½œ
 //int i = 1024, i2 = 2;
 //int &r = i, r2 = i2;
 
 //p50
 //int ival = 1024;
-//int &refVal = ival;    int & ª½±µ·Qµ{¬O§O¦W
+//int &refVal = ival;    int & ç›´æ¥æƒ³ç¨‹æ˜¯åˆ¥å
 //refVal = 2;// = ival = 2
 //int ii = refVal;
 
@@ -743,7 +930,7 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 
 //unsigned i = 1;
 //cout << --i << endl;    0
-//cout << --i << endl;    «Ü¤jªº¼Æ¦r
+//cout << --i << endl;    å¾ˆå¤§çš„æ•¸å­—
 //cout << --i << endl;
 //cin >> i;
 //cout << i;
@@ -751,59 +938,59 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //cin >> i;
 
 
-//¤Q¤T§Ù
+//åä¸‰æˆ’
 //
-//int *p = (int*)malloc(100000000);//°t¸m°O¾ĞÅé  ¤u§@ºŞ²z­û¯à¬İ¨ìÃz¼W
+//int *p = (int*)malloc(100000000);//é…ç½®è¨˜æ†¶é«”  å·¥ä½œç®¡ç†å“¡èƒ½çœ‹åˆ°çˆ†å¢
 //
 //int i;
 //cin >> i;
 //
-//free(p);//ÄÀ©ñ   ¤u§@ºŞ  ÅÜ¶W§C  ¥ß¨è¤Ï¬M
+//free(p);//é‡‹æ”¾   å·¥ä½œç®¡  è®Šè¶…ä½  ç«‹åˆ»åæ˜ 
 //cin >> i;
 //
 
 
 
-//§Ù3
+//æˆ’3
 ////http://www.cplusplus.com/reference/cstdio/fgets/
 ////fgets
 ////char * fgets(char * str, int num, FILE * stream);
 ////Get string from stream
 ////
-////char *name;   /* name ©|¥¼«ü¦V¦³®ÄªºªÅ¶¡ */
+////char *name;   /* name å°šæœªæŒ‡å‘æœ‰æ•ˆçš„ç©ºé–“ */
 ////printf("Your name, please: ");
-////fgets(name, 20, stdin);   /* ±z½T©w­n¼g¤Jªº¨º¶ôªÅ¶¡¦Xªk¶Ü??? */
+////fgets(name, 20, stdin);   /* æ‚¨ç¢ºå®šè¦å¯«å…¥çš„é‚£å¡Šç©ºé–“åˆæ³•å—??? */
 ////printf("Hello, %s\n", name);
 //
 
-//³o¬O¦]¬° gets ¨ç¦¡µLªkª¾¹D¦r¤¸°}¦Cªº¤j¤p¡A¦Ó¬O¨Ì¿à´«¦æ²Å¸¹©Î EOF ¤~·|µ²§ô¿é¤J¡A¦]¦¹¦³¥i¯à¤Şµo½w½Ä°Ï·¸¦ìªº¦w¥ş°İÃD¡A¦³¿³½ì¥i¥H°Ñ¦Ò¡qWhy is the gets function so dangerous that it should not be used ? ¡r¡C
+//é€™æ˜¯å› ç‚º gets å‡½å¼ç„¡æ³•çŸ¥é“å­—å…ƒé™£åˆ—çš„å¤§å°ï¼Œè€Œæ˜¯ä¾è³´æ›è¡Œç¬¦è™Ÿæˆ– EOF æ‰æœƒçµæŸè¼¸å…¥ï¼Œå› æ­¤æœ‰å¯èƒ½å¼•ç™¼ç·©è¡å€æº¢ä½çš„å®‰å…¨å•é¡Œï¼Œæœ‰èˆˆè¶£å¯ä»¥åƒè€ƒã€ˆWhy is the gets function so dangerous that it should not be used ? ã€‰ã€‚
 //
-//±q C11 ¤§«á¡Agets ¤w¸g¤£¦A¬O¼Ğ·Ç¨ç¦¡¤§¤@¡A§A¥i¥H¨Ï¥Î fgets ¨Ó¨ú¥N get¡A¨Ï¥Î®É¥²¶·«ü©w¦r¤¸°}¦C¡B¤j¤p¥H¤Î stdin¡G
+//å¾ C11 ä¹‹å¾Œï¼Œgets å·²ç¶“ä¸å†æ˜¯æ¨™æº–å‡½å¼ä¹‹ä¸€ï¼Œä½ å¯ä»¥ä½¿ç”¨ fgets ä¾†å–ä»£ getï¼Œä½¿ç”¨æ™‚å¿…é ˆæŒ‡å®šå­—å…ƒé™£åˆ—ã€å¤§å°ä»¥åŠ stdinï¼š
 //
 //char str[20];
 //
-//puts("½Ğ¿é¤J¦r¦ê¡G");
+//puts("è«‹è¼¸å…¥å­—ä¸²ï¼š");
 //gets(str);
 //
-//puts("¿é¤Jªº¦r¦ê¬°¡G");
+//puts("è¼¸å…¥çš„å­—ä¸²ç‚ºï¼š");
 //puts(str);
 //
 //return 0;
 
-//§Ù6
+//æˆ’6
 //int *p = (int*)malloc(sizeof(int));
 //free(p);
 //p = NULL;
 //free(p);
 //
-//C++11«á·s¼W´¼¯à«ü¼Ğ(smart pointer) : unique_ptr
-//·íunique_ptr©Ò«üª«¥ó®ø¥¢®É¡A·|¦Û°ÊÄÀ©ñ¨ä°O¾ĞÅé¡A¤£»İ­ndelete¡C
+//C++11å¾Œæ–°å¢æ™ºèƒ½æŒ‡æ¨™(smart pointer) : unique_ptr
+//ç•¶unique_ptræ‰€æŒ‡ç‰©ä»¶æ¶ˆå¤±æ™‚ï¼Œæœƒè‡ªå‹•é‡‹æ”¾å…¶è¨˜æ†¶é«”ï¼Œä¸éœ€è¦deleteã€‚
 //
-//¨Ò¡G
-//#include <memory>    // §tunique_ptrªº¼ĞÀYÀÉ
+//ä¾‹ï¼š
+//#include <memory>    // å«unique_ptrçš„æ¨™é ­æª”
 //std::unique_ptr<int> p1(new int(5));
 //
-//§Ù10
+//æˆ’10
 //C :
 //int *array = (int*)malloc(10000000 * sizeof(int));
 //
@@ -811,28 +998,28 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //std::vector<int> v;
 //v.resize(10000000);
 //
-//»¡©ú¡G«ØÄ³±N¨Ï¥ÎªÅ¶¡¸û¤jªºÅÜ¼Æ¥Îmalloc / new°t¸m¦b heap ¤W¡A¥Ñ©ó¦¹®É stack
-//¤W¥u»İ°t¸m¤@­Ó int* ªºªÅ¶¡«ü¨ì¦bheapªº¸ÓÅÜ¼Æ¡A¥iÁ×§K stack overflow¡C
+//èªªæ˜ï¼šå»ºè­°å°‡ä½¿ç”¨ç©ºé–“è¼ƒå¤§çš„è®Šæ•¸ç”¨malloc / newé…ç½®åœ¨ heap ä¸Šï¼Œç”±æ–¼æ­¤æ™‚ stack
+//ä¸Šåªéœ€é…ç½®ä¸€å€‹ int* çš„ç©ºé–“æŒ‡åˆ°åœ¨heapçš„è©²è®Šæ•¸ï¼Œå¯é¿å… stack overflowã€‚
 //
-//¨Ï¥Î heap ®É¡AÁöµM¾ã­Ó process ¥i¥ÎªºªÅ¶¡¬O¦³­­ªº¡A¦ı±Ä¥Î°ÊºA§ì¨ú
-//ªº¤è¦¡¡Anew µLªk°t¸m®É·|¥á¥X std::bad_alloc ¨Ò¥~¡Amalloc µLªk°t¸m
-//®É·|¦^¶Ç null(µù2)¡A¤£·|¼vÅT¨ì¥¿±`¨Ï¥Î¤Uªºµ{¦¡¥\¯à
+//ä½¿ç”¨ heap æ™‚ï¼Œé›–ç„¶æ•´å€‹ process å¯ç”¨çš„ç©ºé–“æ˜¯æœ‰é™çš„ï¼Œä½†æ¡ç”¨å‹•æ…‹æŠ“å–
+//çš„æ–¹å¼ï¼Œnew ç„¡æ³•é…ç½®æ™‚æœƒä¸Ÿå‡º std::bad_alloc ä¾‹å¤–ï¼Œmalloc ç„¡æ³•é…ç½®
+//æ™‚æœƒå›å‚³ null(è¨»2)ï¼Œä¸æœƒå½±éŸ¿åˆ°æ­£å¸¸ä½¿ç”¨ä¸‹çš„ç¨‹å¼åŠŸèƒ½
 
 //
-//& * ¥Îªk   &¨ú¦ì§}  *¨ú­È   *«Å§i®É¥Nªí«ü¼Ğ
+//& * ç”¨æ³•   &å–ä½å€  *å–å€¼   *å®£å‘Šæ™‚ä»£è¡¨æŒ‡æ¨™
 //int num1 = 2, num2 = 3;
-//int *pi_1, *pi_2;  //«Å§i«ü¦V¾ã¼Æªº«ü¼ĞÅÜ¼Æ
-//pi_1 = &num1;  //¥Î«ü¼Ğpi_1«ü¦Vnum1ªº¦ì¸m
+//int *pi_1, *pi_2;  //å®£å‘ŠæŒ‡å‘æ•´æ•¸çš„æŒ‡æ¨™è®Šæ•¸
+//pi_1 = &num1;  //ç”¨æŒ‡æ¨™pi_1æŒ‡å‘num1çš„ä½ç½®
 //printf("pi_1 = %d\r\n", *pi_1); //pi=2
-//pi_2 = &num2;//¥Î«ü¼Ğpi_2«ü¦Vnum2ªº¦ì¸m
+//pi_2 = &num2;//ç”¨æŒ‡æ¨™pi_2æŒ‡å‘num2çš„ä½ç½®
 //printf("pi_2 = %d\r\n", *pi_2); //pi=2
 
 
-//§Ù13
-//¨ç¦¡¤º new ¥X¨ÓªºªÅ¶¡°O±o­nÅı¥Dµ{¦¡ªº«ü¼Ğ±µ¦í
+//æˆ’13
+//å‡½å¼å…§ new å‡ºä¾†çš„ç©ºé–“è¨˜å¾—è¦è®“ä¸»ç¨‹å¼çš„æŒ‡æ¨™æ¥ä½
 //
 //
-//¹ï«ü¼Ğ¤£¼ô±xªº¨Ï¥ÎªÌ·|¥H¬°¥H¤Uªºµ{¦¡½X¬O²Å¦X¹w´Áªº
+//å°æŒ‡æ¨™ä¸ç†Ÿæ‚‰çš„ä½¿ç”¨è€…æœƒä»¥ç‚ºä»¥ä¸‹çš„ç¨‹å¼ç¢¼æ˜¯ç¬¦åˆé æœŸçš„
 //
 //
 //void newArray(int* local, int size) {
@@ -845,35 +1032,35 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //}
 //
 //
-//±µµÛ´N·|§ä¤F«Ü¤[ªº bug¡A³Ì«á¤´µM·d¤£À´¬°¤°»ò ptr ¨S¦³«ü¦V­è­è®³¨ìªº¦XªkªÅ¶¡
+//æ¥è‘—å°±æœƒæ‰¾äº†å¾ˆä¹…çš„ bugï¼Œæœ€å¾Œä»ç„¶æä¸æ‡‚ç‚ºä»€éº¼ ptr æ²’æœ‰æŒ‡å‘å‰›å‰›æ‹¿åˆ°çš„åˆæ³•ç©ºé–“
 //
 //
-//Åı§Ú­Ì¦A¦^ÅU¤@¦¸¡A¨Ã¥B¥Î¹Ïªí¥Ü(·PÁÂHazukashiineªO¤Í´£¨Ñ¹Ï¸Ñ)
+//è®“æˆ‘å€‘å†å›é¡§ä¸€æ¬¡ï¼Œä¸¦ä¸”ç”¨åœ–è¡¨ç¤º(æ„Ÿè¬Hazukashiineæ¿å‹æä¾›åœ–è§£)
 //
-//¢z¢w¢w¢w¢w¢{      ¢z¢w¢w¢w¢w¢{      ¢z¢w¢w¢w¢w¢{      ¢z¢w¢w¢w¢w¢{
-//Heap   ¢x        ¢x      ¢x        ¢x      ¢x ·s°t¸m ¢x      ¢x ¤wªnº| ¢x
-//¢x        ¢x      ¢x        ¢x      ¢x ªºªÅ¶¡ ¡Õ¢w¢{  ¢x ªºªÅ¶¡ ¢x
-//¢x        ¢x      ¢x        ¢x      ¢x(allocd)¢x  ¢x  ¢x(leaked)¢x
-//¢x        ¢x      ¢x        ¢x      ¢u¢w¢w¢w¢w¢t  ¢x  ¢u¢w¢w¢w¢w¢t
-//¢x        ¢x      ¢x        ¢x      ¢x   ¡G   ¢x  ¢x  ¢x        ¢x
-//¢x        ¢x      ¢x        ¢x      ¢x   ¡G   ¢x  ¢x  ¢x   ¡G   ¢x
-//¢x        ¢x      ¢u¢w¢w¢w¢w¢t      ¢u¢w¢w¢w¢w¢t  ¢x  ¢x   ¡G   ¢x
-//¢x        ¢x      ¢x local  ¢u¢w¢{  ¢x local  ¢u¢w¢}  ¢x        ¢x
-//¢u¢w¢w¢w¢w¢t      ¢u¢w¢w¢w¢w¢t  ¢x  ¢u¢w¢w¢w¢w¢t      ¢u¢w¢w¢w¢w¢t
-//Stack  ¢x  ptr   ¢u¢w¢{  ¢x  ptr   ¢u¢w¢t  ¢x  ptr   ¢u¢w¢{  ¢x  ptr   ¢u¢w¢{
-//¢|¢w¢w¢w¢w¢}  ùí  ¢|¢w¢w¢w¢w¢}  ùí  ¢|¢w¢w¢w¢w¢}  ùí  ¢|¢w¢w¢w¢w¢}  ùí
+//â”Œâ”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”      â”Œâ”€â”€â”€â”€â”
+//Heap   â”‚        â”‚      â”‚        â”‚      â”‚ æ–°é…ç½® â”‚      â”‚ å·²æ³„æ¼ â”‚
+//â”‚        â”‚      â”‚        â”‚      â”‚ çš„ç©ºé–“ ï¼œâ”€â”  â”‚ çš„ç©ºé–“ â”‚
+//â”‚        â”‚      â”‚        â”‚      â”‚(allocd)â”‚  â”‚  â”‚(leaked)â”‚
+//â”‚        â”‚      â”‚        â”‚      â”œâ”€â”€â”€â”€â”¤  â”‚  â”œâ”€â”€â”€â”€â”¤
+//â”‚        â”‚      â”‚        â”‚      â”‚   ï¼š   â”‚  â”‚  â”‚        â”‚
+//â”‚        â”‚      â”‚        â”‚      â”‚   ï¼š   â”‚  â”‚  â”‚   ï¼š   â”‚
+//â”‚        â”‚      â”œâ”€â”€â”€â”€â”¤      â”œâ”€â”€â”€â”€â”¤  â”‚  â”‚   ï¼š   â”‚
+//â”‚        â”‚      â”‚ local  â”œâ”€â”  â”‚ local  â”œâ”€â”˜  â”‚        â”‚
+//â”œâ”€â”€â”€â”€â”¤      â”œâ”€â”€â”€â”€â”¤  â”‚  â”œâ”€â”€â”€â”€â”¤      â”œâ”€â”€â”€â”€â”¤
+//Stack  â”‚  ptr   â”œâ”€â”  â”‚  ptr   â”œâ”€â”¤  â”‚  ptr   â”œâ”€â”  â”‚  ptr   â”œâ”€â”
+//â””â”€â”€â”€â”€â”˜  â•§  â””â”€â”€â”€â”€â”˜  â•§  â””â”€â”€â”€â”€â”˜  â•§  â””â”€â”€â”€â”€â”˜  â•§
 //
 //
-//¥¼ªì©l¤Æ          ¨ç¦¡©I¥s          °t¸mªÅ¶¡          ¨ç¦¡ªğ¦^
+//æœªåˆå§‹åŒ–          å‡½å¼å‘¼å«          é…ç½®ç©ºé–“          å‡½å¼è¿”å›
 //int *ptr;       local = ptr;    local = malloc();
 //
 //
-//¥Î¹Ï¬İÀ³¸Ó¤@¤Á´N³£©ú¥Õ¤F¡A§Ú¤]¤£»İ¤¾¨¥¸ÑÄÀ
+//ç”¨åœ–çœ‹æ‡‰è©²ä¸€åˆ‡å°±éƒ½æ˜ç™½äº†ï¼Œæˆ‘ä¹Ÿä¸éœ€å†—è¨€è§£é‡‹
 //
 //
-//¤]³\¦³¤H·|·Q°İ¡A«ü¼Ğ¤£¬O¶Ç§}¶Ü¡H
+//ä¹Ÿè¨±æœ‰äººæœƒæƒ³å•ï¼ŒæŒ‡æ¨™ä¸æ˜¯å‚³å€å—ï¼Ÿ
 //
-//ºë½T¨ÓÁ¿¡A«ü¼Ğ¤]¬O¶Ç­È¡A¥u¤£¹L¸Ó­È¬O¤@­Ó¦ì§}(ex: 0xfefefefe)
+//ç²¾ç¢ºä¾†è¬›ï¼ŒæŒ‡æ¨™ä¹Ÿæ˜¯å‚³å€¼ï¼Œåªä¸éè©²å€¼æ˜¯ä¸€å€‹ä½å€(ex: 0xfefefefe)
 
 
 
@@ -901,10 +1088,10 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //}
 
 
-//§Ù5
+//æˆ’5
 //char *getstr(char *name)
 //{
-//	char buf[30] = "hello, "; /*±N¦r¦ê±`¼Æ"hello, "ªº¤º®e½Æ»s¨ìbuf°}¦C*/
+//	char buf[30] = "hello, "; /*å°‡å­—ä¸²å¸¸æ•¸"hello, "çš„å…§å®¹è¤‡è£½åˆ°bufé™£åˆ—*/
 //	strcat(buf, name);
 //	return buf;
 //}
@@ -930,7 +1117,7 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 //}
 //
 //
-//#include <string>    /* ¨Ã«D #include <cstring> */
+//#include <string>    /* ä¸¦é #include <cstring> */
 //using std::string;
 //
 //string getstr(string const &name)
@@ -983,14 +1170,14 @@ vector<int>::const_iterator it2; //¥iÅª¤£¯à¼g    ¥Î¦bconstÃş«¬ªºvector  ¥»¨­´N¬O
 
 
 //p15
-//cin  ¤@ª½Åª¨ìµ²§À©Î¿ù»~«D¼Æ¦r    ªGµM§Ö  ¨ì³oÃä¥´³o¬qµ{¦¡ªº¼ô½m«×©M¥´¦r³t«×  ¤w¸g¸òC#®t¤£¦h¤F
+//cin  ä¸€ç›´è®€åˆ°çµå°¾æˆ–éŒ¯èª¤éæ•¸å­—    æœç„¶å¿«  åˆ°é€™é‚Šæ‰“é€™æ®µç¨‹å¼çš„ç†Ÿç·´åº¦å’Œæ‰“å­—é€Ÿåº¦  å·²ç¶“è·ŸC#å·®ä¸å¤šäº†
 //
 //int value = 0;
 //cout << "c" << endl;
 //
-//while (std::cin >> value)    Ctrl Z ¯uªº¬O eof
+//while (std::cin >> value)    Ctrl Z çœŸçš„æ˜¯ eof
 //{
-//	cout << "c" << endl;    ³oÃä©Ç  ¤£·|¶i¨Ó  
+//	cout << "c" << endl;    é€™é‚Šæ€ª  ä¸æœƒé€²ä¾†  
 //}
 //
 //return 0;
