@@ -18,21 +18,115 @@ int main() {
 
 
 	int pause;
-	cin >> pause;
+																																			cin >> pause;
 
 
 }
 
-////152
-//grade < 60要括起來  不然60會直接被cout吃了  
+
+
+//165  舊式強制轉型
+早期版本的C++
+type(expr);
+(type)expr;
+
+//強制轉型會干擾正常的型別檢查  所以建議能避則避  看能循一般正常途徑做到
+
+
+
+
+//163 強制轉型
+//static_cast   除了const轉非const  合理的都可用
+//int i, j;
+//double slope = i / j;
+////轉成double運算
+//double slope = static_cast<double>(j) / i;
 //
-//cout << grade < 60 ? "Fail" : "PASS" << endl; 
+//static_cast常用在大型別轉小型別  不加的話  編譯器會給警告訊息  加就不會 等於告訴編譯器  不在乎精度損失
+
+//double d;
+//void* p = &d;//d先暫存在void*
+//double*dp = static_cast<double*>(p);
+//
+
+
+//const_cast   const轉非const
+//const char *pc;
+//char *p = const_cast<char*>(pc);
+
+//reinterpret_cast   是對位元模式低階的重新解讀
+//int * ip;
+//char *pc = reinterpret_cast<char*>(ip);
+//但由於pc到底只到哪個東西 不知道  所以這種用法很危險
+
+
+
+
+
+//158
+//隱含的轉換 implicit conversions
+//算術型別會盡量保留精確度
+//所以 int ival = 3.541 + 3
+//右邊會先都轉成double  算完再轉成int給左邊
+//
+//這裡有一些 兩個型別擺在一起   要怎麼同化成哪個型別例如小的轉大的  有需要再回來查
+
+
+//157
+//sizeof 回傳一個 運算式 或 型別 的大小   結果是一個size_t
+//sizeof (type)
+//sizeof expr
+//
+//Sales_data data, *p;
+//sizeof(Sales_data); // size required to hold an object of type Sales_data 
+//sizeof data; // size of data's type, i.e., sizeof(Sales_data)
+//sizeof p;    // size of a pointer
+//sizeof *p;   // size of the type to which p points, i.e., sizeof(Sales_data)
+//sizeof data.revenue; // size of the type of Sales_data's revenue member 
+//#ifdef SIZEOF_MEMBER
+//sizeof Sales_data::revenue; // alternative way to get the size of revenue
+//#else
+//sizeof Sales_data().revenue; // use an object
+//#endif
+//
+//sizeof char 1
+//sizeof 參考型別  物件大小
+//sizeof 指標 大小
+//sizeof 解參考  物件大小
+//sizeof 陣列  元素sizeof * 數量
+//sizeof string vector 只有固定部分大小  不是真的多大
+//
+//> arr幾個元素
+//constexpr size_t = sizeof(ia) / sizeof(*ia);
+//int arr2[sz];
+
+
+
+//156
+//優先序
+//cout << 42 + 10;
+//cout << (42 < 10);
+
+//155
+//unsigned long quiz1 = 0;
+//auto u27 = 1UL << 27;
+//quiz1 |= 1UL << 27;
+//quiz1 &= ~(1UL << 27;
+//
+//quiz1 & (1UL << 27;
+
 
 //154
 //兩數一個1一個0 為true   其他false
 
 //位元運算相關
-//! & | ^(XOR)
+//! & | ^(XOR)  ~(NOT)
+
+
+////152
+//grade < 60要括起來  不然60會直接被cout吃了  
+//
+//cout << grade < 60 ? "Fail" : "PASS" << endl; 
 
 
 
