@@ -27,6 +27,51 @@ int main() {
 
 
 
+//205
+//一般變數在區塊結束後被摧毀
+//但宣告成static就可以持續保存
+//
+//size_t count_calls()
+//{
+//	static size_t ctr = 0;  // value will persist across calls
+//	return ++ctr;
+//}
+//
+//int main()
+//{
+//	for (size_t i = 0; i != 10; ++i)
+//		cout << count_calls() << endl;
+//	return 0;
+//}
+//
+//函式名稱要在使用前宣告
+//同變數  只能定義一次  可多次宣告
+//宣告跟C# interface像  只要簽名  不用主體 要加分號  可不用參數名稱
+
+
+
+//204
+//void f1(){}
+//void f1(void){}//同上 表無參  C風格
+//
+//回傳型別  不能是 陣列/函數    但可為指標
+//pointers to functions 函式指標 6.3.3
+
+
+
+//202
+//// factorial of val is val * (val - 1) *  (val - 2) . . . * ((val -  (val - 1)) * 1)
+//int fact(int val)
+//{
+//	int ret = 1; // local variable to hold the result as we calculate it
+//	while (val > 1)
+//		ret *= val--;  // assign ret * val to ret and decrement val
+//	return ret;        // return the result
+//}
+
+
+
+
 //196  197
 
 //錯誤一直往上往外傳  都沒有被適當的catch到
