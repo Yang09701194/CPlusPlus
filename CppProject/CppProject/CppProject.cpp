@@ -17,11 +17,150 @@ int main() {
 
 
 
+
 	int pause;
-																																			cin >> pause;
+	cin>> pause;																																cin >> pause;
 
 
 }
+
+
+
+
+//196  197
+
+//錯誤一直往上往外傳  都沒有被適當的catch到
+//就會轉移到一個叫 terminate 的函式    是系統決定要做什麼後續行為
+//
+//exception 
+//runtime_error
+//range_error
+//overflow_error
+//underflow_error
+//logic_error
+//domain_error
+//invalid_argument
+//length_error
+//out_of_range
+//
+//
+//exception bad_alloc bad_cast   只能用預設初始化   無法提供自訂初始器 initializer
+//其他exception可以用字串初始化 但無法預設初始化
+//
+//
+//what回傳 const char* 指向一個 C-Style字元字串
+
+
+////194
+//if(xxx)
+//	throw runtime_error("err msg");
+//
+//try
+//{
+//
+//}
+//catch (const std::exception&)//這 intellisence 自己產的  沒看過  炫
+//{
+//
+//}
+//
+//try  書的
+//{
+//	//....
+//	throw runtime_error("err");
+//}
+//catch (runtime_error err)//這 intellisence 自己產的  沒看過  炫
+//{
+//	cout << err.what() << endl; 
+//}
+//catch (runtime_error err)//這 intellisence 自己產的  沒看過  炫
+//{
+//	cout << err.what() << endl; 
+//}
+//
+
+
+//192
+//goto somelabel;
+//
+//
+//somelabel: reutrn;
+//
+//兩者要在同個函式內
+
+//190  跳躍述句
+//break continue goto reutrn
+
+//189
+//do whlie
+
+
+
+//188
+//range for   如果要改變元素值  要用參考型別
+//vector<int> v = { 0,1,2 };
+//for (auto &r : v)
+//	r *= 2;
+//
+//等同
+//
+//for (auto beg = v.begin(), end = v.end(); beg != end; ++beg)
+//{
+//	auto &r = *beg;
+//	r * = 2;
+//}
+
+//但記得range for裡的 集合大小不能被改變  一遍iterator就無效了  所以不能增刪 push_back
+
+//https://www.geeksforgeeks.org/difference-between-stdremove-and-vectorerase-for-vectors/
+//vector erase  好像比較花時間  每次刪都回全部一動一次
+//vector remove  好像比較省時間   全部刪完才移動
+
+
+
+//187
+//vector<int>::iterator beg = v.begin();
+//for (; beg != v.end() && *beg >= 0; ++beg)
+//	;
+//for (int i = 0;  ; ++i)
+
+//vector<int> v;
+//for (int i = 0; cin >> i; )
+//	v.push_back(i);
+
+
+
+
+//186
+//
+//vector<int> v;
+//for (decltype(v.size()) index = 0; index != v.size() && !isspace(s[index]); ++index)
+//{
+//	s[index] = toupper(s[index]);
+//}
+
+//for (decltype(v.size()) index = 0, sz = v.size(); index != sz; ++index)
+//{
+
+
+
+
+//182
+//switch 的 case  可以用大括號包住區塊  裡面宣告的變數含初始話就比較獨立
+//沒有用大括號  有定義變數的話   跳過case能讀到變數宣告 但部會初始化
+//case 'A':
+//	{
+//	string str = "a";
+//	//...
+//	}
+//case 'B'
+//	{
+//	string str = 'test';
+//	//...
+//	}
+//
+//可以同行 case 'a': case 'b': case 'c'
+//也可以 case 'a', 'b', 'c'
 
 
 
