@@ -23,13 +23,76 @@ int main() {
 
 
 
+
 }
 
 
 
-//219
 
 
+
+//227
+//return 0;  表示成功  其他大多都表失敗
+//
+//還有  EXIT_FAILURE   EXIT_SUCCESS  可用
+
+//226
+//除了之前ref的寫法  回傳多個值 也可以用例如vector
+//vector<string> process()
+
+
+
+//f &getval(string &str, string::size_type ix)
+//{
+//	return str[ix];
+//}
+//int main() {
+//	string s = "s";
+//	cout << s << endl;
+//	getval(x, 0) = 'a';  //改變s[0]的值
+//	cout << s << endl; 
+//}
+
+
+
+//225
+//不要回傳  區域變數的參考  因為離開之後就被值摧毀了
+
+
+
+//222
+//Ellipsis
+//有點像是
+//void f(pList, ...)
+//void f(...)
+//
+//是為了和C的varargs互動  只限定用於 C 與 C
+
+
+//221
+//220
+//數量不一定的引數  initializer_list  型別相同    型別不同用 variadic template 16.4
+//initializer_list<T> ls;
+//initializer_list<T> ls{a,b,c};
+//ls(ls2)
+//ls = ls2
+//ls.size()
+//ls.begin()
+//ls.end()
+
+//用法同vector
+
+//ls({"a", strb, strc})
+
+
+////219
+//main 傳參數  a b -c -d e
+//可以 int main(int argc, char *argv[])
+//可以 int main(int argc, char **argv)   表 argv指向 char*
+//
+//argc 是參數個數 5
+//argv 就是參數值陣列
+//argv[0] = "a" ...類推
 
 
 //218
