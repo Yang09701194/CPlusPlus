@@ -22,9 +22,158 @@ int main() {
 	cin>> pause;																																cin >> pause;
 
 
+
 }
 
 
+
+//219
+
+
+
+
+//218
+//多維陣列  會作為指標傳入  指向1st元素   因為多維arr是arr的arr   所以1st元素會是一個arr 所以用arr pointer
+//void print(int(*arr)[10]/*10 int arr*/, int rowSize/*第二維度的大小*/)   //不可寫int *arr[10] 是10個指標的陣列   
+//等同
+//void print(int[][10]/*10 int arr*/, int rowSize/*第二維度的大小*/)   //不可寫int *arr[10] 是10個指標的陣列   
+
+
+
+//217
+//如果不需要對陣列寫入  就用const指標參數
+//要寫入 就用普通參數
+
+//陣列參考參數
+//void print(int(&arr)[10])   // 10 int 組成的陣列的參考      不可寫 &arr[10]  是由參考組成的陣列
+//{
+//	for (auto ele : arr) {
+//		cout << ele << endl;
+//	}
+//}
+//但這邊 明確寫10 真的就只能傳剛好10個元素的陣列進來
+
+
+//陣列參考  怎麼知道結尾位置
+//C Style字串  可以靠null結尾判斷
+//
+//或者起訖
+//void print(const int * beg, const int * end)  //前面有講過怎麼取beg end 
+//{
+//	while (beg != end)
+//	{
+//		cout << *beg++ << endl; 
+//	}
+//}
+//
+//或者起 大小
+//void print(const int ia[], size_t size)  //前面有講過怎麼取beg end 
+//{
+//	while (beg != end)
+//	{
+//		cout << *beg++ << endl; 
+//	}
+//}
+
+
+
+
+
+
+//215  傳陣列就是用  傳參考
+//void print(const int *)
+//void print(const int[])
+//void print(const int[10])//三者同  都是const int *
+
+
+////213
+//void f(const int i)
+//void f(int i)// error 重複  等同上
+//
+//可以用非const 初始low level const 但反過來不行   所以int參數  不能傳 const int進去
+//
+//固定值的參數進量明確寫int  會讓叫用者更清楚
+//
+//直接要傳字串進去 f("a")  要用const string &s
+
+
+//212
+//top level const  也就是   變數本身是const
+//const int c = 1; //就是 top level const
+//拷貝引述會忽略頂層const
+//func(const int i) >>   傳 int   const int 都可
+//i 可讀不可寫
+//
+//
+//211 參考 > 可避免拷貝超大物件  或無法拷貝的物件  這裡是說 參考  不是說 指標喔!!!
+//
+//string很長 >
+//bool isshorter(const string &s1, const string &s2)
+//
+//要回傳多個值  這裡介紹  出乎意料  不是用class屬性紀錄  不是dynamic 不是tuple 不是陣列  
+//而是多個參考參數  參數修改完等同回傳值  就是 C#  ref 參數 的作用
+
+
+//210
+//對參考進行的運算  是在參考指涉的物件上進行的  
+//和下面相比
+//void reset(int &i) {
+//	i = 0;//改變外部傳入引數參考繫結的值
+//}
+//
+//int i = 42;
+//reset(i)   直接丟
+//cout << i << endl;  // i 是 0 但位址不變
+
+
+
+//209  很直覺
+//int n = 0, i = 42;
+//int *p = &n, *q = &i;
+//*p = 42;   p沒變
+//p = q;
+//
+//
+//void reset(int *ip) {
+//	*ip = 0;//改變外部傳入引數指標指向的值
+//	ip = 0;//不會改變外部傳入的引數的位址  改變內部 如區域變數
+//}
+//
+//int i = 42;
+//reset(&i)
+//cout << i << endl;  // i 是 0 但位址不變
+
+
+//208
+//函是式數 parameters
+//參數是 參考  pass by reference , call by reference   參考 之前講過  就是  繫結物件的  別名
+//  參考會繫結至bound to初始化他的物件
+//否則  非參考型別 就是  拷貝值        value                     value
+
+//指標 跟非參考一樣   是copy指標值    拷貝後就是兩個不同的東西了
+
+
+
+
+
+//206
+//同變數  函數  在標頭檔h宣告  在源碼檔cpp 定義  就declaration definition
+//也可寫在cpp  合法  但可能多個宣告 要改要改多個  放在h只要改一個
+//h include
+
+//if fact函式寫在 fact.cc  宣告在 ch6.h   main在 factMain.cc
+//編譯指令如這裡前面都有$表cmd  
+
+//編譯整個程式產生可執行檔
+//CC factMain.cc fact.cc #產生factMain.exe or a.out
+//CC factMain.cc fact.cc -o main #產生main or main.exe  
+//  # obj Windows   o Linux
+
+//   假設只改一個檔  編譯單個檔案
+//CC -c factMain.cc #產生factMain.o
+//CC -c fact.cc #產生fact.o
+//CC factMain.o fact.o #產生factMain.exe or a.out
+//CC factMain.o fact.o -o main #產生main or main.exe  
 
 
 //205
@@ -44,9 +193,6 @@ int main() {
 //	return 0;
 //}
 //
-//函式名稱要在使用前宣告
-//同變數  只能定義一次  可多次宣告
-//宣告跟C# interface像  只要簽名  不用主體 要加分號  可不用參數名稱
 
 
 
