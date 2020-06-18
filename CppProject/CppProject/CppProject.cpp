@@ -28,6 +28,73 @@ int main() {
 
 
 
+//233
+//const string &shorten(const string &s1, const string &s2)
+////{....}
+//可以用
+//
+//string &shorten(string &s1, string &s2)
+//{
+//	auto &r = shorten(const_cast<const string&>(s1), const_cast<const string&>(s2))
+//		return const_cast<string&>(r);  //用const_cast轉成const 以匹配const版shorten宣告
+//}
+
+
+//232
+//參數有無const是一樣的 對傳入到函式的物件沒有效果   宣告視為相同
+//
+//但實際傳給參數的值  帶const的 只能傳const修飾的給他
+//沒帶const的  傳有 或 無 const的  都可
+//
+//Record lookup(Account&)
+//Record lookup(const Account&)
+//Record lookup(Account*)
+//Record lookup(const Account&)
+
+
+//231
+//重載 overload 就 同函數名稱 不同參數組合  但只有回傳值型別不同不算重載
+//
+//下面每對相同
+//Record lookup(const Account &acct)
+//Record lookup(const Account&)//名可略
+//typedef Phone Tel
+//Record lookup(const Tel&)
+//Record lookup(const Phone&)
+
+
+//230
+// Trailing Return Type
+//auto func(int i) -> int(*)[10];
+
+//用decltype 對陣列回傳的型別是陣列  不是指標  所以要加一個*表指標
+//
+//int odd[] = { 1, 3, 5, 7, 9 };
+//decltype(odd) *arrPtr(int i) {
+//	return (i % 2) ? &odd : &even;
+//}
+
+
+
+
+//229
+//回傳對陣列的一個指標
+//typedef int arrT[10];
+//using arrT = int[10];  //同上都定義型別同義詞
+//arrT* func(int i);  //就回傳了  指向10 int arr的指標
+
+//不使用別名直接宣告   記得維度要給
+//
+//int arr[10]  //10 int arr
+//int *p1[10]   // 10 ref arr
+//int (*p2)[10]  = &arr // pointer to 10 int arr
+//
+//函式宣告  維度跟在func後  func要括號
+//
+//int (*func(int i))[10];
+//
+
+
 
 
 
@@ -40,6 +107,9 @@ int main() {
 //除了之前ref的寫法  回傳多個值 也可以用例如vector
 //vector<string> process()
 
+//可以  return {};
+//可以  return {"a", "b"};
+//可以  return {stra, "c"};
 
 
 //f &getval(string &str, string::size_type ix)
@@ -49,7 +119,7 @@ int main() {
 //int main() {
 //	string s = "s";
 //	cout << s << endl;
-//	getval(x, 0) = 'a';  //改變s[0]的值
+//	getval(s, 0) = 'a';  //改變s[0]的值
 //	cout << s << endl; 
 //}
 
@@ -66,7 +136,7 @@ int main() {
 //void f(pList, ...)
 //void f(...)
 //
-//是為了和C的varargs互動  只限定用於 C 與 C
+//是為了和C的varargs互動  只限定用於 C 與 C++共通的型別
 
 
 //221
@@ -449,10 +519,13 @@ int main() {
 //const char *pc;
 //char *p = const_cast<char*>(pc);
 
+//------------------233原來有提到 string &s1;   const string &p = const_cast<const string&>(s1);
+//------------------可以把非const 轉為const
+
 //reinterpret_cast   是對位元模式低階的重新解讀
 //int * ip;
 //char *pc = reinterpret_cast<char*>(ip);
-//但由於pc到底只到哪個東西 不知道  所以這種用法很危險
+//但由於pc到底指到哪個東西 不知道  所以這種用法很危險
 
 
 
@@ -936,8 +1009,8 @@ int main() {
 //}
 
 //iter型別有  iterator  const_iterator
-vector<int>::iterator it;  //可讀寫  不能用在const類型的vector  
-vector<int>::const_iterator it2; //可讀不能寫    用在const類型的vector  本身就是常數不能寫  
+//vector<int>::iterator it;  //可讀寫  不能用在const類型的vector  
+//vector<int>::const_iterator it2; //可讀不能寫    用在const類型的vector  本身就是常數不能寫  
 //也可以用在非const類型vector 一樣有唯讀效果
 
 
