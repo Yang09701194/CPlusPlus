@@ -29,6 +29,60 @@ int main() {
 
 
 
+
+
+////249 50
+//void Bigger(const string &s1, const string &s2, bool(*pf)(const string &, const string &))
+//void Bigger(const string &s1, const string &s2, bool pf(const string &, const string &))
+////兩者函是參數實際上都是function pointer
+//
+
+//typedef bool func(const string &, const string &);
+//typedef decltype(lenCompare) Func2;//等效型別
+//
+//typedef bool (*func)(const string &, const string &);
+//typedef decltype(lenCompare) *Func2;//等效型別
+
+
+//void Bigger(const string &s1, const string &s2, Func)
+//void Bigger(const string &s1, const string &s2, Func2)//same
+
+//無法回傳一個函式型別    但可回傳 f pointer
+//using F = int(int*, int); //函式型別 非指標
+//using PF = int(*)(int*, int);  //指標型別
+
+
+//PF f1(int) //ok
+//F f1(int) //err
+//PF *f1(int) //ok
+//
+//auto f1(int) -> int(*)(int*, int) //same
+//
+
+//
+//string::size_type sumLen(const string &s1, const string &s2)
+//
+//decltype(sumLen) *getFcn(const string &)  // *  return f p
+
+
+//247 8 讚  函是指標 你好
+//funciton pointer
+//bool (*pf)(const string &, const string &)    *表指標
+//
+//使用很寬鬆
+//pf = lenCompare
+//pf = &lenCompare  //same
+//
+//bool b = pf("a", "b")
+//bool b = (*pf)("a", "b")
+//bool b = lenCompare("a", "b")  //same
+
+
+
+
+
+
+
 //243-6 又是func 匹配  大多同直覺  需要再細查
 //
 //最佳匹配順序
