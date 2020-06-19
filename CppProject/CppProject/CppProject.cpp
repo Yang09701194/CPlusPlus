@@ -28,6 +28,93 @@ int main() {
 
 
 
+
+//243-6 又是func 匹配  大多同直覺  需要再細查
+//
+//最佳匹配順序
+//1 完全符合
+//2 const轉換
+//3 算術轉換 short double轉int之類   指標轉換
+//4 class轉換
+
+
+//241 2
+//巨集 assert NDEBUG
+//
+//assert定義在cassert.h中
+//
+//assert用在不可能發生的情況   內部運算為false 就直接停止程式
+//assert(word.size() > threshold)
+//
+//如果NDEBUG有定義  assert就不會有動作
+//可以用#define NDEBUG定義  或者編譯器參數下 $CC -D NEDEBUG main.c 
+//
+//沒定義NDEBUG   #ifdef #endif之間程式碼會被執行  反之不會
+//
+//void printf(const int ia[], size_t size)
+//{
+//#ifdef NDEBUG
+//cerr << __func__ << "array size is " << size << endl;
+//#endif
+//
+//}
+//if (w.size() > threshold)
+//	cerr << "Error: " << __FILE__
+//	<< in function << __func
+//	at line __LINE__
+//	Compiled on  __DATE__
+//	at __TIME__
+//	word read was w
+//	Length too short
+
+
+//239 240
+//constexpr int new_sz() { return 42; /*裡面可以很複雜 只要每個部件堆到最底都是常數*/}
+//constexpr是可用在常數運算式的函式
+//
+//constexpr inline 的函式可以被定義多次  但每個都要相同
+//所以一般都定義在標頭檔中
+
+
+
+//
+//238
+//inline 可以減少函式呼叫的負擔  (一般func 呼叫要進行很多工作   呼叫前儲存registers暫存器 回傳後復原
+//	引數可能需拷貝  程式會分支到新位置  )
+//如果shorStr 被宣告 inline
+//cout << shortStr s1 s2 << endl; 
+//編譯過程會直接展開在行內
+//cout << s1.size() < s2.size() ? s1 : s2 << endl; 
+//
+//inline通常用在小函式    幾十行的通常inline不太合用    編譯器可能忽略
+
+
+
+//236  func的參數的  預設引數  規則同C#
+//typedef string::size_type sz;
+//string screen(sz ht, sz wid = 80, char background = '')
+//
+//如果要對同個參數多次宣告
+//每次宣告 定義多的引數  只能增加還沒給預設值的   已經給過的不能再給 直接不加 =
+//string screen(sz = 30, sz, char)
+
+
+//區域變數不能當   預設引數
+//全域變數或函式可當 ""
+//
+//sz wd = 80;
+//sz ht();
+//char def = ' ';
+//string screen(sz = ht(), sz = wd, char = def);
+
+
+//234 重載  就要匹配參數最符合的  最佳匹配  沒有匹配  模糊多個相同的呼叫無法辨識
+//這邊概念看過  需要再回來查
+
+//區塊內變數名稱   也會遮蔽函數名稱   名稱查找優於型別檢查
+
+
+
 //233
 //const string &shorten(const string &s1, const string &s2)
 ////{....}
