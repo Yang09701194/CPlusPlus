@@ -15,18 +15,250 @@ using std::vector;
 int main() {
 
 
-
-
+	
 
 	int pause;
 	cin>> pause;																																cin >> pause;
-
+	
 
 
 
 }
 
 
+
+
+
+//299
+//字面值類別
+
+//全部成員都是字面值型別
+//至少有一個constexpr建構器
+//類別內初始器有的話  都要是常數運算式  
+//或有類別型別成員   初始器就要用自己的constexpr建構器
+//類別必須為解構器使用預設定義  負責摧毀物件的成員
+
+解構器不可以是const 
+建構器可以是constexpr
+constexpr建構器  可以 = default  或 = delete 函式   可以沒reutrn述句
+
+
+
+//298 aggregate class
+//所有成員public
+//無建構器
+//無類別內初始器
+//無父類別base classes 或 virtual函式
+
+//例如說struct
+//
+//struct Data {
+//	int v;
+//	string s; 
+//};
+//
+//就可以依屬性順序大括號初始化
+//
+//Data v1 = { 0, "Anna" };
+//未依順序為error
+
+
+//296  7
+//如果將建構器宣告為explicit(明確的)
+//
+//explicit Sales_data(const string &s): bookNo(s) {}
+//
+//就不能用於隱含轉換
+
+//只能用在直接初始化
+//Sales_Data item1(nullBook); //ok
+//Sales_Data item12 = nullBook; //error 不能用於拷貝形式的初始化
+
+//具explicit的程式庫
+//接受const char * 的單參數string 建構器  不是explicit
+//接受一個大小的vector建構器是explicit
+
+
+
+//295  隱含轉換  這個就炫了
+//string nullBook = "111-111-11";
+//item.combine(nullBook)  //Sales_data的方法  接收一個Sales_Data 因為建構式可吃字串  所以字串自動套用吃字串的建構式變Sales_Data
+//這樣子編譯器產生的是一個暫時物件用完就摧毀  也沒有想宣告變數 Sales_Data sales;  一樣會留著
+
+
+
+
+
+//
+//294
+//SomeClass obj();//變函式了
+//SomeClass obj;//ok 物件
+
+
+//293  一個類沒預設建構器   其他類有這個類的資料成員  可能就無法套用預設建構器 會報錯 感覺少見  遇到再說
+
+
+//292 delegating constructors   就是用其他定義好的建構式 初始
+//
+////非dele
+//Sales_data(const std::string &s, unsigned c, double p) : bookNo(s), units_sold(c), price(c) { }
+////dele
+//Sales_data() : Sales_data("",0,0){ }
+//Sales_data(const std::string &s) : Sales_data(s, 0, 0) { }
+
+
+
+//290
+//很細的問題了  初始化參數的順序  那是要成員用成員初始化  否則不用考慮  所以盡量不要成員初始成員  用參數值接帶
+
+
+
+//288  289
+//
+//初始化
+//Screen() : cursor(0), height(0), width(0) { }
+//
+//指定
+//Screen() : (const string &s, unsigned cnt, double price) {
+//	bookNo = s;
+//	units_sold = cnt;
+//	revenue = cnt * price;
+//
+//}
+//
+
+//初始有時必要
+//class ConstRef {
+//public:
+//	ConstRef(int i);
+//
+//private:
+//	int i;
+//	const int ci;
+//	int &i;
+//};
+//
+//ConstRef(int ii) {
+//	//用指定會出錯
+//	i = ii; //ok
+//	ci = ii;//error const不能改值
+//	ri - i; // error ri參考沒初始化
+//
+//}
+//所以要用類似 vvv 初始才行
+////Screen() : cursor(0), height(0), width(0) { }
+
+
+
+
+//286
+//
+//一個類有height屬性   方法參數也有height
+//int height;
+//void func(int height) {
+//	//要呼叫類別成員height 用
+//	this->height;
+//
+//	//要呼叫類別外的全域屬性
+//	::height
+//}
+
+
+
+283 4
+一般名稱查找
+1 在名稱使用的區塊往前查
+2 找不到去外層區塊查
+類別
+1整個類的成員宣告先被編譯
+2看完整個類別 函式主體才被編譯
+類別成員
+1成員2類別 3 函式定義之前整個範疇中查找
+
+
+typedef using 別名要宣告在使用前  且定義後  隻露不能在重複定義使用 或同個名稱指派給另個別名
+
+
+
+
+//282
+//Sales_data c;
+//c.bookNo;   物件取法
+//Sales_data* p;
+//p->bookNo;  指標取法
+
+
+//280 1
+//friend沒有遞移性  A是B友  C是B友  不會A是C友
+//重仔函式 要個別宣告friend
+
+//279  類別可以讓另個類別變成friend
+//類別可以讓另個類別特定成員變成friend  預設inline
+//A class 將 B 標為好友
+//B就可以存取A的private成員
+
+
+
+
+//278   前向宣告  forward declaration   不完整的型別 incomplete type
+//就是例如只寫  class Screen;   不完整定義內部屬性成員
+//否則編譯器 不可能知道那個類別有什麼成員
+
+//一個類別沒辦法有自己營別的資料成員  然而  類別名稱一看就  就被視為已宣告  但尚未定義   一個類別直到其類別主體完結前都尚未被定義
+//因為視為已宣告  所以可以又只向自己型別的   指標 成員
+//class c {
+//	c *next;
+//	c *previous;
+//};
+
+
+
+//274   mutable 永遠都不會是const  即使被宣告為const 也能改變
+////so const成員函式可以修改其值
+//class Screen {
+//public:
+//	void someMem() const;
+//private:
+//	mutable size_t access_ctr;
+//};
+//
+//void Screen::someMem() const {
+//	++access_ctr;//雖然宣告為const 但可修改
+//}
+
+
+
+//268 
+//struct > class
+//Sales_Item268.h
+
+//struct class差異
+//struct預設都public    class預設都private   所以要有private 就用class
+
+
+
+//267
+//類別copy的情境  1初始化變數  2 以值回傳
+
+//類變數 = 類變數   意義如同  每個屬性賦值過去 copy
+
+//編譯器會為我們合成    拷貝 指定 解構運算  但  會再類別物件外配置資源的類別 不能正確運作     ex ch13.1.4 動態記憶體
+
+
+
+
+//262 3 4
+//constructors 建構式/器  大多概念同C#
+//類別沒給建構式   編譯器會隱含地幫忙定義預設建構式   就是把所有屬性都給預設值
+//如果是複合類別  類別中有其他類別的成員  就要通判考慮所有屬性的初始化正確性   如果有其他類別屬性 沒給建構式會不正確初始  就要再加上去
+
+//如果有加上任何有參建構式  就一定要再宣告無參預設建構式
+// >> Sales_Item255.h
+
+
+
+//255 ~ 261
+//Sales_Item255.h
 
 
 

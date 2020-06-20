@@ -21,6 +21,18 @@
     <ClInclude Include="Sales_item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sales_Item255.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sales_Item268.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

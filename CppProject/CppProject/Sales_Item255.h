@@ -6,6 +6,16 @@ using namespace std;
 //255
 
 struct Sales_Data {
+
+	//265
+	Sales_Data() = default;
+	Sales_Data(const string &s) : bookNo(s){ }
+	Sales_Data(const string &s, unsigned n, double p) : 
+		bookNo(s), units_sold(n), revenue(p*n){ }  // constructor initialize list 建構器初始串列
+
+	Sales_Data(istream &is);//266沒有提到要這句   我看紅字自己加的  可能要再類別外定義  還是要這樣宣告
+
+
 	//成員函式  
 	std::string isbn() const { 
 		return bookNo; 
@@ -52,8 +62,10 @@ Sales_Data& Sales_Data::combine(const Sales_Data &rhs) /*注意沒 const*/ {
 	return *this;
 }
 
+//261
+
 // 介面成員定義  寫在類同個h
-istream &read(istream &is, const Sales_Data &item) {
+istream &read(istream &is, /*沒有const*/ Sales_Data &item) {
 	double price = 0;
 	is >> item.bookNo >> item.units_sold >> price;
 	item.revenue = price * item.units_sold;
@@ -63,15 +75,21 @@ istream &read(istream &is, const Sales_Data &item) {
 ostream &print(ostream &os, const Sales_Data &item) {
 	double price = 0;
 	os << item.isbn() << " " << item.units_sold << " " << item.revenue << " " << item.avg_price();
-	ret os;
+	return os;
 }
 
 Sales_Data add(const Sales_Data &lhs, const Sales_Data &rhs) {
 	Sales_Data sum = lhs;
 	sum.combine(rhs);
-	return sum;
+	return sum;  //回傳copy
 }
 
+
+
+//266  類別外定義建構器
+Sales_Data::Sales_Data(istream &is) {
+	read(is, *this);//*this的用法
+}
 
 
 
