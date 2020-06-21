@@ -28,6 +28,116 @@ int main() {
 
 
 
+//360
+
+//string 運算   
+string(char pointer(cp), n)//拷貝前n字
+string(s2, pos2) //從pos2開始的字元    pos2大於size為 未定義
+string(s2, pos2, len2)//pos2開始到len2的拷貝
+
+
+//356~59
+//同 C# vector string 通常會配置大於當下所需的能量
+//比較能降低 一直配置mem的次數
+//
+//capacity 容器目前可放多少元素
+//reserve 至少會配置 >= 請求的空間
+//小於capacity會被忽略  因為沒更大
+//
+//新程式庫提供  chrink to fit更貼近C__
+//
+//可以用ls.capacity()  可以用ls.size()  來取得最薪值
+//
+//size capacity 
+//0 0
+//24 32 
+//
+//沒超過capacity  中油也不能隨意配置
+
+//每個實做都被要求push_back  要快   創建n元素的容器  必須要在O(n)完成
+
+
+
+
+//355
+//end  每次刷新  就能避免增刪的影響
+//
+//while (begin != v.end()) {
+//	++begin;
+//	begin = v.insert(begin, 42);
+//	++begin;
+//}
+
+
+//353  開發時  最小化iter被要求有效的部分  
+//並且在更改容器後 適當重新定位過相關iter
+//auto prev  = ls.before_begin();
+//auto curr  = ls.begin()
+//while (it != ls.end()) {
+//	if (*it % 2)
+//		it = ls.insert(iter, *iter)  //複製目前元素
+	  //it+=2;   //推進自己和新插入的
+//	else
+//		{
+		//iter = iter.erase()   指到消除元素之後的元素  所以剛剛好不用特別處理
+//       }
+//}
+
+
+
+//352
+//除Array外 可resize
+//list<int> ilist(10, 42) // 10個42
+//ls.resize(15);//多增加5個0
+//ls.resize(25, -1)//後面多一堆-1
+//ls.resize(5)//清除後20個 留前5個
+
+//增刪可能使iter無效
+//
+//vector string 如果有發生重新配置  插入點前的參考有效 之後無效
+//
+//對deque在中間新增 則所有 iter 參考 指標  都會無效
+//在前後新增  iter會無效   但既有的 參考 指標  有效
+//
+//對list forward_list      iter 參考 指標  都有效
+
+
+
+
+//351
+//forward_list  的before_begin 是在第一個的更前一個位置  off-the-begining
+//
+//lst.
+//before_begin()
+//cbefore_begin()//const itr
+//insert_after(iter, t)//在p之後 插入元素
+//insert_after(iter, n個, t)   //回傳itr指向  最後一個插入的元素     p是off the end 則未定義
+//insert_after(iter, begin, end)
+//insert_after(iter, il大括號的元素集合)
+//
+//emplace_after(iter, args) //同上
+//
+//erase_after(iter)              //iter之後的被刪
+//erase_after(begin, end)        //刪除 being ~ end 不包括end   
+
+//已修正 0621
+//prev = curr
+//++curr
+
+//auto prev  = ls.before_begin();
+//auto curr  = ls.begin()
+//while (it != ls.end()) {
+//	if (*it % 2)
+//		it = ls.erase_after(prev)  //是傳前一個進去 會刪掉後一個
+//	else
+//		{
+		//prev = curr;   注意兩個都要移動
+		//++curr;
+//       }
+//}
+
+
+
 
 
 //350
