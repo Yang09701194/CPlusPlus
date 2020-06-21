@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Account.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sales_item.h" />
     <ClInclude Include="Sales_Item255.h" />

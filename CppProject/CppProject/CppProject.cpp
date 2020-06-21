@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <iostream>
 #include "Sales_item.h"
+#include "Account.h"
 #include <vector>
 
 
@@ -29,6 +30,529 @@ int main() {
 
 
 
+//350
+//forward_list是 singly linked list
+//a > b > c > d
+//移除c 是要把 b 改成指向 d
+//但單向llist 沒有簡單方法可以取得前置元素
+//所以forw ls 新增移除   是更改在給定後的元素 的  做法
+//所以她有一些特殊的操作方法
+//insert_after
+//emplace ""
+//erase ""
+
+
+//349
+//c.
+//pop_back()  //移除最後一個元素  c為空未定義   void
+//pop_front() //    第
+//erase(p)    //移除p  回傳iter指向被刪除元素後一個iter  如果p是off the end 則未定義
+//erase(b, e) //   b~e                     最後一個
+//clear()      //移除全部
+//
+//while (1ilist.empty()) {
+//	process(ilist.front())
+//	ilist.pop_Front()
+//}
+//
+//while (it != ls.end()) {
+//	if (*it % 2)
+//		it = ls.erase(it)
+//	else
+//		++it;
+//}
+
+
+
+//347
+//at 下標運算子 subscriptor operator  只對 string vector deque array有效
+//back對 forward_list無效
+//
+//c.back() 回傳一個參考指向最後一個元素
+//  front()               第
+//c[n]     n要 < c.size()  否則未定義
+//c.at(n)                   否則 out of range
+//
+//容器是const  就回傳const參考  不能改變值    不是const 回傳普通參考 可以改變值
+//auto &v = c.back()//參考   變更會變更原物件值
+//auto v2 = c.back()//拷貝  不影響原物件值
+
+
+//346
+//確認有存取到元素
+//可以用if(!v.empty()) {
+//	auto val = *c.begin(), val2 = c.front();//都是第一個值的copy
+//
+//	//forward_list的iter不能遞減
+//	*(--last) //error
+//	//forward_list沒有支援 .back()
+//
+//}
+//
+//對一個沒有指向元素的iter解參考  運算會是未定義的
+
+
+//345
+//
+//insert回傳第一個的特性使得可以這樣寫達成無窮push_front
+//
+//list<string> ls;
+//auto iter = ls.begin()
+//while(cin >> word)
+//	iter = ls.insert(iter, word) //等同push_front
+//
+//insert 是copy   emplace等同於建構子接受的參數  是建構
+//emplace等於在使用建構子
+
+
+
+//342 ~ 4
+//除了 array forward_list 每個 循序容器string 也是  支援push_back 後插入
+//list forward_list deque 支援 push_front  前插入
+//
+//void c.push_back
+//c.emplace_back
+//void c.push_front
+//c.emplace_front
+//迭代器指向新插入的元素  c.insert(p, t)  在iter p前插入
+//c.emplace(p, args)  在iter p前插入
+//
+//迭代器指向新插入的第一個元素  c.insert(p, b, e)  在iter p前插入  b ~e
+//迭代器指向新插入的第一個元素  c.insert(p, n, t)  在iter p前插入  n 個 t
+//迭代器指向新插入的第一個元素  c.insert(p, il/*大括號串列*/)  在iter p前插入  il
+//
+//vec要push_front t 相當於 v.insert(v.begin(), t);
+
+
+
+
+
+//340看
+//max_size() 大於等於榮豈能包含的元素數
+//(特例forward_list提供max_size empty 但沒size)
+//== !=  所有元素相等  反之不相等
+//< <= >= >    要有定義３叫運算子  才能真實比繳
+//如果有包含關係  子集比較小
+//沒有包含關係  就看第一個不相等元素之比較
+
+
+
+
+////339
+//array 之外的 swap 速度都很快 常數時間    元素不會互換   是換內部的資料結構
+//所以迭帶器 參考指標  都仍有效
+//所指的元素與對調前相同
+//
+//但在string 呼叫swap會導致無效
+//
+//
+//array上swap 會實際調換元素 所以O(n)
+//所以迭帶器 參考指標  都仍有效
+//所指的元素與對調前相同  但是值換了
+//
+//最好是使用泛型版的swap
+
+
+//338
+//array<int, 10> a2 = { 0 };//10個0
+//a2 = {0} //error不能這樣用
+//a1 = a2 ok
+//
+//swap(c1, c2)
+//c1.swap(c2)  互換比拷貝快
+//assign的作用是 !!取代!!
+//seq.assign(begin, end)   可型別相容  例子char* string   忘了再查
+//seq.assign(i1)   以初始器串列i1的元素取代seq
+//seq.assign(n, t)  n個t取代seq
+
+
+
+
+////336
+//Array宣告要同時指定 大小 和型別
+//array<int, 42>
+//array<string, 10>
+//
+////337
+//array<int, 10>  a1  10個int
+//array<int, 10>  a1 = {1,2,3,4,...,10 } 手動初始
+//array<int, 10>  a1 = {1,2,3,4 } 後6 0
+//
+//array可以指定拷貝   []陣列不行
+
+
+//334  335
+//大多容器 預設建構器是空的   但array好像是固定大小的初始化好的元素
+//要拷貝另個容器  可以直接拷貝  或用一對迭帶器表示的一個範圍
+//直接拷貝 容器內元素型別要完全相同
+//迭代器範圍拷貝  可以相容可轉型就好了   例如char*和string  就是  很清楚我省略舉例 需要再查
+//這裡的操作  都是下面有列的
+
+//copy it前的元素  不包括it 這就符合 end指向最後的下一個  end本身沒用
+//deque<string> aList(bList.begin(), it)
+
+
+//332  333 同之前vector說iter的觀念
+
+//331 iterator一些操作 ++-- 相減diff 
+//begin 第一元素  end 最後的往後一個的點
+
+
+
+
+//330
+//iterator   const_iterator
+//size_type  difference_type
+//value_type
+//reference  const_reference
+//C c;
+//C c1(c2)
+//C c1(begin, end)
+//C c1 {a,b,c}
+//
+//c1 = c2
+//c1 = {a,b,c}
+//a.swap(b)
+//swap(a, b)
+//
+//c.size()
+//c.max_size()
+//c.empty()  //是否無元素
+//
+//c.insert(args)
+//c.emplace(inits)
+//c.erase(args)
+//c.clear()
+//
+//== != 
+//< <= >= > 
+//
+//c.begin() c.end()
+//c.cbegin() c.cend()
+//
+//reverse_iterator const_reverse_iterator
+//c.rbegin()  c.rend()
+//c.crbegin()  c.crend()
+
+//327~9
+//先中間新增  後續隨機存取
+//先用list輸入完畢 再拷貝到vector隨機存取
+//如果既隨機又中間插入  同時   因為不明顯哪個有優勢  可以list  forward list   vector deque 實際做效能測試
+//
+//vector<noEdfault> v(10, init) //元素沒初始器  後面有給初始器　　ok
+//vector<noEdfault> v(10)  //err 元素沒初始器  不能直接用數字初始
+
+
+
+//
+//326
+//container  
+//循序容器 擺放順序依照放入順序       關聯式容器 key值存取
+//
+//
+//循序容器 
+//vector   大小可變  快速隨機存取 insert del 不在後端會慢
+//deque  double end q   快速隨機存取 前後 ins del快
+//list  doubly linked list  雙向循序存取 任一點ins del都快
+//forward list   singly linked list   單向循序存取  任一點ins del都快   設計用意是希望筆的上最佳的手寫單向LinkedList 所以沒size運算
+//其他類型size運算是常數時間
+//array     大小固定 又和[]稍有不同  無法del ins 
+//string     快速隨機存取  後端ins del快
+//
+//string vector 存放連續記憶體位置  可以直接 start + index*size計算元素位址
+//
+//優先
+//沒特別理由 > vector
+//很多小型元素  空間額外負擔有關係 > list forward_list
+//隨機存取 > vector deque
+//中間插入元素 list forward list
+//前後插入元素 deque
+
+
+
+
+//323  ostringstream   ex 想要format後輸出
+//for (const auto &entry : people)
+//{
+//	ostringstream formatted, badNums;
+//	for (const auto &nums : entry.phones)
+//		if (!valid(nums)) badNums << " " << nums;
+//		else formatted << " " << format(nums);
+//	if (badNums.str().empty())
+//		cout << entry.name << " " << formatted.str() << endl;
+//	else
+//		cerr << "input error: " << entry.name
+//		<< " invalid number(s) " << badNums.str() << endl;
+//}
+//
+//return 0;
+//}
+
+
+
+
+//321
+//istringstream ostringstream stringstream  
+
+
+//struct PersonInfo {
+//	string name;
+//	vector<string> phones;
+//};
+//
+//int main()
+//{
+//	string line, word;
+//	vector<PersonInfo> people;
+//	istringstream record;
+//	while (getline(cin, line))  !!!
+//	{
+//		PersonInfo info;
+//
+//		record.clear();
+//		record.str(line);
+//      //這兩句書寫  istringstream record(line); !!!
+
+//		record >> info.name;
+//		while (record >> word)   !!!
+//			info.phones.push_back(word);
+//		people.push_back(info);
+//	}
+//
+//	for (auto &p : people)
+//	{
+//		std::cout << p.name << " ";
+//		for (auto &s : p.phones)
+//			std::cout << s << " ";
+//		std::cout << std::endl;
+//	}
+//
+//	return 0;
+//}
+
+
+
+
+
+//320
+//會被截斷
+//ofstream out("file")
+//ofstream out("file",ofstream::out) 
+//ofstream out("file",ofstream::out | ofstream::trunc)  //三個都隱含有  out + trunc 
+//保留
+//ofstream out("file",ofstream::app) 
+
+//可以open close open close 每次open可獨立指定不同檔案 模式
+
+//ex8.8
+//ifstream input(argv[1]);
+//ofstream output(argv[2], ofstream::app);
+//
+//Sales_data total;
+//if (read(input, total))
+//{
+//	Sales_data trans;
+//	while (read(input, trans))
+//	{
+//		if (total.isbn() == trans.isbn())
+//			total.combine(trans);
+//		else
+//		{
+//			print(output, total) << endl;
+//			total = trans;
+//			..........
+//
+
+
+//319  
+//file mode
+//in 輸入
+//out 輸出
+//app  寫入前移到尾端  沒trunc可指定     會被永遠開啟在輸出模式
+//ate  開啟後移到尾端
+//trunc  截斷檔案      out有指定才能設定
+//binary  二進位模式作業
+
+
+//預設用out開啟的檔案會被截斷   要保留 設app  則只能寫道尾端  如果再加in 就可讀寫
+//ate binary可任意搭配
+
+
+
+
+//317  8
+//iostream& 的地方  可接受 fstream sstream  因為是父類
+//
+//ostream o;
+//o.open(file);
+//if(o) //多一層檢查成功比較穩   呼叫失敗的話 failbit會被設定
+
+//不能重複open 錯誤 並設定failbit
+
+//main 接收一個檔案清單    逐一處理
+//for (auto p = argv + 1; p != argv + argc; ++p)
+//{
+//	istream input(p*);//創建intput並open
+//	if (input) {
+//		process(input)
+//	}
+//	else {
+//		cerr << "couldn't open" << string(*p);
+//	}
+//}
+//
+
+
+
+//316
+//資料流綁定  s.tie() 回傳目前被綁至的stream指標  空的話回傳null
+//s.tie(s2)  s綁到s2
+
+//
+//ifstream 讀檔  ofstream寫檔
+//
+//可以用 << >> 讀寫檔案  可以getline 讀ifstream
+//
+//
+//
+//fstream f(fileName)   //會自動open
+//fstream f(fileName, mode)
+//f.open(filename)
+//f.open(filename, mode)
+//f.close()
+//f.is_open()
+//
+
+
+//314
+//關閉failbit badbit  其他不變
+//cin.clear(ciin.rstd::istream& func(std::istream &is)
+
+
+//ex8.1
+//std::istream& func(std::istream &is)
+//{
+//	std::string buf;
+//	while (is >> buf)
+//		std::cout << buf << std::endl;
+//	is.clear();//回傳前設定為有效
+//	return is;
+//}
+
+//
+//緩衝區被清掉的情況
+//滿了     endl指定清除  unitbuf每次清除   cerr預設有unitbuf
+//輸出資料流綁定到輸入時  輸入一讀 輸出會被清掉
+
+//cout <<  << endl 尾端加newline清除 / flush 清除 / ends 尾端加null
+
+//cout << unitbuff //立刻清掉
+//
+//cout << nounitbuff //恢復一般緩衝
+
+
+
+
+
+//313
+//istream::iostate
+//istream::badbit
+//s表任一strean名稱
+//s:iostate
+//s:badbit
+//s:eofbit
+//s:failbit
+//s:goodbit
+//s.eof()  / s.bad()  ...
+//s.clear()
+//s.clear(flags)
+//s.setstate(flags)
+//s.rdstate() // read state 讀目前狀態
+
+//auto old_state = cin.rdstate();//紀錄當前狀態
+//cin.clear() //使cin變有效
+//process(cin) //使用cin
+//cin.setstate(old_state)//恢復
+
+
+
+
+
+
+//312
+//
+//cin >> i 如果輸入字元就會出錯  可以由狀態知道
+//ex while (cin >> word)  truefalse判斷式
+//
+//狀態 iostate
+//有四種iostate型別的constexpr值
+//可以和位元運算子使用 以設定或測試多個旗標
+//
+//badbit   系統錯誤 無法再使用
+//fallbit  如字元讀到int錯誤 可復原更正繼續使用
+//檔案結尾 > eofbit 和 fallbit
+//正確  值0 的 goodbit
+//
+//good以外的三種任一設定 資料流就失敗
+//
+//上面關鍵字去掉bit就是讀取狀態的方法了  bad fail ...
+
+
+
+
+//310   IO  ch8
+//istream ostream cin cout <<  << endl;  cerr  >>  << getline可以從istream讀一行到給定的string 
+//wcin wcout wcerr
+
+//主控台 檔案 字串
+//istream ostream iostream   w
+//ifstream ofstream  fstream w
+//istringstream ostringstream stringstream  w       寬字元用wchar_t
+
+//他們繼承自 istream  ostream   所以都可以用在cin cout cerr   如果參數指標宣告成父類   子類也都可以適用
+
+// io 物件 不能 拷貝 指定
+
+
+
+//302 3 
+//static成員不可在類別內初始化  要在外部初始化
+//static成員只能被定義一次
+//
+//定義並初始化一個static成員
+////double Account::interestRate - initRate()
+
+//但  const static int這種就可以類別內初始化   並且是用constexpr的字面值型別初始
+//static const int period = 30;// period is a constant expression
+
+
+//如果像只在類別內使用static成員 如daliy_tbl  則period可不必在外部定義
+//如果要在外部使用  需定義  因已初始化所以只須宣告不用初始
+//constexpr int Account::period;
+
+//static可以用一些一般屬性不能用的用法
+//可以是不完整型別
+//可以是型別本身 (一般只能型別本身的參考指標
+//可以當成預設引數
+
+
+
+//300 1 
+//static  同C#    所有物件共用   也是直接用類別名稱::存取
+// static 可為 public private const 參考陣列類別等
+//  ex >　Account.h
+
+//double d;
+//d = Account::rate();    名稱存取
+
+//Account a;
+//Account *a2 = &a;
+//d = a.rate();           物件存取   這邊就跟C#不同  C#不行這樣
+//d = a2->rate();
+
+
+
+
 //299
 //字面值類別
 
@@ -38,9 +562,39 @@ int main() {
 //或有類別型別成員   初始器就要用自己的constexpr建構器
 //類別必須為解構器使用預設定義  負責摧毀物件的成員
 
-解構器不可以是const 
-建構器可以是constexpr
-constexpr建構器  可以 = default  或 = delete 函式   可以沒reutrn述句
+//解構器不可以是const 
+//建構器可以是constexpr
+//constexpr建構器  可以 = default  或 = delete 函式   
+//要符合建構器所以可以沒reutrn述句    constexpr函式本身又只能有return述句   所以結果是  主體通常是空的
+//
+//#ifndef DEBUG_H
+//#define DEBUG_H
+//class Debug {
+//public:
+//#ifdef CONSTEXPR_CTORS
+//	constexpr Debug(bool b = true) : hw(b), io(b), other(b) { }
+//	constexpr Debug(bool h, bool i, bool o) :
+//		hw(h), io(i), other(o) { }
+//	constexpr bool any() { return hw || io || other; }
+//	constexpr bool hardware() { return hw || io; }
+//	constexpr bool app() { return other; }
+//#else
+//	Debug(bool b = true) : hw(b), io(b), other(b) { }
+//	Debug(bool h, bool i, bool o) :
+//		hw(h), io(i), other(o) { }
+//	bool any() const { return hw || io || other; }
+//	bool hardware() const { return hw || io; }
+//	bool app() const { return other; }
+//#endif
+//	void set_io(bool b) { io = b; }
+//	void set_hw(bool b) { hw = b; }
+//	void set_other(bool b) { hw = b; }
+//private:
+//	bool hw;    // hardware errors other than IO errors
+//	bool io;    // IO errors
+//	bool other; // other errors
+//};
+
 
 
 
@@ -165,18 +719,18 @@ constexpr建構器  可以 = default  或 = delete 函式   可以沒reutrn述�
 
 
 
-283 4
-一般名稱查找
-1 在名稱使用的區塊往前查
-2 找不到去外層區塊查
-類別
-1整個類的成員宣告先被編譯
-2看完整個類別 函式主體才被編譯
-類別成員
-1成員2類別 3 函式定義之前整個範疇中查找
-
-
-typedef using 別名要宣告在使用前  且定義後  隻露不能在重複定義使用 或同個名稱指派給另個別名
+//283 4
+//一般名稱查找
+//1 在名稱使用的區塊往前查
+//2 找不到去外層區塊查
+//類別
+//1整個類的成員宣告先被編譯
+//2看完整個類別 函式主體才被編譯
+//類別成員
+//1成員2類別 3 函式定義之前整個範疇中查找
+//
+//
+//typedef using 別名要宣告在使用前  且定義後  隻露不能在重複定義使用 或同個名稱指派給另個別名
 
 
 
