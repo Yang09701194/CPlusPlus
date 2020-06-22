@@ -28,12 +28,82 @@ int main() {
 
 
 
+
+
+
+
+////364 6
+//string 六個搜尋函數  有分大小寫
+//找到的話  回傳 string::size_type  符合處的索引
+//沒有  回傳static string::npos  是const string::size_type  以-1初始 但unsigned 所以是string最大可能大小
+//
+//auto  pos = str.find("abc")
+//
+//find  
+//rfind  最後一個出現處
+//find_first_of          args任一字元第   一個出現處
+//find_last_of           args       最後
+//find_first_not_of  不在           第  
+//find_last_of       不在           最後  
+//
+//如果是args, pos   就從pos之後開始找起   while持續找的話 記得pos++
+//
+//compare 類似 C strcmp  回傳   0 +值 -值  對應 = > <
+
+
+
+//363
+//
+//insert 在pos前插入args   回傳指向插入的第一個字元的 迭代器/參考
+//erease pos ~尾端 或pos+len
+//assign 取代整個內容
+//append 附加尾端
+//replace 
+//
+//接收參數  
+//
+//str   
+//str pos len
+//cp len
+//cp
+//n c
+//begin end
+//詳細列表需要再查
+
+
+
+//362
+//
+//string支援前面提過的 assign insert erase    用法同前
+//s.insert(s.size(), 5, '!');//結尾插入5個!
+//s.erase(s.size() - 5, 5);//移除最後五字元
+//
+//額外支援 C style字元陣列   insert assign
+//const char *cp = "Stately, plump Buck"
+//s.assign(cp, 7) // "Stately"
+//s.insert(s.size(), cp + 7) //拷貝超過前7的字元 直到null 
+//
+//s.insert(s.size(), "abc");//尾端插入abc
+//s.insert(0, s2, 0, s2.size())//插入 s2 從 s2[0] ~ s2[0 + size] 到 s2之前
+//
+//s.append(" 4th Ed.");  // 接到尾端
+//
+//s2.replace(11, 3, "5th") // 從11開始 消除三個字元  然後插入5th
+//
+//
+//361
+//
+//string s  
+//子字串
+//s.substr(pos, n)//pos預設0   n不給就到最後  兩個都給 pos ~ pos + n
+
+
 //360
 
 //string 運算   
-string(char pointer(cp), n)//拷貝前n字
-string(s2, pos2) //從pos2開始的字元    pos2大於size為 未定義
-string(s2, pos2, len2)//pos2開始到len2的拷貝
+//string(char pointer(cp), n)//拷貝前n字
+//string(s2, pos2) //從pos2開始的字元    pos2大於size為 未定義
+//string(s2, pos2, len2)//pos2開始到len2的拷貝
 
 
 //356~59
@@ -44,7 +114,7 @@ string(s2, pos2, len2)//pos2開始到len2的拷貝
 //reserve 至少會配置 >= 請求的空間
 //小於capacity會被忽略  因為沒更大
 //
-//新程式庫提供  chrink to fit更貼近C__
+//新程式庫提供  shrink_to_fit 歸還不需要的記憶體
 //
 //可以用ls.capacity()  可以用ls.size()  來取得最薪值
 //
@@ -52,7 +122,7 @@ string(s2, pos2, len2)//pos2開始到len2的拷貝
 //0 0
 //24 32 
 //
-//沒超過capacity  中油也不能隨意配置
+//沒超過capacity  vector也不能增加空間配置
 
 //每個實做都被要求push_back  要快   創建n元素的容器  必須要在O(n)完成
 
