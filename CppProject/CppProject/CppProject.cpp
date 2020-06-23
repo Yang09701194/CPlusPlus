@@ -29,7 +29,449 @@ int main() {
 
 
 
+//400
 
+
+//397 9
+//lambda適合少量地方使用   常用還是寫成func
+//
+//bind
+//定義在 <functional>
+//接受一個可呼叫物件  並產生一個新callable 轉接原物件的參數列
+//auto newCallable = bind(callable, arg_list)
+//
+//arg_list可以包含 _n   _1 _2 _3 ...
+//會為將來傳入的引數佔位置
+//                             //字串, 長度
+//auto check6 = bind(check_size, _1, 6)
+//
+//bool b - check6(str)
+//
+//
+//auto wc = find_if(w.b, w.e, [sz](const string &a))
+//同義於
+//auto wc = find_if(w.b, w.e, bind(check_size, _1, sz))
+//                                            //str                                
+//
+//placeholder
+//using std::placeholder::_1  _2....
+//乾脆直接
+//using std::placeholder
+//就可以 _1  _2 ...
+//
+//
+//_2 _1的順序如果交換   那相當於原傳入參數的順序會依照 _1 _2的擺放順序跟著對應   跟C# Strin.Format差不多意思
+//
+//f(a,b,_2,c,_1)
+//g(X,Y)  傳入到f
+//相當於
+//f(a,b,Y,c,X)
+
+
+
+//395
+//
+//預設lambda不能改變  []裡 值拷貝的變數值  要改變用mutable  >>>不能省略()
+//
+////auto f = [v] () mutable {return v++; };
+//
+//如果是capture by ref  那就看參考所指的 是不是const 決定能不能修改
+//
+//396 回傳型別  下面有寫過了
+
+
+//392  4
+//定義了一個Lamba  編譯器會產生新的無名類別 對應   14.8
+//並且以物件傳給函式
+//變數會對應於類別的資料成員
+//
+//
+//size_t v = 3;
+//auto f = [v] {return v; }//capture by value
+//
+//size_t v = 3;
+//auto f = [&v] {return v; }//capture by reference
+////要小心使用時  參考還在   例如區域變數使用完可能就消失了
+//
+//ex
+//
+//biggies(&os = cout, cahr c = '')  !! &os
+//	for_each(words.begin(), words.end(), [](const string &os, c) {os << s << endl;  }
+
+//可以從函式回傳一個lambda  也就是個可呼叫物件   那lambda必定不能有參考捕捉  就跟不能回傳區域變數參考理由一樣
+
+
+//隱含捕捉  省打字用的吧  可讀性低
+//[]裡面只放 & 或 =  會自動去推斷可能的外層的變數值 或參考  
+
+//biggies(vector<string> &words, vector<string>::size_type sz, ostream &os = cout, char c = '')
+//	for_each(words.begin(), words.end(), [&, c](const string &s) {cout << s << endl;  }
+//	for_each(words.begin(), words.end(), [=, &os](const string &s) {cout << s << endl;  }
+//	 
+
+
+
+//391
+//
+//for_each(words.begin(), words.end(), [](const string &s) {cout << s << endl;  }
+//
+//biggies(vector<string> &words, vector<string>::size_type sz)
+//{
+//	elimDups(words); // put words in alphabetical order and remove duplicates
+//	// sort words by size, but maintain alphabetical order for words of the same size
+//	stable_sort(words.begin(), words.end(),
+//		[](const string &a, const string &b)
+//	{ return a.size() < b.size(); });
+//
+//	// get an iterator to the first element whose size() is >= sz
+//	auto wc = find_if(words.begin(), words.end(),
+//		[sz](const string &a)
+//	{ return a.size() >= sz; });
+//
+//	// compute the number of elements with size >= sz 
+//	auto count = words.end() - wc;
+//	cout << count << " " << make_plural(count, "word", "s")
+//		<< " of length " << sz << " or longer" << endl;
+//
+//	// print words of the given size or longer, each one followed by a space
+//	for_each(wc, words.end(),
+//		[](const string &s) {cout << s << " "; });
+//	cout << endl;
+//}
+
+
+
+
+
+//390
+//要使用區域變數  放在捕捉串列
+
+//int sz = 42;
+//auto f = [sz] (const string &s1){return s1.size()  >= sz; };//有引數
+
+//而不能不放在[]  就在{}使用
+
+//auto wc = find_if(w.b, w.e, [sz] (const string &s1){return s1.size()  >= sz; }) 
+
+
+
+//388 9
+//find_if接受  單元判斷式
+//
+//如果要找 長度大於常數大小   就需要 string  和大小兩個參數
+//
+//可以轉成Lambda去傳入
+//
+//我們可傳入任何種類的callable object 給演算法    其實就是函數的意思  e是callable  就可以寫成e(args)
+//
+//callable 有   函式   函式指標    重載了函式呼叫運算子的類別  Lambda expression運算式
+//
+//Lambda expression運算式  可想成   無名的 inline函式
+//
+//Lambda 可以被定義在函式裡
+//
+//[capture list](parameter list) -> return type{ function body }
+//
+//參數列  回傳型別  可省略
+//
+//auto f = [] {return 42; };//ex   無引數
+//
+//cout << f() << endl; 
+//
+//只有一句return 回傳型別會自動推論  有其他述句  會被視為void  
+//p396才繼續提到  多句最後一句return 就要指定 ->回傳型別   來讓Lambda知道回傳類型
+//
+//auto f = [] (const string &s1, const string &s2){return s1.size() < s2.size(); };//有引數
+//
+//stable_sort(w.b, w.e, [](onst string &s1, const string &s2) {return s1.size() < s2.size(); });
+
+
+
+
+
+
+
+//385 7
+//用自訂運算 取代 > < == 等等
+//
+//傳遞函式給演算法  predicate
+//
+//演算法使用 單元/二元判斷式     unary   binary
+//
+//接受 二元判斷式 的sort 可給自訂
+//
+//
+//// comparison function to be used to sort by word length
+//bool isShorter(const string &s1, const string &s2)
+//{
+//	return s1.size() < s2.size();
+//}
+//
+//// sort by length using a function
+//elimDups(words)//有用字母排序
+//stable_sort(words.begin(), words.end(), isShorter);   //長度相同的字詞間維持字母順序  stable意義
+//print(words);
+//
+//words = cpy; // return to the original data                  
+//// sort the original input on word length, shortest to longest
+//sort(words.begin(), words.end(), isShorter);                                   //依照長度排序  由短到長
+
+
+
+
+
+//384
+//void elimDups(vector<string> &words)
+//{
+//	// sort words alphabetically so we can find the duplicates
+//	sort(words.begin(), words.end());
+//	for_each(words.begin(), words.end(),
+//		[](const string &s) { cout << s << " "; });
+//	cout << endl;
+//
+//
+//	// unique reorders the input so that each word appears once in the
+//	// front part of the range   把不重複的字放到最前面  消除相鄰的重複項(因為排序過了)    後面不確定是什麼值 
+//	// returns an iterator one past the unique range
+//	auto end_unique = unique(words.begin(), words.end());
+//	for_each(words.begin(), words.end(),
+//		[](const string &s) { cout << s << " "; });
+//	cout << endl;
+//
+//	// erase uses a vector operation to remove the nonunique elements
+//	words.erase(end_unique, words.end());   //清除重複的
+//	for_each(words.begin(), words.end(),  
+//		[](const string &s) { cout << s << " "; });
+//	cout << endl;
+//}
+
+
+
+
+
+//382 3
+//如果使用的是  insert iterator  就可以新增院速到容器
+
+//vector<int> v;
+//auto it = back_inserter(v);//取得可insert的iter
+//*it = 42 //這樣賦值就會執行新增
+//
+//int a = { 1,2,3 };
+//int a2[sizeof(a)/sizeof(*a1)]//a2大小同a
+//copy(begin(a), end(a), a2);//a拷貝到a2  兩者值相同
+//
+//copy回傳拷貝到a2最後一個元素的地方  
+//
+//
+//replace(a.begin(), a.end(), 0, 42);//0 -> 42
+//
+//replace_copy(a.begin(), a.end(), back_inserter(vec), 0, 42);// a copy 到 vec 且 vec 的 0 -> 42
+//
+
+//381  會寫入容器元素的演算法  是改變元素的值  但演算法不會作榮器運算  所以不會改變容器大小
+
+//ex
+//fill(vec.cbegin(), vec.cend(), 0); //全設為0
+//
+//fill_n(vec.cbegin(), j, 0); //往後寫j個0
+//演算法不會幫忙檢查iter有沒有在容器範圍   超出的話結果是未定義的
+
+
+
+
+
+//379 80 ======= 唯讀演算法  =========
+//最好可搭配 cbegin cend
+//
+//ex  accumulate 逐一累加
+//
+//vector<int> vec(10);              // default initialized to 0
+//fill(vec.begin(), vec.end(), 1);  // reset each element to 1
+//
+//// sum the elements in vec starting the summation with the value 0
+//
+//// !!  起   迄   初始值
+//
+//int sum = accumulate(vec.cbegin(), vec.cend(), 0);
+//cout << sum << endl;
+//
+//// set a subsequence of the container to 10
+//fill(vec.begin(), vec.begin() + vec.size() / 2, 10);
+//cout << accumulate(vec.begin(), vec.end(), 0) << endl;
+//
+//
+//// roster2 should have at least as many elements as roster1
+//equal(roster1.cbegin(), roster1.cend(), roster2.cbegin());
+//
+//起1 , 迄1,  起2   (假設迄2起2間距等於1的)
+
+
+
+
+
+
+//377 78
+//迭代器   讓演算法獨立於容器
+//但確實依存於元素型別的運算   ex == < > 
+//演算法以迭代器運算   而非藉由容器運算
+//
+//程式庫100多個演算法  在附錄A
+//
+//唯讀演算法
+//會寫入元素的演算法
+//重新排序的演算法
+
+
+
+
+//376  泛用演算法
+//algorithm.h
+//對一個泛為作用 而非整個容器  
+//
+
+//舉例  find
+//#include <algorithm>
+//using std::find;
+//
+//#include <iterator>
+//using std::begin; using std::end;
+//
+//#include <vector>
+//using std::vector;
+//
+//#include <list>
+//using std::list;
+//
+//#include <string>
+//using std::string;
+//
+//#include <iostream>
+//using std::cout; using std::endl;
+//
+//int main()
+//{
+//	int ia[] = { 27, 210, 12, 47, 109, 83 };
+//	int val = 83;
+//	int* result = find(begin(ia), end(ia), val);
+//	cout << "The value " << val
+//		<< (result == end(ia)                                  !!!!! end判斷有無找到
+//			? " is not present" : " is present") << endl;
+//
+//	// search starting from ia[1] up to but not including ia[4]
+//	result = find(ia + 1, ia + 4, val);
+//
+//	// initialize the vector with some values
+//#ifdef LIST_INIT
+//	vector<int> vec = { 27, 210, 12, 47, 109, 83 };
+//#else
+//	int temp[] = { 27, 210, 12, 47, 109, 83 };
+//	vector<int> vec(begin(temp), end(temp));
+//#endif
+//	val = 42; // value we'll look for
+//
+//	// result2 will denote the element we want if it's in vec, 
+//	// or vec.cend() if not
+//	auto result2 = find(vec.cbegin(), vec.cend(), val);
+//
+//	// report the result
+//	cout << "The value " << val
+//		<< (result2 == vec.cend()
+//			? " is not present" : " is present") << endl;
+//
+//	// now use find to look in a list of strings
+//#ifdef LIST_INIT
+//	list<string> lst = { "val1", "val2", "val3" };
+//#else
+//	string temp2[] = { "val1", "val2", "val3" };
+//	list<string> lst(begin(temp2), end(temp2));
+//#endif
+//
+//	string sval = "a value";  // value we'll look for
+//	// this call to find looks through string elements in a list
+//	auto result3 = find(lst.cbegin(), lst.cend(), sval);
+//	cout << "The value " << sval
+//		<< (result3 == lst.cend()
+//			? " is not present" : " is present") << endl;
+//
+//	return 0;
+
+
+
+
+//371
+//用轉接器  不能使用底層的容器運算 要透過外包的轉接器的運算去操作底層
+
+//queue priorityQ
+//pop()
+//front()
+//back top push emplace
+//
+//
+//Q FIFO
+//Priori Q  新增的元素  優先高的放在優先低的之前
+
+
+
+
+////369  70 容器轉接器
+//stack queue priority_queue
+//stack接受循序容器   除了array forward_list 因為要增刪
+//
+//容器轉接器  共通運算型別
+//size_type  value_type container_type(轉接器實做的底層容器型別)
+//A a;
+//A a(c);
+//a.empty()
+//a.size()
+//swap(a, b)
+//a.swap(b)
+//
+//stack<int> stk(deq)  // 將deq的元素拷貝到stk
+//預設 stack q 都用 deque來實作的
+//priority_queue則是在vector上實作的
+//
+//要換容器   給第二引數
+//stack<string, vector<string>> str_stk
+//stack<string, vector<string>> str_stk(vec)
+//
+//stack要 push_back pop_back back  > 任何容器
+//queeue push_back back front push_front  > list 或 deque
+//priorty queue    push_back back front push_front 要隨機存取   > vector 或 deque  不能list
+//
+////////////
+//
+//stack<int> intStack;  // empty stack
+//
+//	// fill up the stack
+//for (size_t ix = 0; ix != 10; ++ix)
+//intStack.push(ix);   // intStack holds 0 . . . 9 inclusive
+//
+//// while there are still values in intStack
+//while (!intStack.empty()) {
+//	int value = intStack.top();
+//	// code that uses value
+//	cout << value << endl;
+//	intStack.pop(); // pop the top element, and repeat
+//}
+//
+//stack:  
+//pop 
+//push(item) emplace(args)
+//top
+
+
+//368
+//to_string  數字>文字
+//stoi
+//stol
+//stoul
+//stoll
+//stoull
+//stof
+//stod
+//stold
+//參數s ,p對size_t的一個指標 ,b數值基數
+//s可以代正負號
 
 
 ////364 6
@@ -49,6 +491,14 @@ int main() {
 //如果是args, pos   就從pos之後開始找起   while持續找的話 記得pos++
 //
 //compare 類似 C strcmp  回傳   0 +值 -值  對應 = > <
+//s2
+//pos1 n1 s2
+//pos1 n1 s2 pos2 n2
+//
+//cp
+//pos1 n1 cp
+//pos1 n1  cp n2
+
 
 
 
