@@ -3,23 +3,41 @@
 
 #include "pch.h"
 #include <iostream>
+#include <algorithm>
 #include "Sales_item.h"
 #include "Account.h"
 #include <vector>
+
+#include <numeric>      // std::accumulate
+
+#include <set>
+using std::multiset;
+
+#include <map>
+using std::map;
+
+#include <utility>
+
+using std::pair; using std::make_pair;
+
+#include <unordered_map>
+using std::unordered_map;
+
+#include <unordered_set>
+using std::unordered_set; using std::unordered_multiset;
+
+#include <memory>
 
 
 using namespace std;
 using std::vector;
 
-
-
 int main() {
-
-
-	
 
 	int pause;
 	cin>> pause;																																cin >> pause;
+
+
 	
 
 
@@ -29,7 +47,744 @@ int main() {
 
 
 
-//400
+
+////451  smart pointer 簡稱SP
+//shared_ptr 是template
+//
+//shared_ptr<string> p1   預設初始化的 SP 為null指標
+//
+//if(p1/*測試非null*/ && p1->empty())
+//	*p1 = "a";
+//
+//使用動態記憶體 最安全是  呼叫 make_shared
+//
+//shared_ptr<int> p = make_shared<int>(42); //指向值為42的 int
+//shared_ptr<string> p = make_shared<string >(10, '9'); //9999999999
+//shared_ptr<int> p = make_shared<int>(); //0
+//make_shared 引數  也是建構器的引數同emplace
+//
+//用auto接shared_ptr<int>  更方便
+//
+//拷貝 或  指定 或 以值傳入函數  以值回傳  shared_ptr  內部機制都會計數 +1  計數器  稱 reference count 參考計數
+//摧毀時 -1   例如變數離開scope
+//歸0時  會自動釋放他管理的物件  利用解構器 destructor
+//
+//shared_ptr<int> p = make_shared<int>(42); //指向值為42的 int
+//auto q(p)  //copy   有兩個指標指向相同物件
+//
+//
+//shared_ptr<T>
+//unique_ptr<T>
+//p
+//*p
+//p->mem
+//p.get()
+//swap(p, q)
+//p.swap(q)
+//
+//
+//shared_ptr<int> p = make_shared<int>(42); //指向值為42的 int
+//p = c;  歸0  釋放
+
+
+
+
+
+//450
+//
+//靜態記憶體 static  用於 static物件 成員 任何函式外的變數
+//堆疊記憶體 stack        函式內的非static物件      
+//兩者的物件由編譯器自動創建和摧毀      存活週期  跟一般觀念相同
+//
+//除此這兩個  還有集區pool記憶體可以用      稱作  自由存放區free store 或 heap堆積
+//用於  動態run time 配置的物件  由程式控制生命週期   要明確摧毀
+//
+//動態記憶體  與 智慧指標
+//
+//new 在動態記憶體 配置 並選擇性初始化一個物件  並回傳指向該物件的一個指標
+//delete 摧毀該物件  並釋放關聯的記憶體
+//
+//智慧指標 smart pointer    重點在  會在沒用到時自動刪除 
+//shared_ptr  允許多個指標指向相同物件
+//unique_ptr  擁有他指的物件
+//weak_ptr 指向一個shared_ptr管理的物件    都在<memory>
+
+
+
+
+//446
+//
+//宣告multiset
+//using SD_multiset = unordered_multiset<Sales_data, decltype(hasher)*, decltype(eqOp)*>
+//SD_multiset bookstore(42/*這個是有點怪  竟然是貯體大小  跟函式宣告不同*/, hasher, eqOp);
+
+
+// unordered_map version of the word count program
+int main()
+{
+	// count occurrences, but the words won't be in alphabetical order
+	unordered_map<string, size_t> word_count;
+	string word;
+	while (cin >> word)
+		++word_count[word]; // fetch and increment the counter for word
+
+	for (const auto &w : word_count) // for each element in the map
+		// print the results
+		cout << w.first << " occurs " << w.second
+		<< ((w.second > 1) ? " times" : " time") << endl;
+
+	return 0;
+}
+
+// how to override default hash and equality operator on key_type
+size_t hasher(const Sales_data &sd)
+{
+	return hash<string>()(sd.isbn());//
+}
+bool eqOp(const Sales_data &lhs, const Sales_data &rhs)
+{
+	return lhs.isbn() == rhs.isbn();
+}
+
+// typ
+
+
+//444  5
+//unorder 四種 無序 不用比較運算子 組織元素   而是用hash function
+//
+//使用時機   元素間沒有明顯順序  或 維護順序的成本很高
+//
+//hash要設計好   才能得到好的平均效能
+//不然一般   用有序容器比較容易  經常效能也比較好
+//
+//也有 find insert等
+//
+//無序 for印出值  就也是無序的
+//
+//無序容器  透過 hash function 把元素hash value雜湊值  相同的對應至 bucket(貯體)
+//
+//所以效能和hash function的品質  貯體數量  大小
+//
+//hash func每次計算的值要相同
+//
+//c.
+//bucket_count
+//max_bucket_count
+//bucket_size(n)
+//bucket_size()
+//
+//local_iterator
+//const_local_iterator
+//
+// begin end
+//
+//load_factor
+//max_load_factor     有需要再回來查
+//
+//rehash  reserve
+
+
+
+
+//441 2 3
+//
+//map<string, string> buildMap(ifstream &map_file)
+//{
+//	map<string, string> trans_map;   // holds the transformations
+//	string key;    // a word to transform
+//	string value;  // phrase to use instead
+//	// read the first word into key and the rest of the line into value
+//	while (map_file >> key && getline(map_file, value))
+//		if (value.size() > 1) // check that there is a transformation
+//			trans_map[key] = value.substr(1); // skip leading space 
+//		else
+//			throw runtime_error("no rule for " + key);
+//	return trans_map;
+//}
+//
+//const string &
+//transform(const string &s, const map<string, string> &m)
+//{
+//	// the actual map work; this part is the heart of the program
+//	auto map_it = m.find(s);
+//	// if this word is in the transformation map
+//	if (map_it != m.cend())
+//		return map_it->second; // use the replacement word
+//	else
+//		return s;              // otherwise return the original unchanged
+//}
+//
+//// first argument is the transformations file; 
+//// second is file to transform
+//void word_transform(ifstream &map_file, ifstream &input)
+//{
+//	auto trans_map = buildMap(map_file); // store the transformations
+//
+//	// for debugging purposes print the map after its built
+//	cout << "Here is our transformation map: \n\n";
+//	for (auto entry : trans_map)
+//		cout << "key: " << entry.first
+//		<< "\tvalue: " << entry.second << endl;
+//	cout << "\n\n";
+//
+//	// do the transformation of the given text 
+//	string text;                    // hold each line from the input
+//	while (getline(input, text)) {  // read a line of input
+//		istringstream stream(text); // read each word 
+//		string word;
+//		bool firstword = true;      // controls whether a space is printed 
+//		while (stream >> word) {
+//			if (firstword)
+//				firstword = false;
+//			else
+//				cout << " ";  // print a space between words
+//			// transform returns its first argument or its transformation 
+//			cout << transform(word, trans_map); // print the output 
+//		}
+//		cout << endl;        // done with this line of input
+//	}
+//}
+//
+//int main(int argc, char **argv)
+//{
+//	// open and check both files
+//	if (argc != 3)
+//		throw runtime_error("wrong number of arguments");
+//
+//	ifstream map_file(argv[1]); // open transformation file 
+//	if (!map_file)              // check that open succeeded
+//		throw runtime_error("no transformation file");
+//
+//	ifstream input(argv[2]);    // open file of text to transform
+//	if (!input)                 // check that open succeeded
+//		throw runtime_error("no input file");
+//
+//	word_transform(map_file, input);
+//
+//	return 0;  // exiting main will automatically close the files
+//}
+
+
+//437 8 9 40
+
+//set<int> = set;
+//set.find(1)
+//set.count(1)
+//
+//如果想要鍵值不在  也不新增  可以先用find檢驗
+//if (w.find("val") == w.end())
+//	cout << "not exists" << endl; 
+//
+//
+//multi set map   是有序的  所以鍵值相同的會相鄰
+//
+//
+//c.
+//lower_bound(k)  //回傳第一個鍵值 >=k 的iter
+//upper_bound(k) //回傳第一個鍵值  >k 的iter
+//equal_range(k) //               =k   的一對起迄iter   無元素 兩個都end
+//
+//
+//找出相同作者的
+//
+//法一
+//string search_item("alain bottn")
+//auto entries = authors.count(search_item)
+//auto iter = authors.find(search_item)
+//while (entries)
+//{
+//	cout << iter->second << endl;
+//	++iter 
+//	--entries //靠數量 + iter
+//}
+//
+//法2
+//for (auto beg = authors.lower_bound(search_item), end = authors.upper_bound(search_item); beg != end; ++beg)
+//{
+//	cout << beg->second << endl;
+//}
+//
+//法3
+//for (auto pos = authors.equal_range(search_item); beg != end; ++beg)
+//{
+//	cout << pos.first->second << endl;
+//}
+
+
+
+//435  6
+//map unordered_map 有 下標運算子  (不存在新增)  和 at函式(不存在出out of range)    都接受key  取得value  
+//(set沒有一對值所以不用用key取val所以沒這類運算)
+//
+//如果key不存在 map新增後回傳的是mapped_type  即是 pair
+//如果key存在 map新增後回傳的是value_type
+//
+//想知道一個key在不在  最好是用find    count在multi類的  要計算比較多 
+
+
+
+
+//434
+//
+//multimap set insert後  只回傳迭代器  指向新插入的元素  因為允許多個 不需判斷已存在
+//multimap<string, int> authors;
+//authors.insert("A", "B")
+//authors.insert("A", "C")   可允許同鍵多筆
+//
+//用key erase   回傳多少元素被移除了
+//if (w.erase(word))
+//	cout << "ok" << endl; 
+//else
+//	cout << "not found" << endl;
+//
+//erase(val)
+//erase(iter)  回傳iter後的元素
+//erase(b, e)
+
+
+
+//431  2 3
+//
+//
+////set
+//vector<int> ivec = {2,3,4}
+//set<int> set2;
+//set2.insert(ivec.cb, ivec.end)
+//set2.insert({1,2,3,1,2,3})     //insert時   重複的都只進一個  
+//
+//
+////map   insert psir
+//w.insert({"s","d"})  //其他pair語法都可  make_pair(a,b)  pair<c,d>(a,b)   pair<c,d>::value_type(word, 1)
+//
+//c
+//.insert(v) //value_type
+//.emplace(args) //同建構式
+//insert(b,e)
+//insert(il)//串列
+//insert(p, v)     // p迭代器  告知要哪裡找新元素的地方
+//emplace(p, v)
+
+//這邊動作完都是回傳 迭代器  指向新插入的元素 
+
+
+//insert回傳值    對於唯一 鍵的容器   回傳一個pair   first 迭代器  指向新插入的元素  second 是否是   插入true  或已存在false
+//
+//用  insert iter 改寫420
+//
+//map<string, size_t> word_count; // empty map from string to size_t
+//string word;
+//while (cin >> word)
+//{
+//	auto ret = word_count.insert({ "a", 3 })
+//		if (!ret.second)
+//			++ret.first->second;// first是insert map後的iter元素   map的元素是pair  所以second就是value計數  
+//}
+//	++word_count[word];  //遞增word計數器  不存在會創建並值初始化為0
+//
+//for (const auto &w : word_count)
+//	cout << w.first << " occurs " << w.second << " times" << endl;//first key   second value
+
+
+
+
+////429  30
+//
+//set map的鍵值 都是const
+//
+//key_type   set map的鍵值type
+//value_type   map的val type
+//mapped_type  set來說就key_type  map是pair<const key_type, mapped_type>
+//
+//型別成員一樣用 map<string, int>::key_type 類似寫法
+//
+//關聯式容器的  迭代器
+//auto map_it = word_cou.begin();
+////*map_it 會是 pair<const key_type, mapped_type>
+//cout << map_it -> first << endl; 
+//++map_it->second;
+//
+//set 的iterator 或 const_oterator 都唯讀
+//
+//set<int> iset = {1,2,3}
+//set<int>::iterator set_it = iset.begin();
+//if (set_it != iset.end()) {
+//	cout << *set_it++ << endl;    
+//}
+//
+//auto map_it = w.cbegin()
+//while (map_it != w.cend())
+//{
+//	cout << map_it -> first + " " + map_it->second << endl; 
+//}
+//
+//一般 演算法不會用 關聯式容器
+//find也是用內建的比較快
+//有的有用例如  copy 一個關容器  到另一個
+//或者  inserter關連到 關容器  可以有其他用途
+
+
+//427 428
+
+
+//p1 == p2 是字典比較   他有寫一個很複雜的無喇直接感覺合理 先不管  !(p2.first < p1.first)
+//
+//<utility> 的 pair 就是一對值  也是tempalte
+//pair<string, size_t> word_count; //會值初始化   也可以串列初始  word{"a", 3}
+
+// p(v1, v2)     p = { v1, v2 }   make_pair(v1, v2) 這種寫法能用大括號取代同義
+
+//
+//pair<string, string >  F(vector<string> v) {   回傳pair
+//	if (!v.empty())
+//		return { v.back(), "t" }
+//	else
+//		return pair<string, string >();
+//}
+
+
+
+
+//423   4  5 6
+//關聯式容器支援9.2通用容器運算   不支援位置運算(而是用key)
+//無序容器 提供調整hash效能的運算
+//迭代器是雙向的
+//
+//
+//map set 鍵值型別     必須要有 < 運算子  在程式庫知道  就比較好分析民眾問題
+//	而且小於   嚴格的遞減     嚴格的弱次序    書上寫了一些很數學的描述 a> b則 b不< a  a <= b b<=a 推得 a==b  之類的
+//
+//鍵值型別  使用自訂的  比較函式  如下例
+//
+//bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs) {
+//	return lhs.isbn() < rhs.isbn()
+//}
+//
+////這是一行   加註解才斷行
+//multiset<Sales_data, decltype(compareIsbn)*> //指向compareIsbn的函式指標型別  記得*
+//								bookstore(compareIsbn);//可省略&  因為函式名稱需要時  會自動轉為一個指標
+
+
+
+
+//
+//set<string> exclude = { "The", "But", "And", "Or", "An", "A",
+//					   "the", "but", "and", "or", "an", "a" };
+//map<string, string> exclude = { {"The", "But"},
+//								{"And", "Or"},
+//								{"An", "A"},  
+//					   };
+//初始器裡的值必須能   轉換至 set map值型別
+//
+//vector<int> ivec;
+//for (vector<int>::size_type i = 0; i != 10; ++i) {
+//	ivec.push_back(i);
+//	ivec.push_back(i);  // duplicate copies of each number
+//}
+//
+//// iset holds unique elements from ivec; miset holds all 20 elements
+//
+//set<int> iset(ivec.cbegin(), ivec.cend());
+//multiset<int> miset(ivec.cbegin(), ivec.cend());   //1~10重複兩次
+//
+//cout << ivec.size() << endl;    // prints 20
+//cout << iset.size() << endl;    // prints 10  自動去掉重複的         
+//cout << miset.size() << endl;   // prints 20  multi沒有去掉重複的
+//
+
+
+
+
+
+//422
+//
+//map<string, size_t> word_count; // empty map from string to size_t
+//
+//set<string> exclude = { "The", "But", "And", "Or", "An", "A",
+//					   "the", "but", "and", "or", "an", "a" };
+//
+//while(cin >> word )
+//	if(exclude.find(word) == exclude.end()) // set  全key 用 find == end
+//		  ++word_count[word];
+
+
+////420 1
+//關聯式容器 associative-container    透過鍵值高速查找取回
+//
+//map : key-value pair
+//set : key
+//
+//map set                //有序的             
+//multimap multiset      //key可相同多個
+//unordered_map unordered_set //hash 組織的
+//unordered_multimap unordered_multiset  // hash + multi
+//
+//
+//map<keyType, valueType>     map也是模板template  (C#的泛型)
+//
+//
+//// count the number of times each word occurs in the input
+//map<string, size_t> word_count; // empty map from string to size_t
+//string word;
+//while (cin >> word)
+//	++word_count[word];  //遞增word計數器  不存在會創建並值初始化為0
+//
+//for (const auto &w : word_count)
+//	cout << w.first << " occurs " << w.second << " times" << endl;//first key   second value
+
+
+
+//415 6
+//list  forward_list  自定義數個演算法 sort merge remove reverse unique
+//用內建的  會比泛用的 效能更好
+//內建的會調換swap元素    而非元素的值  所以會更快
+//
+//l.
+//merge(l2)
+//merge(l2, comp2)  //會排序   完成後l2會是空的
+//remove(val) //底層呼叫erase
+//remove_if(pred) //erase
+//reverse()
+//sort   //<
+//sort(compare)
+//unique
+//unique(pred)
+//
+//splice是串列專屬的
+//
+//l.splice() splice_after()
+//
+//(p, l2)       //l2 移到 l 的p之前/後的位置
+//(p, l2, p2)   //p2 為l2的迭代器  p2移到l  或p2緊接後的到l  兩者可以是同個串列
+//(p, l2, b,e)  //be 為l2 的範圍  移動範圍  兩者可同串列  但p不可在範圍
+//
+//串列的運算確實會改變容器內的元素  相對於泛用版本不會
+
+
+//414  演算法慣例
+//有 < > 功能的  通常有一個重載版本是  接受一個predicate的判斷式`
+//
+//unique(b, e) // ==
+//unique(b, e, compare/*predicate*/) 
+//find(b, e. val)
+//find_if(b, e, predicate/*為ture的*/)
+//
+//reverse(b, e)
+//reverse_copy(b, e, dest)
+//
+//
+//remove_if(b, e, [](int i) { reutrn i%2})
+//remove_copy_if(b, e, back_inserter(v2),[](int i) { reutrn i % 2})
+
+//411  13
+//
+////輸入      input          == != ++ * ->    find accumulate
+////正向      forward        同上 + 多次讀寫相同元素 replace    forward_list上的iter
+////雙向      bidirectional  同上 --  除forward_list之外的容器都是
+////隨機存取  rrandom-access  < <= > >=  += -= -距離   下標運算子[i]   sort   array deque vector
+//
+//algo參數模式
+//
+//alg(b, e, args)
+//alg(b, e, dest, args)
+//alg(b, e, b2, args)
+//alg(b, e, b2, e2, args)
+
+
+
+
+////410
+//
+//相對於 401  的另一種  五種迭代器 分類法
+//
+//輸入      input        讀取 不寫入 單回  遞增
+//輸出      output      寫入  不讀取  單回  遞增
+//正向      forward        讀寫  多回  遞增
+//雙向      bidirectional  讀寫  多回  遞增減
+//隨機存取  rrandom-access  讀寫  多回  完整算術
+//
+//
+//ostream_iterator  遞增 解參考  指定
+//vector string deque 遞增 解參考  指定 遞減 關係  運算子
+//
+//除輸出   其他四種 有功能上包下的關係
+//
+//find 輸入
+//replace 一對 正向  
+//reaplce_copy 一對 正向 一個輸出
+
+
+
+
+
+
+
+//407
+
+//反向迭代器  reverse iterator
+//
+//++往前  --往後
+//begin最後  end最前面再往前一個
+//
+//用法差不多
+//
+//用 v.rbegin rend crbegin crend
+//
+//例如說 sort(v.b, v.e)    //  大 -> 小
+//例如說 sort(v.rb, v.re)  //反向排序  小-> 大
+//
+//
+//auto comma = find(line.cb, line.ce, ',')    //找第一個字
+//auto comma = find(line.crb, line.cre, ',')  //找最後一個字
+//
+//對於  FIRST, SECOND, THIRD  用r找到最後,
+//
+//印 cout << string(line.crb, comma) << endl; 會變  DRIHT
+//所以要  string(comma.base()/*往後位置指一個 是一般迭代器*/, line.end())  就會印出 THIRD
+//
+
+//406
+//
+//用 i ostream_iterator 改寫  1.6 程式
+//
+//#include <iterator>
+//using std::istream_iterator; using std::ostream_iterator;
+//
+//#include <iostream>
+//using std::cin; using std::cout;
+//
+//#include "Sales_item.h"
+//
+//int main()
+//{
+//	// iterators that can read and write Sales_items
+//	istream_iterator<Sales_item> item_iter(cin), eof;
+//	ostream_iterator<Sales_item> out_iter(cout, "\n");
+//
+//	// store the first transaction in sum and read the next record
+//	Sales_item sum = *item_iter++;
+//
+//	while (item_iter != eof) {
+//		// if the current transaction (which is in item_iter) 
+//		// has the same ISBN
+//		if (item_iter->isbn() == sum.isbn())
+//			sum += *item_iter++; // add it to sum 
+//								 // and read the next transaction
+//		else {
+//			out_iter = sum;      // write the current sum
+//			sum = *item_iter++;  // read the next transaction
+//		}
+//	}
+//	out_iter = sum;  // remember to print the last set of records
+//
+//	return 0;
+//}
+//
+//
+
+
+//405
+////istream_iterator 
+//有 lazy evaluation 允許延遲讀取
+//
+//ostream_iterator<T> out(os)
+//ostream_iterator<T> out(os, val)  //每次輸出的文字後面都會加 val
+//
+//ostream_iterator<int> outit(cout, " ");
+//for (auto e : vec)
+//	*outit++ = e; //e寫到cout
+//cout << endl;
+//
+//for (auto e : vec)
+//	outit = e; //對o來說  * 跟++ 可省略 無用 同意
+//cout << endl;
+//
+//
+//更簡
+//
+//copy(vec.begin(), vec.end(), out_iter);
+
+
+
+
+
+//403 4
+
+//istream_iterator 
+//o                 用在IO讀寫
+//
+//istream_iterator<int> int_it(cin)  //從cin讀
+//istream_iterator<int> int_eof  //空表eof
+//ifstream in("file") 
+//ifstream_iterator str_it(in)//檔案牘
+//
+//while (in_it != int_eof)
+//{
+//	v.push_back(*in_it++)  持續讀取 儲存到v注意有++
+//}
+//
+//上面等同更簡潔的語法
+//istream_iterator<int> int_it(cin), eof
+//vector<int> vec(in_it, eof) //迭代器範圍件購
+//
+//in1 == in2   繫結到相同資料留就相等
+//!
+//*in1 讀取
+//in1->mem(*in).mem
+//++  等於用 >> 讀取下個值
+//
+//也可用在演算法
+//cout << accumulate(int_it, eof, 0) << endl; 
+//就會印出 所有輸入的 加總
+
+
+
+//402
+//insert iter   inserter 是種迭代器轉接器  三種
+//back_inserter  用 push_back            後
+//fornt ""               front     插到最前面
+//inserter          insert  插到迭代器表示的元素前
+//
+//用 it = t 就會作上三種插入的動作
+//
+//ex it 是 inserter(c, iter)
+//
+//*it = val 相當於
+//
+//it = c.insert(it, val);
+//++it;  //  插入到之前  再把指標往前移回原本的位置
+//
+//
+//List<int> l = {1,2,3,4}
+//copy(l.cb, l.ce, front_inserter(l2))  //4321
+//copy(l.cb, l.ce, inserter(l2))     //1234
+//
+//
+//401
+//
+//舊的 C++ 的 bind 用 bind1st, bind2nd
+//
+//四種   迭代器           iterator
+//插入          insert             繫結到容器 可插入 
+//資料流        stream             繫結I O 資料流
+//反向          reverse            往回移動 非前進  容器除forward_list都有
+//移動          move               
+
+
+
+//
+////400
+//sort(w.b, w.e, isShorter);				//
+//sort(w.b, w.e, bind(isShorter, _2, _1); // 1 2 倒過來 就可以反轉順序
+//
+//bind 會拷貝引數  如果要傳參考  要特別寫ref
+//
+//ostream &print(ostream &os, const string &s, char c) {
+//	return os << s << c;
+//}
+//
+//for_each(w.b, w.e, bind(print, ref(os), _1, '' ))//加 ref 
+//
+//cref 則是 const 的參考
 
 
 //397 9
