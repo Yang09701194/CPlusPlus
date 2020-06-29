@@ -35,52 +35,32 @@ using std::vector;
 int main() {
 
 
+	int *pi = new int;//動態配置  無名  未初始化
 
 
 	int pause;
 	cin>> pause;	
 
+	int c = *pi;
+
+
+
+	int pause2;
+	cin >> pause;
 
 	
 }
 
 
 
-//460
-
-
-//458  9
+//458
 //直接管理記憶體  用 new delete
 //
 //在自由存放區free store配置的物件是無名的
 //所以 new 回傳pt 指向物件
 //
-//int *pi = new int;//動態配置  無名  未初始化    Debug實測  真的是一個亂數
+//int *pi = new int;//動態配置  無名  未初始化
 //new是預設初始化 :  內建/複合型別>未定義的值   類別>預設建構器初始化
-
-//string *ps = new string ;//空字串 
-
-//
-//也可以
-//int *p = new int(1024);
-//string *s = new string(10, '9')
-//vec *v = new vec<int>{ 1,2,3 };
-//
-//如果有加空括號  就是值初始化  int > 0
-//int *p = new int();
-//
-//用auto配一個參數  可以都用auto  編譯器推論型別
-//auto a = new auto(obj)
-//
-//const 也可 new 
-//const int *p = new const int(10)
-
-//const 都要被初始化
-//
-//new const回傳 對const的指標
-
-
-
 
 
 //456 7
