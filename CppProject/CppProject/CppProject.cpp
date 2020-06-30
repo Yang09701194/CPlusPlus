@@ -27,6 +27,7 @@ using std::unordered_map;
 using std::unordered_set; using std::unordered_multiset;
 
 #include <memory>
+#include <new> //460
 
 
 using namespace std;
@@ -45,8 +46,121 @@ int main() {
 }
 
 
+//470
 
-//460
+
+//467 8 9
+//
+//shared_ptr 可以保證在ex發生時  自動計數遞減 0則釋放
+//
+//new delete就要自己注意
+//
+//
+//如果類別沒有定義良好的解構器 釋放資源  特別是設計讓C和C++同時使用的類比較不會要求user明確釋放
+//這時就可以參數傳入解構方法
+//ex   connect這個類字有點多省略不打  需要再翻 只記關鍵
+//connection c = connect(&d)
+//shared_ptr<connection> p(&c, end_connection)
+//
+//當要執行del時   實際上是呼叫end_connection
+
+
+//465 6
+//
+//別混合使用普通指標  和 SP
+//
+//shared_ptr<T> p(q)  //q指向new配置的記憶體
+//shared_ptr<T> p(u)  //p預設來自unique_ptr的所有權 使u變null
+//shared_ptr<T> p(q / p, d)  //d可呼叫物件 取代delete釋放q
+//
+//
+//////如果p是指向其物件的唯一一個shared_ptr  
+////reset會釋放p現有的物件  如果傳入q  就讓p指向q 否則p變為null
+////d來釋放q
+//p.reset()
+//p.reset(q)
+//p.reset(q, d)
+//
+//int *x(new int(4))
+//process(x)
+//process(shared_ptr<int>(x))
+//int j = *x//上面process完 x 就被釋放了  繼續使用就是未定義  
+////這種用法就錯  所以避免混用
+//
+//別用get來初始另個SP
+//get使用時機是  傳給無法使用SP的程式使用
+//使用get回傳值的程式碼  必不能delete那個指標  所以另一邊被摧毀之後  這個指標就不能用了
+//
+//shared_ptr<int> p(new int(42))
+//int* q = p.get();
+//{
+//	shared_ptr<int>(q)
+//}//結束後q被摧毀
+//int foo = *p//未定義  p指的記憶體已被釋放   且若再delete
+//
+///////
+//
+//shared_ptr<int> p(new int(42))
+//p = new int(4) //error 不能指定指標給share...
+//p.reset(new int(4))//ok  指向新的物件   會更新參考計數   適當時刪除p原本指向的物件
+//
+//
+//reset 常會與unique 一起控制對數個 share_ptr的變更
+//變更物件前 先檢查是否為唯一使用者  不是就在更動前先製作一個新的拷貝
+//if (!p.unique())
+//	p.reset(new string(*p))//拷貝後  自己就變唯一使用者 就不會干擾到他人
+//*p += newVal;
+//
+//
+//464
+//混用 shared_ptr  new   
+//shared_ptr<double> p1
+//shared_ptr<double> p2(new int(42))   //建構器是explicit的  所以不能 p2 = new int(42
+//
+//初始一個SP的指標要指向動態記憶體  因為 shared_ptr 也是用 delete來釋放
+
+
+
+
+ 
+////460  1 2 3
+//自由存放區  記憶體耗盡時  new 會丟bad_alloc 例外
+//要避免用
+//int *p = new(nothrow) int;//錯誤時回傳null指標   這叫placement new	 這兩個瓷都定義在 <new>
+//
+//
+//釋放動態記憶體  delete p;
+//刪除非new指標 或多於一次 > 未定義
+//
+//double d = new double(33);
+//delete d;    //const new也適用
+//
+//前面 shared_ptr 是在引用數歸0自動摧毀
+//new 則是沒delete錢都會存在
+//
+//Foo* factory(T arg) {
+//	return new Foo(arg)
+//}
+//
+//void use_fac(T arg) {
+//	Foo *p = factory(arg)
+//}//離開後p仍然存在 不會被摧毀
+////加上delete p 就會摧毀
+//
+//動態記憶體容易出錯
+//1 忘記 del > memory leak 很難找    除非完全耗盡
+//2 物件刪除後還使用  有時可以在del後設為null (nullptr) 來偵測
+//3 重複刪除  
+//上面易犯  要找出來很難
+//
+//多個指標指向同個記憶體 刪掉一個後 其他的指向的記憶體會無效  但難偵測
+//int *p(new int(3)), *r = new int(100)
+//r = q 
+//delete p
+//p = nullptr
+
+
+
 
 
 //458  9
@@ -75,7 +189,7 @@ int main() {
 //const 也可 new 
 //const int *p = new const int(10)
 
-//const 都要被初始化
+//const 有預設建構器的類別型別 可隱含初始化  其他類別 都要被明確初始化
 //
 //new const回傳 對const的指標
 
