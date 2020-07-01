@@ -40,13 +40,154 @@ int main() {
 
 	int pause;
 	cin>> pause;	
-
-
+	
 	
 }
 
 
+
+
+
+480
+shared_ptr  要提供刪除器  沒提供未定義
+shared_ptr<int[]> sp(new int[10], [](int *p) {delete[] p};//未初始化
+sp.reset()//使用delete[]刪除指標
+沒有下標運算子
+for (size_t i = 0; i != 10; i++)
+{
+	*(sp.get() + i) = i; //就是這樣用
+}
+
+
+
+
+478  9
+也可以串列初始
+//int *pia = new int[5]{1,2,3};  //前三個是初始器初始化  後二值初始化
+
+空陣列合法
+char arr[0]//error 陣列長不可0
+char *cp = new char[0] // ok  cp不能被解參考  有點像off the end
+
+// []  沒[]會未定義
+delete[] pia;
+摧毀順序是相反  從最後面開始
+
+
+unique_ptr + 動陣
+unique_ptr<int[]> up(new int[10]);//未初始化
+up.release()//自動使用delete[]刪除指標
+
+up可以用下標運算子存取  當成陣列
+for (size_t i = 0; i != 10; i++)
+{
+	up[i] = i;
+} 
+
+
+
+
+//476 7
+//new delete 依次配置一個物件
+//動態陣列 可以一次配置一個陣列  為allocator模板類別
+//
+//通常用不到動態陣列  因為容器更好用
+//容器有預設的拷貝 指定 解構
+//但配置動陣  需要用自己版本的運算管理記憶體
+
+//int *pia = new int[get_size()]; //pia指向第一個元素
+//
+//用型別別名
+//typedef int arrT[42];
+//int *p = new arrT;
+
+//配置完並不具備一個陣列型別  所以也沒有begin end for
+//上面寫法是 預設初始化 的  要值初始化 跟前面很多慣例相同 加小括號 
+//類似上面寫法 不贅述 
+
+
+
+
+//472 3 4 5 
+//weak_ptr  不控制他指物件的生命週期
+//是由某個shared_ptr管理的
+//weak繫結到share  並不改變share的參考計數
+//share歸0刪除  就算有weak指向也不影響照刪 所以叫weak
+//
+//auto p = make_shared<int>(42) 
+//weak_ptr<int> wp(p) 
+//
+//因w指的物件可能不在  所以透過lock判斷呼叫
+//if (shared_ptr<int> np = wp.lock()) {
+//	//
+//}
+//
+//
+//weak_ptr<T> w
+//weak_ptr<T> w(sp)   //都跟sp共享所有權
+//weak_ptr<T> w = sp
+//w.reset()       // w 變 null
+//.use_count()    // 共享所有權的sp數目
+//.expired()  //usecount ==0 
+//lock() //  expired true 回傳 null  shared_ptr  否則回傳sp
+
+//StrBlobPtr下面記錄過了
+//為StrBlob定義一個伴隨的指標類別  命名為 StrBlobPtr
+//會儲存一個wp指向他從之初使化的data成員
+//不影響原本StrBlob所指的vector的生命週期   
+//請搜尋  wptr 還有 check 方法
+//deref incr也有意思
+//begin end 要存取data 所以StrBlob內部要宣告StrBlobPtr為StrBlob的friend
+
+
+//471
+//unique_ptr  可拷貝的例外情境
+//編譯器知道即將被摧毀  會進行特殊拷貝 13.6.2
+//1
+//unique_ptr<int> clone(int p) {
+//	return unique_ptr<int>(new int(p))
+//}
+//unique_ptr<int> clone(int p) {
+//	unique_ptr<int> ret(new int(p))
+//	return ret
+//}
+//
+//auto_ptr沒在用
+//
+//刪除器 16.1.6會提到  unique_ptr 刪除器 管理方式和shared_ptr
+//						//角括號要指出型別
+//unique_ptr<connection, decltype(end_conn)> p(&c, end_conn)
+
+
 //470
+//unique_ptr 擁有own 他的物件  一次只有一個能指向
+//所以u被摧毀 物件就被摧毀
+//u用直接初始化
+////unique_ptr<int> p(new int(42))
+////unique_ptr<int> p2(p)  //error no copy
+////p3 = p2 // error no assign
+//
+//unique_ptr<T> u1 
+//unique_ptr<T, D> u1   //D 刪除時要執行的動作  D是可呼叫物件
+//unique_ptr<T, D> u(d)// 用d來取代delete的物件的 null unique_ptr  
+//u = null_ptr //刪除u指的物件  
+//u.release()//放棄u持有的指標控制權 回傳u所持有的指標 且u變null
+//u.reset()//刪除u所指的物件
+//u.reset(q)//刪除u所指的物件   u指向q
+//u.reset(nullptr)//刪除u所指的物件   u變null
+//
+////搭配上面看
+////所有權 p1 轉移給 p2
+//unique_ptr<string> p2(p1.release()) //p1變null
+//unique_ptr<string> p3(new string("T")) 
+//p2.reset(p3.release())//所有權 p3 轉移至 p2  
+////reset 刪除 p2 曾指向的記憶體
+//
+//p2.release()// 錯 p2不會是放記憶體  且會失去指標
+//auto p = p2.release() // ok 記得delete p
+
+
+
 
 
 //467 8 9
