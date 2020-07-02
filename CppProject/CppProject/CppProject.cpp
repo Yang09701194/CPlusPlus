@@ -33,6 +33,9 @@ using std::unordered_set; using std::unordered_multiset;
 using namespace std;
 using std::vector;
 
+
+
+
 int main() {
 
 
@@ -44,46 +47,332 @@ int main() {
 	
 }
 
+//指標 pointer pt
 
 
 
 
-480
-shared_ptr  要提供刪除器  沒提供未定義
-shared_ptr<int[]> sp(new int[10], [](int *p) {delete[] p};//未初始化
-sp.reset()//使用delete[]刪除指標
-沒有下標運算子
-for (size_t i = 0; i != 10; i++)
-{
-	*(sp.get() + i) = i; //就是這樣用
-}
+////485  6 7  8 9  490
+//文字查詢程式
+//搜尋檔案中  字詞出現的錯誤  和出現的行號  遞增出現
+//
+//任務分析
+//讀取輸入時  記得個字出現在哪幾行  一次讀一行  拆成個別字詞
+//輸出  字詞的關聯行號  遞增 不重複  印出行號上的文字
+//
+//作法
+//用vector<string>  儲存檔案的每一行
+//用istringstream 來把行拆成字詞
+//set 儲存行號  保證唯一性 遞增性
+//map 紀錄  字詞 , 關聯的行號集合  (set of line numbers)    就是可以用字詞  查 行號set
+//也會使用shared_ptr
+//
+//TextQuery 存放一個vector 和 map   (字詞, 字詞關聯的行號)
+//回傳資料用  TextQueryResult 存放查詢結果   並且有print函式印出結果
+//
+//TextQueryResult所需的資料存在TextQuery  像是set vector     當然不想用複製的  他們都很大
+//也不適合用迭代器   因為可能物件先被摧毀了
+//所以當然是shared_ptr  莫屬
+//
+//先寫個概念性程式
+//void runQuries(ifstream &infile) {
+//	TextQuery tq(infile)//儲存檔案  建構查詢的map
+//	while (true)
+//	{
+//		cout << "enter word to look for or q quit" << endl;
+//		string s;
+//		if ((cin >> s) || s == "q") break;
+//		print(tq.query(s)) << endl;//執行查詢並印出
+//	}
+//}
+//
+//
+//實際來寫類別
+//#include <memory>
+//#include <string>
+//#include <vector>
+//#include <map>
+//#include <set>
+//#include <fstream>
+//#include "QueryResult.h"
+//
+///* this version of the query classes includes two
+// * members not covered in the book:
+// *   cleanup_str: which removes punctuation and
+// *                converst all text to lowercase
+// *   display_map: a debugging routine that will print the contents
+// *                of the lookup mape
+//*/
+//
+//class QueryResult; // declaration needed for return type in the query function
+//class TextQuery {
+//public:
+//#ifdef TYPE_ALIAS_DECLS
+//	using line_no = std::vector<std::string>::size_type;
+//#else
+//	typedef std::vector<std::string>::size_type line_no;
+//#endif
+//	TextQuery(std::ifstream&);
+//	QueryResult query(const std::string&) const;
+//	void display_map();        // debugging aid: print the map
+//private:
+//	std::shared_ptr<std::vector<std::string>> file; // input file   !!!!!!!!!!!
+//	// maps each word to the set of the lines in which that word appears   !!!!!!!!!
+//	std::map<std::string,
+//		std::shared_ptr<std::set<line_no>>> wm;
+//
+//	// canonicalizes text: removes punctuation and makes everything lower case
+//	static std::string cleanup_str(const std::string&);
+//};
+//#endif
+//
+//
+//#include <cstddef>
+//#include <memory>
+//#include <sstream>
+//#include <string>
+//#include <vector>
+//#include <map>
+//#include <set>
+//#include <iostream>
+//#include <fstream>
+//#include <cctype>
+//#include <cstring>
+//#include <utility>
+//
+//using std::size_t;
+//using std::shared_ptr;
+//using std::istringstream;
+//using std::string;
+//using std::getline;
+//using std::vector;
+//using std::map;
+//using std::set;
+//using std::cerr;
+//using std::cout;
+//using std::cin;
+//using std::ostream;
+//using std::endl;
+//using std::ifstream;
+//using std::ispunct;
+//using std::tolower;
+//using std::strlen;
+//using std::pair;
+//
+//// read the input file and build the map of lines to line numbers    建構器!!!!!!!!
+//TextQuery::TextQuery(ifstream &is) : file(new vector<string>)
+//{
+//	string text;
+//	while (getline(is, text)) {       // for each line in the file
+//		file->push_back(text);        // remember this line of text
+//		int n = file->size() - 1;     // the current line number
+//		istringstream line(text);     // separate the line into words
+//		string word;
+//		while (line >> word) {        // for each word in that line
+//			word = cleanup_str(word);
+//			// if word isn't already in wm, subscripting adds a new entry
+//			auto &lines = wm[word]; // lines is a shared_ptr 
+//			if (!lines) // that pointer is null the first time we see word
+//				lines.reset(new set<line_no>); // allocate a new set
+//			lines->insert(n);      // insert this line number      就算存在也可以呼叫insert 因為set不會重複新增   保持唯一性
+//		}
+//	}
+//}
+//
+//// not covered in the book -- cleanup_str removes
+//// punctuation and converts all text to lowercase so that
+//// the queries operate in a case insensitive manner
+//string TextQuery::cleanup_str(const string &word)
+//{
+//	string ret;
+//	for (auto it = word.begin(); it != word.end(); ++it) {
+//		if (!ispunct(*it))
+//			ret += tolower(*it);
+//	}
+//	return ret;
+//}
+//
+//QueryResult
+//TextQuery::query(const string &sought) const
+//{
+//	// we'll return a pointer to this set if we don't find sought
+//	static shared_ptr<set<line_no>> nodata(new set<line_no>);
+//
+//	// use find and not a subscript to avoid adding words to wm!              !!!!!!!!!!!!!!
+//	auto loc = wm.find(cleanup_str(sought));
+//
+//	if (loc == wm.end())
+//		return QueryResult(sought, nodata, file);  // not found
+//	else
+//		return QueryResult(sought, loc->second, file);
+//}
+//
+//ostream &print(ostream & os, const QueryResult &qr)    !!!!!!!!!!!!!!!!!!!!!!!!!!!
+//{
+//	// if the word was found, print the count and all occurrences
+//	os << qr.sought << " occurs " << qr.lines->size() << " "
+//		<< make_plural(qr.lines->size(), "time", "s") << endl;
+//
+//	// print each line in which the word appeared
+//	for (auto num : *qr.lines) // for every element in the set 
+//		// don't confound the user with text lines starting at 0
+//		os << "\t(line " << num + 1 << ") "
+//		<< *(qr.file->begin() + num) << endl;
+//
+//	return os;
+//}
+//
+//// debugging routine, not covered in the book
+//void TextQuery::display_map()
+//{
+//	auto iter = wm.cbegin(), iter_end = wm.cend();
+//
+//	// for each word in the map
+//	for (; iter != iter_end; ++iter) {
+//		cout << "word: " << iter->first << " {";
+//
+//		// fetch location vector as a const reference to avoid copying it
+//		auto text_locs = iter->second;
+//		auto loc_iter = text_locs->cbegin(),
+//			loc_iter_end = text_locs->cend();
+//
+//		// print all line numbers for this word
+//		while (loc_iter != loc_iter_end)
+//		{
+//			cout << *loc_iter;
+//
+//			if (++loc_iter != loc_iter_end)
+//				cout << ", ";
+//
+//		}
+//
+//		cout << "}\n";  // end list of output this word
+//	}
+//	cout << endl;  // finished printing entire map
+//}
+//
+//
+//#ifndef QUERYRESULT_H
+//#define QUERYRESULT_H
+//#include <memory>
+//#include <string>
+//#include <vector>
+//#include <set>
+//#include <iostream>
+//
+//class QueryResult {
+//	friend std::ostream& print(std::ostream&, const QueryResult&);
+//public:
+//	typedef std::vector<std::string>::size_type line_no;
+//	typedef std::set<line_no>::const_iterator line_it;
+//	QueryResult(std::string s,
+//		std::shared_ptr<std::set<line_no>> p,
+//		std::shared_ptr<std::vector<std::string>> f) :
+//		sought(s), lines(p), file(f) { }
+//	std::set<line_no>::size_type size() const { return lines->size(); }
+//	line_it begin() const { return lines->cbegin(); }
+//	line_it end() const { return lines->cend(); }
+//	std::shared_ptr<std::vector<std::string>> get_file() { return file; }
+//private:
+//	std::string sought;  // word this query represents                 !!!!!!
+//	std::shared_ptr<std::set<line_no>> lines; // lines it's on       !!!!!!!
+//	std::shared_ptr<std::vector<std::string>> file;  //input file   !!!!!!!!!!!
+//};
+//
+//std::ostream &print(std::ostream&, const QueryResult&);
+//#endif
 
 
 
 
-478  9
-也可以串列初始
-//int *pia = new int[5]{1,2,3};  //前三個是初始器初始化  後二值初始化
-
-空陣列合法
-char arr[0]//error 陣列長不可0
-char *cp = new char[0] // ok  cp不能被解參考  有點像off the end
-
-// []  沒[]會未定義
-delete[] pia;
-摧毀順序是相反  從最後面開始
 
 
-unique_ptr + 動陣
-unique_ptr<int[]> up(new int[10]);//未初始化
-up.release()//自動使用delete[]刪除指標
 
-up可以用下標運算子存取  當成陣列
-for (size_t i = 0; i != 10; i++)
-{
-	up[i] = i;
-} 
+////483   4
+//在未初始化的記憶體中建構物件  也在 <memory>
+//
+//uninitialize_copy(b, e, b2)   b, e範圍的元素  拷貝到 b2代表的原始記憶體  b2大小要能夠存放
+//uninitialize_copy_n(b, n, b2) b 開始 拷貝n個 到 b2 ""
+//uninitialize__fill(b, e, t)   b e 範圍的原始記憶體  建構物件t的拷貝
+//uninitialize_fill_n(b, n, t)  b 未經建構的原始記憶體   開始建構 n 個 t 物件   b要夠大
+//
+//
+//ex vector<int>  n個元素       配置2n個數目的記憶體   我們從原本的vec  拷貝到前n     後半部填入定值
+//-------
+//auto p =  alloc.allocate(v.size() *2)
+//auto q = uninitialize_copy(v.begin(), v.end(), p)  注意跟上面對照
+//uninitialize_fill_n(q, v.size(), 42)
 
+
+
+
+
+
+//481 2
+//new 結合了 配置記憶體 + 建構
+//delete 解構 + 釋放
+//
+//配置 + 建構  可能會浪費記憶體  詳見書
+//
+//<memory> 的 allocator類別 是模版 可以只配置
+//
+//一個 allocator 配置記憶體時  有適當的大小  並經過對其排列   配置的記憶體是未經建構的
+//allocator<string> alloc;//用來配置string 的物件
+//auto const p = alloc.allocate(n);//配置n個未建構的string
+//.deallocate(p, n)// 從pt p 開始  解除存放n個物件   p 和 n 必須和allocate的時後的值相同
+//.construct(p, args)// args被傳到T的建構器 建構一個p所指的物件
+//.destroy(p)//在 T* pt p所指物件上執行解構器
+//
+//auto q = p // q會指向超過最後一個建構的元素的位置 邊建構會邊往後移動
+//alloc.construct(q++);//*q 空string 
+//alloc.construct(q++, 10, 'c')	//*q cccccccccc
+//alloc.construct(q++, "hi")// *q是hi
+//
+//cout << *q << endl;//error q指向未經建構的記憶體
+//
+//物件使用完畢後解構
+//while(q != p)
+//	alloc.destroy(--q);
+//接著
+//alloc.deallocate(p, n);
+
+
+
+
+//480
+//shared_ptr  要提供刪除器  沒提供未定義
+//shared_ptr<int[]> sp(new int[10], [](int *p) {delete[] p};//未初始化
+//sp.reset()//使用delete[]刪除指標
+//沒有下標運算子
+//for (size_t i = 0; i != 10; i++)
+//{
+//	*(sp.get() + i) = i; //就是這樣用
+//}
+//
+//
+//478  9
+//也可以串列初始
+////int *pia = new int[5]{1,2,3};  //前三個是初始器初始化  後二值初始化
+//
+//空陣列合法
+//char arr[0]//error 陣列長不可0
+//char *cp = new char[0] // ok  cp不能被解參考  有點像off the end
+//
+//// []  沒[]會未定義
+//delete[] pia;
+//摧毀順序是相反  從最後面開始
+//
+//
+//unique_ptr + 動陣
+//unique_ptr<int[]> up(new int[10]);//未初始化
+//up.release()//自動使用delete[]刪除指標
+//
+//up可以用下標運算子存取  當成陣列
+//for (size_t i = 0; i != 10; i++)
+//{
+//	up[i] = i;
+//} 
+//
 
 
 
