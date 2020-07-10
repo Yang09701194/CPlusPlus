@@ -50,6 +50,65 @@ int main() {
 //指標 pointer pt
 
 
+//read end 862
+
+
+
+//498
+//有移動建構器的話  拷貝初始化有時會使用移動建構器   或拷貝建構器任一
+
+//拷貝初始化  
+
+
+////496 7
+//沒有定義拷貝控制成員  編譯器會自動定義  幫忙合成一個
+//正常來說會逐個成員拷貝其引數的成員到正在建立的物件中
+//13.1.6還說  有些合成的拷貝建構器 會防止我們拷貝該類的物件
+//
+//拷貝建構器
+//class Foo {
+//public:
+//	Foo();				//預設建構器
+//	Foo(const Foo&)		//拷貝建構器   幾乎總是const的參考  通常不應是explicit的
+//};
+//
+//類別型別成員 用copy建構器copy
+//內建型別成員直接拷貝 (陣列無法拷貝)
+//class Sales_data {
+//public:
+//	Sales_data(Sales_data&);
+//private:
+//	string bookNo;
+//	int units_sold;
+//};
+//
+//Sales_data::Sales_data(const Sales_data &orig) :   //拷貝所有屬性
+//	bookNo(orig.bookNo),
+//	units_sold(orig.units_sold)
+//{}
+//
+//
+//string d(10, 'c')  //直接初始化  用一般建構器
+//string d(d2)//直接初始化
+//string d = d2;//拷貝初始化
+//string null_book = "999-9"//拷貝初始化 拷貝建構器ㄌ
+//string n = string(100, '9')//拷貝初始化
+//
+
+
+
+
+
+
+////495
+//總稱拷貝控制
+//學習類別如何控制 類別型別被 拷貝 指定 移動 摧毀時 會發生什麼事
+//拷貝建構器 移動建構器   拷貝指定運算子  移動指定運算子  解構器
+
+
+
+//494
+//類別能夠重載的運算子包括 函式呼叫運算子  可以呼叫這種類別的物件  好像他是函式一樣  
 
 
 ////485  6 7  8 9  490
