@@ -29,7 +29,7 @@ using namespace std;
 
 int main() {
 	Solution s;
-	auto a = s.getSum(-1, 1);
+	auto a = s.getSum(-2147483648, 2147483648);
 	cout << a << endl;
 
 	int pause;
