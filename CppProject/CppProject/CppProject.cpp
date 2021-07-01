@@ -2771,7 +2771,7 @@ int main() {
 
 //主控台 檔案 字串
 //istream ostream iostream   w
-//ifstream ofstream  fstream w
+//ifstream ofstream fstream w
 //istringstream ostringstream stringstream  w       寬字元用wchar_t
 
 //他們繼承自 istream  ostream   所以都可以用在cin cout cerr   如果參數指標宣告成父類   子類也都可以適用
