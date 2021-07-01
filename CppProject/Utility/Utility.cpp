@@ -4,9 +4,31 @@
 #include "pch.h"
 #include <iostream>
 
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+#include <curlpp/Options.hpp>
+#include <string>
+//#include <codecvt>
+//#include <locale>
+
+#include <iostream>
+//#include <fstream>
+#include <sstream>
+
+#include <io.h>
+
+using namespace std;
+
+
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	//  HTTP GET
+	curlpp::Cleanup myCleanup;
+	std::ostringstream os;
+	os << curlpp::options::Url(std::string("http://example.com"));
+	string html = os.str();
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
